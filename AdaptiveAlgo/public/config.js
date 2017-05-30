@@ -50,6 +50,14 @@
                 resolve : {
                     checkLogin : checkLogin
                 }
+            })
+            .when("/instructor/buildDocker", {
+                templateUrl: "views/instructor/templates/buildDocker.view.client.html",
+                // controller: "BuildDockerController",
+                // controllerAs: "model",
+                resolve : {
+                    checkLogin : checkLogin
+                }
             });
 
 

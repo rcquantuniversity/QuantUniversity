@@ -1,0 +1,191 @@
+<h1>
+    Build Docker
+</h1>
+<br>
+
+<div class="col-md-12">
+	<form action="" method="post" id="buildDockerForm" enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+			        <div class="panel-heading">
+			            Python 2.7
+			        </div>
+			        <div class="panel-body">
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="python27" value="numpy"> Numpy 1.12.0</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="python27" value="pandas"> Pandas 0.19.2</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="python27" value="matplotlib"> Matplotlib 2.0.0</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="python27" value="ipython"> IPython 5.2.2</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="python27" value="scipy"> SciPy 0.18.1</label>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-default">
+			        <div class="panel-heading">
+			            Python 3.4
+			        </div>
+			        <div class="panel-body">
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="python34" value="numpy"> Numpy 1.12.0</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="python34" value="pandas"> Pandas 0.19.2</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="python34" value="matplotlib"> Matplotlib 2.0.0</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="python34" value="ipython"> IPython 5.2.2</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="python34" value="scipy"> SciPy 0.18.1</label>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-default">
+			        <div class="panel-heading">
+			            R 3.3.2
+			        </div>
+			        <div class="panel-body">
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="rcheck" value="forecast"> Forecast 7.3</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="rcheck" value="plyr"> Plyr 1.8.4</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="rcheck" value="lubridate"> Lubridate 1.6.0</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="rcheck" value="ggplot"> Ggplot2 2.2.1</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="rcheck" value="qcc"> Qcc 2.6</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="rcheck" value="reshape"> Reshape2 1.4.2</label>
+			            </div>
+			            <div class="checkbox">
+			                <label><input type="checkbox" name="rcheck" value="randomforest"> RandomForest 4.6.12</label>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel panel-default">
+			        <div class="panel-heading">
+			            Additional installations
+			        </div>
+			        <div class="panel-body">
+			        	<div class="form-grp">
+			            	<label>Git Repository URL</label>
+			            	<div class="input-group">
+			                	<input type="text" name="gitRepo[]" class="form-control" placeholder="Git Repo...">
+			                	<span class="input-group-btn">
+			                		<button class="btn btn-secondary addRepo" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+			                	</span>
+			            	</div>
+			            </div>
+			            <br/>
+			            <div class="form-grp hide" id="gitRepoTemplate">
+			            	<label>Git Repository URL</label>
+			            	<div class="input-group">
+			                	<input type="text" name="gitRepo[]" class="form-control" placeholder="Git Repo...">
+			                	<span class="input-group-btn">
+			                		<button class="btn btn-secondary removeRepo" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+			                	</span>
+			            	</div>
+			            </div>
+			            <br/>
+			            <div class="form-grp">
+			            	<label>Apt Get</label>
+			            	<div class="input-group">
+			                	<input type="text" name="aptget[]" class="form-control" placeholder="Package Name">
+			                	<span class="input-group-btn">
+			                		<button class="btn btn-secondary addAptget" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+			                	</span>
+			            	</div>
+			            </div>
+			            <br/>
+			            <div class="form-grp hide" id="aptgetTemplate">
+			            	<label>Apt Get</label>
+			            	<div class="input-group">
+			                	<input type="text" name="aptget[]" class="form-control" placeholder="Package Name">
+			                	<span class="input-group-btn">
+			                		<button class="btn btn-secondary removeAptget" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+			                	</span>
+			            	</div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+			        <div class="panel-heading">
+			            Datasets Upload
+			        </div>
+			        <div class="panel-body">
+			        	<div class="form-grp">
+			            	<label>Git Repository URL</label>
+			            	<div class="input-group">
+			                	<input type="text" name="gitRepo[]" class="form-control" placeholder="Git Repo...">
+			                	<span class="input-group-btn">
+			                		<button class="btn btn-secondary addRepo" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+			                	</span>
+			            	</div>
+			            </div>
+			            <br/>
+			            <div class="form-grp hide" id="gitRepoTemplate">
+			            	<label>Git Repository URL</label>
+			            	<div class="input-group">
+			                	<input type="text" name="gitRepo[]" class="form-control" placeholder="Git Repo...">
+			                	<span class="input-group-btn">
+			                		<button class="btn btn-secondary removeRepo" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+			                	</span>
+			            	</div>
+			            </div>
+			            <br/>
+			            <div class="form-grp">
+			            	<label>Apt Get</label>
+			            	<div class="input-group">
+			                	<input type="text" name="aptget[]" class="form-control" placeholder="Package Name">
+			                	<span class="input-group-btn">
+			                		<button class="btn btn-secondary addAptget" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+			                	</span>
+			            	</div>
+			            </div>
+			            <br/>
+			            <div class="form-grp hide" id="aptgetTemplate">
+			            	<label>Apt Get</label>
+			            	<div class="input-group">
+			                	<input type="text" name="aptget[]" class="form-control" placeholder="Package Name">
+			                	<span class="input-group-btn">
+			                		<button class="btn btn-secondary removeAptget" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+			                	</span>
+			            	</div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</form>
+</div>
+<br/>
+<div class="col-md-12">
+	<a class="btn btn-primary btn-block" ng-click="model.logout()">Logout</a>
+</div>
