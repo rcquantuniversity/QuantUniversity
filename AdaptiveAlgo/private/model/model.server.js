@@ -14,12 +14,15 @@ module.exports = function () {
     mongoose.connect(connectionString);
 
     var userModel = require("./user/user.model.server.js")();
+    var packagesModel = require("./packages/packages.model.server.js")();
 
     var model = {
-        userModel : userModel
+        userModel : userModel,
+        packagesModel : packagesModel
     };
 
     userModel.setModel(model);
+    packagesModel.setModel(model);
 
     return model;
 };
