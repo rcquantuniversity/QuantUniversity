@@ -10,7 +10,7 @@ module.exports = function() {
         userType: {
             type: String,
             enum: ['STUDENT', 'INSTRUCTOR'],
-            default: 'STUDENT'
+            default: 'INSTRUCTOR'
         }
     }, {collection: "UserDB"});
 
