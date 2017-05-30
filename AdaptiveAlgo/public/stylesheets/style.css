@@ -1,0 +1,67 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.rc-background-login {
+  background: url("/images/a75fdcab110ae11f155ed96f428a86ae.png");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  opacity: 1;
+  position: absolute;
+  top:0;
+  left:0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.rc-login-button {
+  border-radius: 15px;
+  font-size: 15px;
+  background-color: #F9690E;
+}
+
+.rc-margin {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.rc-login-top-margin {
+  margin-top: 5%;
+}
+
+.rc-register-top-margin {
+  margin-top: 2%;
+}
+
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.highcharts-tooltip h3 {
+  margin: 0.3em 0;
+}
+
+.rc-white-font {
+  color: white;
+}
+
+#goJsStateMachine {
+  height: 500px;
+  width: auto;
+}
+
+.rc-black-navbar {
+  background-color: black;
+  opacity: 0.8;
+}
+
+.rc-top-margin {
+  margin-top: 3%;
+}
+
+.wbdv-font-color-white {
+  color: white;
+}

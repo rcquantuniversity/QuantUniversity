@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="AdaptiveAlgoApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no width=device-width">
+    <link href="stylesheets/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet"/>
+    <link href="stylesheets/style.css" rel="stylesheet"/>
+    <link href ='https://fonts.googleapis.com/css?family=Sansita' rel='stylesheet' type='text/css'>
+
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script src="javascripts/bootstrap.js"></script>
+
+    <link href="stylesheets/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet"/>
+
+    <script src="javascripts/angular.js"></script>
+    <script src="javascripts/angular-route.js"></script>
+    <script src="javascripts/jquery-3.1.1.js"></script>
+    <script src="javascripts/jquery-ui.js"></script>
+    <script src="javascripts/jqueryui_touch.js"></script>
+
+    <!--Application-->
+    <script src="app.js"></script>
+
+    <!--Config-->
+    <script src="config.js"></script>
+
+    <!--Contollers-->
+    <script src="views/user/controller/login.controller.client.js"></script>
+    <script src="views/user/controller/register.controller.client.js"></script>
+    <script src="views/instructor/controller/instructor.controller.client.js"></script>
+    <script src="views/student/controller/student.controller.client.js"></script>
+    <script src="views/student/controller/availableCourseList.controller.client.js"></script>
+
+
+    <!--Services-->
+    <script src="services/user.service.client.js"></script>
+    <script src="services/course.service.client.js"></script>
+
+</head>
+<body>
+<div ng-view>
+</div>
+</body>
+</html>
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<link rel="stylesheet" href="javascripts/rappid/dist/joint.min.css" />-->
+    <!--<script src="javascripts/rappid/node_modules/jquery/dist/jquery.js"></script>-->
+    <!--<script src="javascripts/rappid/node_modules/lodash/index.js"></script>-->
+    <!--<script src="javascripts/rappid/node_modules/backbone/backbone.js"></script>-->
+    <!--<script src="javascripts/rappid/dist/joint.min.js"></script>-->
+
+
+<!--</head>-->
+<!--<body>-->
+<!--<div id="myholder"></div>-->
+<!--<div id="paper"></div>-->
+<!--<script>-->
+    <!--var graph = new joint.dia.Graph;-->
+
+    <!--var paper = new joint.dia.Paper({-->
+        <!--el: $('#paper'),-->
+        <!--width: 800,-->
+        <!--height: 700,-->
+        <!--gridSize: 1,-->
+        <!--model: graph-->
+    <!--});-->
+
+    <!--function state(x, y, label) {-->
+
+        <!--var cell = new joint.shapes.fsa.State({-->
+            <!--position: { x: x, y: y },-->
+            <!--size: { width: 60, height: 60 },-->
+            <!--attrs: { text : { text: label }}-->
+        <!--});-->
+        <!--graph.addCell(cell);-->
+        <!--return cell;-->
+    <!--};-->
+
+    <!--function link(source, target, label, vertices) {-->
+
+        <!--var cell = new joint.shapes.fsa.Arrow({-->
+            <!--source: { id: source.id },-->
+            <!--target: { id: target.id },-->
+            <!--labels: [{ position: .5, attrs: { text: { text: label || '', 'font-weight': 'bold' } } }],-->
+            <!--vertices: vertices || []-->
+        <!--});-->
+        <!--graph.addCell(cell);-->
+        <!--return cell;-->
+    <!--}-->
+
+    <!--var start = new joint.shapes.fsa.StartState({ position: { x: 50, y: 530 } });-->
+    <!--graph.addCell(start);-->
+
+    <!--var code  = state(180, 390, 'code');-->
+    <!--var slash = state(340, 220, 'slash');-->
+    <!--var star  = state(600, 400, 'star');-->
+    <!--var line  = state(190, 100, 'line');-->
+    <!--var block = state(560, 140, 'block');-->
+
+    <!--link(start, code,  'start');-->
+    <!--link(code,  slash, '/');-->
+    <!--link(slash, code,  'other', [{x: 270, y: 300}]);-->
+    <!--link(slash, line,  '/');-->
+    <!--link(line,  code,  'new\n line');-->
+    <!--link(slash, block, '*');-->
+    <!--link(block, star,  '*');-->
+    <!--link(star,  block, 'other', [{x: 650, y: 290}]);-->
+    <!--link(star,  code,  '/',     [{x: 490, y: 310}]);-->
+    <!--link(line,  line,  'other', [{x: 115,y: 100}, {x: 250, y: 50}]);-->
+    <!--link(block, block, 'other', [{x: 485,y: 140}, {x: 620, y: 90}]);-->
+    <!--link(code,  code,  'other', [{x: 180,y: 500}, {x: 305, y: 450}]);-->
+<!--</script>-->
+<!--&lt;!&ndash;<script type="text/javascript">&ndash;&gt;-->
+
+    <!--&lt;!&ndash;var graph = new joint.dia.Graph;&ndash;&gt;-->
+
+    <!--&lt;!&ndash;var paper = new joint.dia.Paper({&ndash;&gt;-->
+        <!--&lt;!&ndash;el: $('#myholder'),&ndash;&gt;-->
+        <!--&lt;!&ndash;width: 900,&ndash;&gt;-->
+        <!--&lt;!&ndash;height: 500,&ndash;&gt;-->
+        <!--&lt;!&ndash;model: graph,&ndash;&gt;-->
+        <!--&lt;!&ndash;gridSize: 1&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+
+    <!--&lt;!&ndash;var rect = new joint.shapes.basic.Rect({&ndash;&gt;-->
+        <!--&lt;!&ndash;position: { x: 100, y: 30 },&ndash;&gt;-->
+        <!--&lt;!&ndash;size: { width: 100, height: 30 },&ndash;&gt;-->
+        <!--&lt;!&ndash;attrs: { rect: { fill: 'blue' }, text: { text: 'my box', fill: 'white' } }&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+
+    <!--&lt;!&ndash;var rect2 = rect.clone();&ndash;&gt;-->
+    <!--&lt;!&ndash;rect2.translate(300);&ndash;&gt;-->
+
+    <!--&lt;!&ndash;var link = new joint.dia.Link({&ndash;&gt;-->
+        <!--&lt;!&ndash;source: { id: rect.id },&ndash;&gt;-->
+        <!--&lt;!&ndash;target: { id: rect2.id }&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+
+    <!--&lt;!&ndash;graph.addCells([rect, rect2, link]);&ndash;&gt;-->
+
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->

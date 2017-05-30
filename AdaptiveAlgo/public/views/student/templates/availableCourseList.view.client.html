@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <h1>Available Courses</h1><br><br>
+    <div class="row">
+        <div class="col-xs-6">
+            <iframe src="http://www.youtube.com/embed/HW29067qVWk"
+                    width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="col-xs-4">
+
+        </div>
+        <div class="col-xs-2">
+            <a class="btn btn-primary btn-block" ng-click="model.startLab()">Start Lab</a>
+            <a class="btn btn-primary btn-block" ng-click="model.stopLab()">Stop Lab</a>
+            <a class="btn btn-primary btn-block" ng-click="model.publish()">Publish</a>
+            <a class="btn btn-primary btn-block" ng-click="model.consume()">Consume</a>
+        </div>
+    </div>
+    <br>
+    <div ng-if="model.message">{{model.message}}</div>
+    <div ng-if="model.message">{{model.message}}</div>
+    <div ng-if="model.message">{{model.message2}}</div>
+    <div ng-if="model.message">{{model.message3}}</div>
+    <br>
+    <a class="btn btn-primary btn-block" ng-click="model.logout()">Logout</a>
+
+
+
+
+</div>

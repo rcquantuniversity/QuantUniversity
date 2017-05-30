@@ -1,0 +1,39 @@
+<div class="rc-background-login">
+    <div class="row rc-white-font rc-login-top-margin">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 rc-margin">
+            <h2 class="text-center">Welcome !</h2>
+            <br>
+            <form name = "loginpage">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input ng-model="model.user.username"
+                           type="text"
+                           class="form-control"
+                           id="username"
+                           placeholder="Username"
+                           autofocus
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input ng-model="model.user.password"
+                           type="password"
+                           class="form-control"
+                           id="password"
+                           placeholder="Password"
+                           required>
+                </div>
+                <div>
+                    <input class="btn btn-block rc-login-button"
+                           type="submit"
+                           ng-click="loginpage.$valid && model.login(model.user)"
+                           value="Login">
+                </div><br>
+                <a class="wbdv-left-right-margin pull-right wbdv-font-color-white"
+                   href="#/register">Not A Member?</a>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
