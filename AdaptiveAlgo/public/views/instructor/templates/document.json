@@ -1,0 +1,43 @@
+{
+  "data": [
+    {
+      "base": "python2.7",
+      "packages": [
+        {
+          "name": "matplotlib",
+          "command": "pip install matplotlib"
+        },
+        {
+          "name": "numpy",
+          "command": "pip install numpy"
+        }
+      ]
+    },
+    {
+      "base": "python3.5",
+      "packages": [
+        {
+          "name": "matplotlib",
+          "command": "pip install matplotlib"
+        },
+        {
+          "name": "numpy",
+          "command": "pip install numpy"
+        }
+      ]
+    },
+    {
+      "base": "R",
+      "packages": [
+        {
+          "name": "matplotlib",
+          "command": "pip install matplotlib"
+        },
+        {
+          "name": "numpy",
+          "command": "pip install numpy"
+        }
+      ]
+    }
+  ]
+}
