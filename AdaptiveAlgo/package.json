@@ -17,6 +17,7 @@
     "gojs": "^1.7.8",
     "highcharts": "5.0.10",
     "jade": "~1.11.0",
+    "jsonfile": "^3.0.0",
     "mongoose": "^4.4.15",
     "morgan": "~1.7.0",
     "passport": "^0.3.2",

@@ -12,9 +12,19 @@
             "logout" : logout,
             "findCurrentUser" : findCurrentUser,
             "registerUser" : registerUser,
-            "callToJupyterNotebook" : callToJupyterNotebook
+            "callToJupyterNotebook" : callToJupyterNotebook,
+            "getAllPackages" : getAllPackages,
+            "createOutputJSON" : createOutputJSON
         };
         return api;
+
+        function createOutputJSON(packageList) {
+            return $http.post("/api/createOutputJSON", packageList);
+        }
+
+        function getAllPackages() {
+            return $http.get("/api/getAllPackages");
+        }
 
         function callToJupyterNotebook() {
             return $http.post("/api/callToJupyterNotebook");

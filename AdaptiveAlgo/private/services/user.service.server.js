@@ -6,8 +6,33 @@ module.exports = function (app, model) {
     app.get("/api/findCurrentUser",findCurrentUser);
     app.post("/api/registerUser", registerUser);
     app.post("/api/callToJupyterNotebook", callToJupyterNotebook);
+    app.get("/api/getAllPackages", getAllPackages);
+    app.post("/api/createOutputJSON", createOutputJSON);
 
     var request = require('request');
+    var jsonfile = require('jsonfile');
+
+    function createOutputJSON(req, res) {
+        var file = './private/services/output.json';
+        jsonfile.writeFile(file, req.body, function (err) {
+            console.error(err);
+        });
+        return res.sendStatus(200);
+    }
+    
+    function getAllPackages(req, res) {
+        model
+            .packagesModel
+            .getAllPackages()
+            .then(
+                function (allPackages) {
+                    res.json(allPackages);
+                },
+                function (err) {
+                    res.sendStatus(400).send(err);
+                }
+            );
+    }
 
 
     function callToJupyterNotebook(req, res) {

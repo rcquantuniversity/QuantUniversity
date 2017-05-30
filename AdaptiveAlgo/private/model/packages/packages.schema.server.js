@@ -10,7 +10,11 @@ module.exports = function() {
         packages: [
             {
                 name : String,
-                command : String
+                command : String,
+                version: {
+                    type: String,
+                    default: 'latest'
+                }
             }]
     }, {collection: "PackagesDB"});
 
