@@ -15,14 +15,17 @@ module.exports = function () {
 
     var userModel = require("./user/user.model.server.js")();
     var packagesModel = require("./packages/packages.model.server.js")();
+    var dockerImageModel = require("./dockerImage/dockerImage.model.server.js")();
 
     var model = {
         userModel : userModel,
-        packagesModel : packagesModel
+        packagesModel : packagesModel,
+        dockerImageModel : dockerImageModel
     };
 
     userModel.setModel(model);
     packagesModel.setModel(model);
+    dockerImageModel.setModel(model);
 
     return model;
 };

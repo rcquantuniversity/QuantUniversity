@@ -32,6 +32,34 @@ module.exports = function (app, model) {
                     res.sendStatus(400).send(err);
                 }
             );
+
+        //testing
+        var imageDesrc = 'Python2.7 \r\nnumpy : 1.2 \r\nmatplotlib : 2.4';
+        model
+            .dockerImageModel
+            .saveDockerImageFile(req.user.id, Date.now().toString() , imageDesrc)
+            .then(
+                function (allPackages) {
+                    //res.json(allPackages);
+                },
+                function (err) {
+                    //res.sendStatus(400).send(err);
+                }
+            );
+
+        //testing
+        model
+            .dockerImageModel
+            .getImagesForUser(req.user.id)
+            .then(
+                function (allPackages) {
+                    //res.json(allPackages);
+                },
+                function (err) {
+                    //res.sendStatus(400).send(err);
+                }
+            );
+
     }
 
 

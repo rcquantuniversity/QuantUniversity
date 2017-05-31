@@ -23,15 +23,15 @@ module.exports = function () {
                 } else {
                     deferred.resolve(allPackages);
 
-                    addPackage("", "")
-                        .then(
-                            function (package) {
-                                console.log(package);
-                            },
-                            function (err) {
-                                console.log(err);
-                            }
-                        );
+                    // addPackage("", "")
+                    //     .then(
+                    //         function (package) {
+                    //             console.log(package);
+                    //         },
+                    //         function (err) {
+                    //             console.log(err);
+                    //         }
+                    //     );
                 }
             });
         return deferred.promise;
