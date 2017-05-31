@@ -12,20 +12,12 @@
 			            Python 2.7
 			        </div>
 			        <div class="panel-body">
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="python27" value="numpy"> Numpy 1.12.0</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="python27" value="pandas"> Pandas 0.19.2</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="python27" value="matplotlib"> Matplotlib 2.0.0</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="python27" value="ipython"> IPython 5.2.2</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="python27" value="scipy"> SciPy 0.18.1</label>
+			        	<div class="checkbox" ng-repeat="x in myData">
+			        		<div ng-repeat="y in x.packages">
+				                <label ng-if="x.base == 'python2.7'">
+				                	<input type="checkbox" name="python27" value="{{y.name}}">{{y.name}}
+				                </label>
+			                </div>
 			            </div>
 			        </div>
 			    </div>
@@ -33,23 +25,15 @@
 			<div class="col-md-4">
 				<div class="panel panel-default">
 			        <div class="panel-heading">
-			            Python 3.4
+			            Python 3.5
 			        </div>
 			        <div class="panel-body">
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="python34" value="numpy"> Numpy 1.12.0</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="python34" value="pandas"> Pandas 0.19.2</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="python34" value="matplotlib"> Matplotlib 2.0.0</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="python34" value="ipython"> IPython 5.2.2</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="python34" value="scipy"> SciPy 0.18.1</label>
+			        	<div class="checkbox" ng-repeat="x in myData">
+			        		<div ng-repeat="y in x.packages">
+				                <label ng-if="x.base == 'python3.5'">
+				                	<input type="checkbox" name="python34" value="{{y.name}}">{{y.name}}
+				                </label>
+			                </div>
 			            </div>
 			        </div>
 			    </div>
@@ -57,29 +41,15 @@
 			<div class="col-md-4">
 				<div class="panel panel-default">
 			        <div class="panel-heading">
-			            R 3.3.2
+			            R
 			        </div>
 			        <div class="panel-body">
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="rcheck" value="forecast"> Forecast 7.3</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="rcheck" value="plyr"> Plyr 1.8.4</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="rcheck" value="lubridate"> Lubridate 1.6.0</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="rcheck" value="ggplot"> Ggplot2 2.2.1</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="rcheck" value="qcc"> Qcc 2.6</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="rcheck" value="reshape"> Reshape2 1.4.2</label>
-			            </div>
-			            <div class="checkbox">
-			                <label><input type="checkbox" name="rcheck" value="randomforest"> RandomForest 4.6.12</label>
+			        	<div class="checkbox" ng-repeat="x in myData">
+			        		<div ng-repeat="y in x.packages">
+				                <label ng-if="x.base == 'R'">
+				                	<input type="checkbox" name="rcheck" value="{{y.name}}">{{y.name}}
+				                </label>
+			                </div>
 			            </div>
 			        </div>
 			    </div>
@@ -140,49 +110,30 @@
 			            Datasets Upload
 			        </div>
 			        <div class="panel-body">
-			        	<div class="form-grp">
-			            	<label>Git Repository URL</label>
-			            	<div class="input-group">
-			                	<input type="text" name="gitRepo[]" class="form-control" placeholder="Git Repo...">
-			                	<span class="input-group-btn">
-			                		<button class="btn btn-secondary addRepo" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
-			                	</span>
-			            	</div>
-			            </div>
-			            <br/>
-			            <div class="form-grp hide" id="gitRepoTemplate">
-			            	<label>Git Repository URL</label>
-			            	<div class="input-group">
-			                	<input type="text" name="gitRepo[]" class="form-control" placeholder="Git Repo...">
-			                	<span class="input-group-btn">
-			                		<button class="btn btn-secondary removeRepo" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
-			                	</span>
-			            	</div>
-			            </div>
-			            <br/>
-			            <div class="form-grp">
-			            	<label>Apt Get</label>
-			            	<div class="input-group">
-			                	<input type="text" name="aptget[]" class="form-control" placeholder="Package Name">
-			                	<span class="input-group-btn">
-			                		<button class="btn btn-secondary addAptget" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
-			                	</span>
-			            	</div>
-			            </div>
-			            <br/>
-			            <div class="form-grp hide" id="aptgetTemplate">
-			            	<label>Apt Get</label>
-			            	<div class="input-group">
-			                	<input type="text" name="aptget[]" class="form-control" placeholder="Package Name">
-			                	<span class="input-group-btn">
-			                		<button class="btn btn-secondary removeAptget" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
-			                	</span>
-			            	</div>
-			            </div>
+			        	<input type="file" ng-model="files" multiple/>
+         				<!-- <button ng-click = "uploadFile()">upload me</button> -->
+			        </div>
+			    </div>
+			    <div class="panel panel-default">
+			        <div class="panel-heading">
+			            Package Selection File
+			        </div>			        
+			        <div class="panel-body">
+			        	<p>Upload a CSV or JSON file to specify the packages to include in the Docker Image.</p>
+			        	<input type="file" ng-model="file"/>
+         				<!-- <button ng-click = "uploadFile()">upload me</button> -->
 			        </div>
 			    </div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-5"></div>
+			<div class="col-md-2">
+				<a class="btn btn-primary btn-block" ng-click="">Submit</a>
+			</div>
+			<div class="col-md-5"></div>
+		</div>
+		<br/>
 	</form>
 </div>
 <br/>

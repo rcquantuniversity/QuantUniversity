@@ -24,6 +24,4 @@ $(document).ready(function() {
 
         $row.remove();
     });
-
-    Dropzone.autoDiscover = false;
 });
