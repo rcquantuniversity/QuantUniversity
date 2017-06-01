@@ -8,16 +8,36 @@ module.exports = function (app, model) {
     app.post("/api/callToJupyterNotebook", callToJupyterNotebook);
     app.get("/api/getAllPackages", getAllPackages);
     app.post("/api/createOutputJSON", createOutputJSON);
+    app.post("/api/createDockerImage", createDockerImage);
 
     var request = require('request');
     var jsonfile = require('jsonfile');
 
+
+    function createDockerImage(req, res) {
+        var PythonShell = require('python-shell');
+
+        PythonShell.run('C:\\Users\\QuantUniversity-6\\Rohan\\AdaptiveAlgo\\private\\services\\dockerimage_generator.py', function (err) {
+            if (err) {
+//                throw err;
+//                return res.sendStatus(400).send(err);
+            } else {
+                console.log("finished");
+            }
+        });
+        return res.sendStatus(200);
+    }
+
     function createOutputJSON(req, res) {
         var file = './private/services/output.json';
         jsonfile.writeFile(file, req.body, function (err) {
-            console.error(err);
+            if (err) {
+                console.error(err);
+                return res.sendStatus(400).send(err);
+            } else {
+                return res.sendStatus(200);
+            }
         });
-        return res.sendStatus(200);
     }
     
     function getAllPackages(req, res) {

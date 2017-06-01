@@ -22,7 +22,6 @@ module.exports = function () {
                     deferred.reject(err);
                 } else {
                     deferred.resolve(allImages);
-                    console.log(allImages);
                 }
             });
         return deferred.promise;
