@@ -12,12 +12,10 @@
 			            Python 2.7
 			        </div>
 			        <div class="panel-body">
-			        	<div class="checkbox" ng-repeat="x in model.myData">
-			        		<div ng-repeat="y in x.packages">
-				                <label ng-if="x.base == 'python2.7'">
-				                	<input type="checkbox" name="python27" value="{{y.name}}">{{y.name}}
-				                </label>
-			                </div>
+			        	<div class="checkbox" ng-repeat="x in model.py27">
+			                <label>
+			                	<input type="checkbox" ng-model="model.folder1[x.name]" value="x.name">{{x.name}}
+			                </label>
 			            </div>
 			        </div>
 			    </div>
@@ -28,12 +26,10 @@
 			            Python 3.5
 			        </div>
 			        <div class="panel-body">
-			        	<div class="checkbox" ng-repeat="x in model.myData">
-			        		<div ng-repeat="y in x.packages">
-				                <label ng-if="x.base == 'python3.5'">
-				                	<input type="checkbox" name="python34" value="{{y.name}}">{{y.name}}
-				                </label>
-			                </div>
+			        	<div class="checkbox" ng-repeat="y in model.py35">
+			        		<label>
+			                	<input type="checkbox" ng-model="model.folder2[y.name]" value="y.name">{{y.name}}
+			                </label>
 			            </div>
 			        </div>
 			    </div>
@@ -44,12 +40,10 @@
 			            R
 			        </div>
 			        <div class="panel-body">
-			        	<div class="checkbox" ng-repeat="x in model.myData">
-			        		<div ng-repeat="y in x.packages">
-				                <label ng-if="x.base == 'R'">
-				                	<input type="checkbox" name="rcheck" value="{{y.name}}">{{y.name}}
-				                </label>
-			                </div>
+			        	<div class="checkbox" ng-repeat="z in model.r">
+			        		<label>
+			                	<input type="checkbox" ng-model="model.folder3[z.name]" value="z.name">{{z.name}}
+			                </label>
 			            </div>
 			        </div>
 			    </div>
@@ -129,7 +123,7 @@
 		<div class="row">
 			<div class="col-md-5"></div>
 			<div class="col-md-2">
-				<a class="btn btn-primary btn-block" ng-click="model.createOutputJSON(model.packageList)">Submit</a>
+				<a class="btn btn-primary btn-block" ng-click="model.createOutputJSON(model.folder)">Submit</a>
 			</div>
 			<div class="col-md-5"></div>
 		</div>
