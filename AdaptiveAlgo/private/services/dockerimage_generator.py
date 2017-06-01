@@ -30,11 +30,7 @@ else:
     baseImage = 'jupyter/base-py35'
 
 #write the Dockerfile
-<<<<<<< HEAD
 with open(module_dir+'/Dockerfile', 'wb') as dockerfile:
-=======
-with open('Dockerfile', 'wb') as dockerfile:
->>>>>>> 1cbb1451303abb7e55b7308faccb2c4c9cf74ca8
     #FROM the base image
     dockerfile.write('FROM ' + baseImage + '\n')
     #get the root privilege 
@@ -68,16 +64,12 @@ with open('Dockerfile', 'wb') as dockerfile:
                 else:
                     dockerfile.write(pkg['name'] +'==' +pkg['version']+ ' ')
             else:
-<<<<<<< HEAD
                 #latest or sepcific version
                 if(pkg['version'] == 'latest'):
                     dockerfile.write(pkg['name'] + '\n')
                 else:
                     dockerfile.write(pkg['name'] +'==' +pkg['version']+ '\n')
 
-=======
-                dockerfile.write(pkg['name'] +'\n')
->>>>>>> 1cbb1451303abb7e55b7308faccb2c4c9cf74ca8
     
     #install r packages
     if num_pkg_r > 0:
@@ -99,8 +91,4 @@ with open('Dockerfile', 'wb') as dockerfile:
     dockerfile.write('USER $NB_USER\n')
 
 #execute the building process
-<<<<<<< HEAD
 str = subprocess.call(['cd '+module_dir+ '; docker build -t ' + module_name + ' .'], shell=True)
-=======
-#str = subprocess.call('docker build -t ' + moduleName + ' .', shell=True)
->>>>>>> 1cbb1451303abb7e55b7308faccb2c4c9cf74ca8
