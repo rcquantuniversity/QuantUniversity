@@ -1,7 +1,6 @@
-<h1>
+<h2>
     Build Docker
-</h1>
-<br>
+</h2>
 
 <div class="col-md-12">
 	<form action="" method="post" id="buildDockerForm" enctype="multipart/form-data">
@@ -123,7 +122,10 @@
 		<div class="row">
 			<div class="col-md-5"></div>
 			<div class="col-md-2">
-				<a class="btn btn-primary btn-block" ng-click="model.createOutputJSON(model.folder)">Submit</a>
+				<label for="imageName">Image Name</label>
+				<input type="text" class="form-control" ng-model="model.imageName" id="imageName" required>
+				<br>
+				<a class="btn btn-primary btn-block" ng-click="model.createOutputJSON(model.folder1, model.folder2, model.folder3, model.imageName)">Submit</a>
 			</div>
 			<div class="col-md-5"></div>
 		</div>

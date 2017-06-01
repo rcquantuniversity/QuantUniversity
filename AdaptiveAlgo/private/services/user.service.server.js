@@ -7,7 +7,7 @@ module.exports = function (app, model) {
     app.post("/api/registerUser", registerUser);
     app.post("/api/callToJupyterNotebook", callToJupyterNotebook);
     app.get("/api/getAllPackages", getAllPackages);
-    app.post("/api/createOutputJSON", createOutputJSON);
+    app.post("/api/createOutputJSON/:imageName", createOutputJSON);
     app.post("/api/createDockerImage", createDockerImage);
 
     var request = require('request');
@@ -30,8 +30,11 @@ module.exports = function (app, model) {
     }
 
     function createOutputJSON(req, res) {
+        var imageName = req.params.imageName + Date.now().toString();
+        var packageList = req.body;
+        var output = {"name" : imageName, "data" : packageList};
         var file = './private/services/output.json';
-        jsonfile.writeFile(file, req.body, function (err) {
+        jsonfile.writeFile(file, output, function (err) {
             if (err) {
                 console.error(err);
                 return res.sendStatus(400).send(err);

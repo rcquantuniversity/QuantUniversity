@@ -23,8 +23,8 @@
             return $http.post("/api/createDockerImage");
         }
 
-        function createOutputJSON(packageList) {
-            return $http.post("/api/createOutputJSON", packageList);
+        function createOutputJSON(packageList, imageName) {
+            return $http.post("/api/createOutputJSON/" + imageName, packageList);
         }
 
         function getAllPackages() {

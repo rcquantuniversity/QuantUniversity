@@ -35,14 +35,74 @@
         }
         init();
 
-        function createOutputJSON(packageList) {
+        function createOutputJSON(folder1, folder2, folder3, imageName) {
             // packageList = {"name" : "python123456", "package" : "rohan"};
             // packageList = {"data":[{"_id":"592de4fc87aa4829f0fcca1b","__v":0,"packages":[{"name":"matplotlib","command":"pip install matplotlib","_id":"592de4fc87aa4829f0fcca1d","version":"latest"},{"name":"numpy","command":"pip install numpy","_id":"592de4fc87aa4829f0fcca1c","version":"latest"}],"base":"python2.7"},{"_id":"592de4fc87aa4829f0fcca1e","__v":0,"packages":[{"name":"matplotlib","command":"pip install matplotlib","_id":"592de4fc87aa4829f0fcca20","version":"latest"},{"name":"numpy","command":"pip install numpy","_id":"592de4fc87aa4829f0fcca1f","version":"latest"},{"_id":"592de54287aa4829f0fcca24","command":"pip install SciPy","name":"SciPy","version":"1.9"}],"base":"python3.5"},{"_id":"592de4fc87aa4829f0fcca21","__v":0,"packages":[{"name":"matplotlib","command":"pip install matplotlib","_id":"592de4fc87aa4829f0fcca23","version":"latest"},{"name":"numpy","command":"pip install numpy","_id":"592de4fc87aa4829f0fcca22","version":"latest"}],"base":"R"}]};
 
-            console.log(packageList);
-            
+            vm.python27Packages = [];
+            vm.python35Packages = [];
+            vm.rPackages = [];
+
+            angular.forEach(folder1, function(key, value) {
+                if(key) {
+                    vm.python27Packages.push(value);
+                }
+            });
+
+            angular.forEach(folder2, function(key, value) {
+                if(key) {
+                    vm.python35Packages.push(value);
+                }
+            });
+
+            angular.forEach(folder3, function(key, value) {
+                if(key) {
+                    vm.rPackages.push(value);
+                }
+            });
+
+            var allPackageArray = [];
+            var packageArray = [];
+
+            // python 2.7
+            for (var i in vm.python27Packages) {
+                var package = vm.python27Packages[i];
+                var packageDetails = vm.py27.filter(function (item) {
+                    return item.name === package;
+                });
+                packageArray.push(packageDetails[0]);
+            }
+            var packageJson = {"packages": packageArray,"base":"python2.7"};
+            allPackageArray.push(packageJson);
+
+
+            packageArray = [];
+            // python 3.5
+            for (var i in vm.python35Packages) {
+                var package = vm.python35Packages[i];
+                var packageDetails = vm.py35.filter(function (item) {
+                    return item.name === package;
+                });
+                packageArray.push(packageDetails[0]);
+            }
+            packageJson = {"packages": packageArray,"base":"python3.5"};
+            allPackageArray.push(packageJson);
+
+
+            packageArray = [];
+            // R
+            for (var i in vm.rPackages) {
+                var package = vm.rPackages[i];
+                var packageDetails = vm.r.filter(function (item) {
+                    return item.name === package;
+                });
+                packageArray.push(packageDetails[0]);
+            }
+            packageJson = {"packages": packageArray,"base":"R"};
+            allPackageArray.push(packageJson);
+
             UserService
-                .createOutputJSON(packageList)
+                .createOutputJSON(allPackageArray, imageName)
                 .then(
                     function () {
                         vm.message = "JSON created successfully! Creating Docker Image";
