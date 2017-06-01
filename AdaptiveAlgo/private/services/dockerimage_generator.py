@@ -20,7 +20,7 @@ else:
     baseImage = 'jupyter/base-py35'
 
 #write the Dockerfile
-with open('Dockerfile1', 'wb') as dockerfile:
+with open('Dockerfile', 'wb') as dockerfile:
     #FROM the base image
     dockerfile.write('FROM ' + baseImage + '\n')
     #get the root privilege 
