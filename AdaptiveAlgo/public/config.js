@@ -54,7 +54,7 @@
             .when("/instructor/buildDocker", {
                 templateUrl: "views/instructor/templates/buildDocker.view.client.html",
                 controller: "BuildDockerController",
-                // controllerAs: "model",
+                controllerAs: "model",
                 resolve : {
                     checkLogin : checkLogin
                 }

@@ -12,7 +12,7 @@
 			            Python 2.7
 			        </div>
 			        <div class="panel-body">
-			        	<div class="checkbox" ng-repeat="x in myData">
+			        	<div class="checkbox" ng-repeat="x in model.myData">
 			        		<div ng-repeat="y in x.packages">
 				                <label ng-if="x.base == 'python2.7'">
 				                	<input type="checkbox" name="python27" value="{{y.name}}">{{y.name}}
@@ -28,7 +28,7 @@
 			            Python 3.5
 			        </div>
 			        <div class="panel-body">
-			        	<div class="checkbox" ng-repeat="x in myData">
+			        	<div class="checkbox" ng-repeat="x in model.myData">
 			        		<div ng-repeat="y in x.packages">
 				                <label ng-if="x.base == 'python3.5'">
 				                	<input type="checkbox" name="python34" value="{{y.name}}">{{y.name}}
@@ -44,7 +44,7 @@
 			            R
 			        </div>
 			        <div class="panel-body">
-			        	<div class="checkbox" ng-repeat="x in myData">
+			        	<div class="checkbox" ng-repeat="x in model.myData">
 			        		<div ng-repeat="y in x.packages">
 				                <label ng-if="x.base == 'R'">
 				                	<input type="checkbox" name="rcheck" value="{{y.name}}">{{y.name}}
