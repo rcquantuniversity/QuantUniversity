@@ -43,7 +43,6 @@ with open('Dockerfile', 'wb') as dockerfile:
                 dockerfile.write(pkg['name'] + ' ')
             else:
                 dockerfile.write(pkg['name'] +'\n')
-
     
     #install r packages
     if num_pkg_r > 0:
