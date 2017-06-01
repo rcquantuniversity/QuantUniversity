@@ -29,21 +29,21 @@ module.exports = function () {
     
     function saveDockerImageFile(userid, imagename, imageDescription) {
         var deferred = Q.defer();
-        var file = './private/services/dockerImages/'+imagename +'.txt';
-        var record = {userid : userid, imageName : imagename, descriptionFile : file};
-        DockerImageModel
-            .create(record, function (err, status) {
-                if (err) {
-                    deferred.reject(err);
-                } else {
-                    deferred.resolve(status);
-                    fs.writeFile(file, imageDescription, function(err) {
-                        if (err) {
-                            console.log(err);
-                        }
-                    });
-                }
-            });
+        // var file = './private/services/dockerImages/'+imagename +'.txt';
+        // var record = {userid : userid, imageName : imagename, descriptionFile : file};
+        // DockerImageModel
+        //     .create(record, function (err, status) {
+        //         if (err) {
+        //             deferred.reject(err);
+        //         } else {
+        //             deferred.resolve(status);
+        //             fs.writeFile(file, imageDescription, function(err) {
+        //                 if (err) {
+        //                     console.log(err);
+        //                 }
+        //             });
+        //         }
+        //     });
         return deferred.promise;
     }
 

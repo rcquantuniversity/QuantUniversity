@@ -17,8 +17,9 @@ module.exports = function (app, model) {
     function createDockerImage(req, res) {
         var PythonShell = require('python-shell');
 
-        PythonShell.run('C:\\Users\\QuantUniversity-6\\Rohan\\AdaptiveAlgo\\private\\services\\dockerimage_generator.py', function (err) {
+        PythonShell.run(process.cwd() + '/private/services/dockerimage_generator.py', function (err) {
             if (err) {
+                console.log(err);
 //                throw err;
 //                return res.sendStatus(400).send(err);
             } else {
