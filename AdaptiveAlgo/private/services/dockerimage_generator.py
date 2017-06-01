@@ -5,20 +5,21 @@ import os
 
 #parse JSON file
 service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
-with open(service_dir+'/master.json') as data_file:    
+with open(service_dir+'/output.json') as data_file:    
     data = json.load(data_file)
 
 #get basic info from data
-module_name = 'finace modeling'.replace(" ", "")
+module_name = data['name'].replace(" ", "").lower()
 num_pkg_py27 = len(data['data'][0]['packages'])
 num_pkg_py35 = len(data['data'][1]['packages'])
 num_pkg_r = len(data['data'][2]['packages'])
 
 #create module dir to save Dockerfile
-module_dir = service_dir + module_name
+module_dir = service_dir + 'temp'
 if not os.path.exists(module_dir):
     os.makedirs(module_dir)
 print(module_dir)
+print(module_name)
 
 if num_pkg_py27 > 0 and num_pkg_r > 0:
     baseImage = 'jupyterhub/base-pyr'
