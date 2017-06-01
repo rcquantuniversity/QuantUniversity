@@ -1,9 +1,13 @@
 #under Python 2.7
 import subprocess
 import json
+import os
+
+cwd = os.getcwd()
+print(cwd)
 
 #parse JSON file
-with open('master.json') as data_file:    
+with open('./private/services/master.json') as data_file:    
     data = json.load(data_file)
 
 num_pkg_py27 = len(data['data'][0]['packages'])
@@ -20,7 +24,7 @@ else:
     baseImage = 'jupyter/base-py35'
 
 #write the Dockerfile
-with open('Dockerfile', 'wb') as dockerfile:
+with open('./private/services/Dockerfile', 'wb') as dockerfile:
     #FROM the base image
     dockerfile.write('FROM ' + baseImage + '\n')
     #get the root privilege 
