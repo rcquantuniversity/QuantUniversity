@@ -14,9 +14,14 @@
             "registerUser" : registerUser,
             "callToJupyterNotebook" : callToJupyterNotebook,
             "getAllPackages" : getAllPackages,
-            "createOutputJSON" : createOutputJSON
+            "createOutputJSON" : createOutputJSON,
+            "createDockerImage" : createDockerImage
         };
         return api;
+
+        function createDockerImage() {
+            return $http.post("/api/createDockerImage");
+        }
 
         function createOutputJSON(packageList) {
             return $http.post("/api/createOutputJSON", packageList);

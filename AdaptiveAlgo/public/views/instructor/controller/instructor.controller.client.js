@@ -36,19 +36,19 @@
         }
         init();
         
-        function createOutputJSON(packageList) {
-            packageList = {"name" : "python123456", "package" : "rohan"};
-            UserService
-                .createOutputJSON(packageList)
-                .then(
-                    function () {
-                        vm.message = "JSON created successfully!";
-                    },
-                    function () {
-                        vm.error = "Could not create JSON. Try again.";
-                    }
-                );
-        }
+        // function createOutputJSON(packageList) {
+        //     packageList = {"name" : "python123456", "package" : "rohan"};
+        //     UserService
+        //         .createOutputJSON(packageList)
+        //         .then(
+        //             function () {
+        //                 vm.message = "JSON created successfully!";
+        //             },
+        //             function () {
+        //                 vm.error = "Could not create JSON. Try again.";
+        //             }
+        //         );
+        // }
 
 
         function logout() {
