@@ -6,7 +6,7 @@
     function InstructorController($location, UserService) {
         var vm = this;
         vm.logout = logout;
-        vm.createOutputJSON = createOutputJSON;
+//        vm.createOutputJSON = createOutputJSON;
 
         function init() {
             UserService
@@ -21,7 +21,6 @@
                                 .then(
                                     function (allPackages) {
                                         vm.allPackages = allPackages;
-                                        console.log(vm.allPackages);
                                     },
                                     function (err) {
                                         console.log("Error : " + err);
