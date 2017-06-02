@@ -96,6 +96,6 @@ print(os.name)
 if os.name == 'nt':
     print('under windows')
     str = subprocess.Popen('docker build -t ' + module_name + ' .', cwd=module_dir, shell=True)
-if os.name == 'nt':
+if os.name == 'posix':
     print('under linux')
     str = subprocess.call(['cd '+module_dir+ '; docker build -t ' + module_name + ' .'], shell=True)
