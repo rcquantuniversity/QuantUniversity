@@ -92,4 +92,10 @@ with open(module_dir+'/Dockerfile', 'wb') as dockerfile:
     dockerfile.write('USER $NB_USER\n')
 
 #execute the building process
-str = subprocess.call(['cd '+module_dir+ '; docker build -t ' + module_name + ' .'], shell=True)
+print(os.name)
+if os.name == 'nt':
+    print('under windows')
+    str = subprocess.Popen('docker build -t ' + module_name + ' .', cwd=module_dir, shell=True)
+if os.name == 'nt':
+    print('under linux')
+    str = subprocess.call(['cd '+module_dir+ '; docker build -t ' + module_name + ' .'], shell=True)
