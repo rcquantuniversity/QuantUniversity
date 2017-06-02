@@ -44,29 +44,35 @@ module.exports = function (app, model) {
         var imageName = req.body.data;
         console.log(imageName);
 
-        var waitTill = new Date(new Date().getTime() + 60000);
-        while(waitTill > new Date()) {
-        }
+        // while(1) {
+        //     var waitTill = new Date(new Date().getTime() + 2000);
+        //     while(waitTill > new Date()) {}
+        //     console.log("Image not ready");
+        //     if(isImageReady()) {
+        //         break;
+        //     }
+        // }
+        // console.log("image ready");
 
-        // docker.command('tag'+' '+currentImageName+' '+ "jdadaptivealgo" +'/'+currentImageName, function(err, data){
-        //     docker.command('push'+' '+ "jdadaptivealgo" +'/'+currentImageName, function(err, data){
-        //         console.log(data);
-        //     });
-        // });
+        var waitTill = new Date(new Date().getTime() + 60000);
+        while(waitTill > new Date()) {}
+        docker.command('tag'+' '+imageName+' '+ "jdadaptivealgo" +'/'+imageName, function(err, data){
+            docker.command('push'+' '+ "jdadaptivealgo" +'/'+imageName, function(err, data){
+                console.log(data);
+            });
+        });
         return res.sendStatus(200);
     }
 
     function isImageReady() {
-        var ready = false;
-        console.log("here");
         docker.command('inspect --type=image' + ' ' + 'jupyter/scipy-notebook', function(err, data){
+            console.log("Inside isImageReady() : "+ err);
+            console.log("Inside isImageReady() : "+ data);
             if (err) {
-                ready = false;
-            } else {
-                ready = true;
+                return false;
             }
+            return true;
         });
-        return ready;
     }
 
     // function pushImageToDockerHub() {
