@@ -17,7 +17,7 @@ module.exports = function (app, model) {
     function createDockerImage(req, res) {
         var PythonShell = require('python-shell');
 
-        PythonShell.run(process.cwd() + '/private/services/dockerimage_generator.py', function (err) {
+        PythonShell.run('./private/services/dockerimage_generator.py', function (err) {
             if (err) {
                 console.log(err);
 //                throw err;
