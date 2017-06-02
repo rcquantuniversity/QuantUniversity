@@ -22,13 +22,13 @@ print(module_dir)
 print(module_name)
 
 if num_pkg_py27 > 0 and num_pkg_r > 0:
-    baseImage = 'jupyterhub/base-pyr'
+    baseImage = 'jupyter/scipy-notebook'
 elif num_pkg_py27 > 0:
-    baseImage = 'jupyter/base-py27'
+    baseImage = 'jupyter/scipy-notebook'
 elif num_pkg_r > 0:
-        baseImage = 'jupyter/base-r'
+        baseImage = 'jupyter/scipy-notebook'
 else:
-    baseImage = 'jupyter/base-py35'
+    baseImage = 'jupyter/scipy-notebook'
 
 #write the Dockerfile
 with open(module_dir+'/Dockerfile', 'wb') as dockerfile:

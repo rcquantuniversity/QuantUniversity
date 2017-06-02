@@ -12,25 +12,89 @@ module.exports = function (app, model) {
 
     var request = require('request');
     var jsonfile = require('jsonfile');
+    var dockerCLI = require('docker-cli-js');
+    var DockerOptions = dockerCLI.Options;
+    var Docker = dockerCLI.Docker;
+    var docker = new Docker();
+    var currentImageName;
 
+    function init() {
+        docker.command('login'+' -e '+ "jd.adaptivealgo@gmail.com" +' -p '+ "JDadaptivealgo2017" +' -u '+"jdadaptivealgo", function(err, data){
+            console.log(data);
+        });
+    }
+    init();
+
+    function isImageReady() {
+        var ready = false;
+        console.log("here");
+        docker.command('inspect --type=image' + ' ' + 'jupyter/scipy-notebook', function(err, data){
+            if (err) {
+                ready = false;
+            } else {
+                ready = true;
+            }
+        });
+        return ready;
+    }
+
+    function pushImageToDockerHub() {
+        console.log("currentImageName : " + currentImageName);
+        // currentImageName = 'jupyter/scipy-notebook';
+        docker.command('tag'+' '+currentImageName+' '+ "jdadaptivealgo" +'/'+currentImageName, function(err, data){
+            docker.command('push'+' '+ "jdadaptivealgo" +'/'+currentImageName, function(err, data){
+                console.log(data);
+            });
+        });
+    }
 
     function createDockerImage(req, res) {
         var PythonShell = require('python-shell');
 
+        // while(1) {
+        //     var waitTill = new Date(new Date().getTime() + 1000);
+        //     while(waitTill > new Date()){
+        //     }
+        //     console.log("Print");
+        //     if(isImageReady()) {
+        //         break;
+        //     }
+        // }
+        // console.log("Image Ready");
+
+
+
+
         PythonShell.run('./private/services/dockerimage_generator.py', function (err) {
             if (err) {
                 console.log(err);
-//                throw err;
-//                return res.sendStatus(400).send(err);
-            } else {
-                console.log("finished");
             }
-        });
+            // var imageReady = false;
+            // while(1) {
+            //     setTimeout(function () {
+            //         imageReady = isImageReady();
+            //     }, 1000);
+            //     console.log("Print");
+            //     if(imageReady) {
+            //         break;
+            //     }
+            // }
+        //     pushImageToDockerHub();
+        //     return res.sendStatus(200);
+        var waitTill = new Date(new Date().getTime() + 100000);
+        while(waitTill > new Date()) {
+
+        }
+        console.log('Image created');
+        pushImageToDockerHub();
         return res.sendStatus(200);
+
+         });
     }
 
     function createOutputJSON(req, res) {
         var imageName = req.params.imageName + Date.now().toString();
+        currentImageName = imageName;
         var packageList = req.body;
         var output = {"name" : imageName, "data" : packageList};
         var file = './private/services/output.json';

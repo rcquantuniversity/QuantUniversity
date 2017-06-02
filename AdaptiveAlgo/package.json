@@ -12,6 +12,7 @@
     "child_process": "^1.0.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
+    "docker-cli-js": "^2.1.1",
     "express": "~4.14.1",
     "express-session": "^1.15.2",
     "file-system": "^2.2.2",

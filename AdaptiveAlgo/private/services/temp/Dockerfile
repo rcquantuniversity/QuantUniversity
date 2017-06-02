@@ -1,5 +1,4 @@
-FROM jupyter/base-py27
+FROM jupyter/scipy-notebook
 USER root
-RUN pip2 --no-cache-dir --no-cache install numpy
-RUN pip3 --no-cache-dir --no-cache install SciPy==1.9
+RUN pip2 --no-cache-dir --no-cache install matplotlib numpy
 USER $NB_USER
