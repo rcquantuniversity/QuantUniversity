@@ -15,9 +15,19 @@
             "callToJupyterNotebook" : callToJupyterNotebook,
             "getAllPackages" : getAllPackages,
             "createOutputJSON" : createOutputJSON,
-            "createDockerImage" : createDockerImage
+            "createDockerImage" : createDockerImage,
+            "uploadToDockerHub" : uploadToDockerHub,
+            "listAllImages" : listAllImages
         };
         return api;
+
+        function listAllImages() {
+            return $http.get("/api/listAllImages");
+        }
+
+        function uploadToDockerHub(imageName) {
+            return $http.post("/api/uploadToDockerHub", imageName);
+        }
 
         function createDockerImage() {
             return $http.post("/api/createDockerImage");

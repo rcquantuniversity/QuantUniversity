@@ -9,6 +9,8 @@ module.exports = function (app, model) {
     app.get("/api/getAllPackages", getAllPackages);
     app.post("/api/createOutputJSON/:imageName", createOutputJSON);
     app.post("/api/createDockerImage", createDockerImage);
+    app.post("/api/uploadToDockerHub", uploadToDockerHub);
+    app.get("/api/listAllImages", listAllImages);
 
     var request = require('request');
     var jsonfile = require('jsonfile');
@@ -16,7 +18,6 @@ module.exports = function (app, model) {
     var DockerOptions = dockerCLI.Options;
     var Docker = dockerCLI.Docker;
     var docker = new Docker();
-    var currentImageName;
 
     function init() {
         docker.command('login'+' -e '+ "jd.adaptivealgo@gmail.com" +' -p '+ "JDadaptivealgo2017" +' -u '+"jdadaptivealgo", function(err, data){
@@ -24,6 +25,36 @@ module.exports = function (app, model) {
         });
     }
     init();
+    
+    function listAllImages(req, res) {
+        model
+            .dockerImageModel
+            .getImagesForUser(req.user.id)
+            .then(
+                function (images) {
+                    res.json(images);
+                },
+                function (err) {
+                    res.sendStatus(400).send(err);
+                }
+            );
+    }
+
+    function uploadToDockerHub(req, res) {
+        var imageName = req.body.data;
+        console.log(imageName);
+
+        var waitTill = new Date(new Date().getTime() + 60000);
+        while(waitTill > new Date()) {
+        }
+
+        // docker.command('tag'+' '+currentImageName+' '+ "jdadaptivealgo" +'/'+currentImageName, function(err, data){
+        //     docker.command('push'+' '+ "jdadaptivealgo" +'/'+currentImageName, function(err, data){
+        //         console.log(data);
+        //     });
+        // });
+        return res.sendStatus(200);
+    }
 
     function isImageReady() {
         var ready = false;
@@ -38,72 +69,53 @@ module.exports = function (app, model) {
         return ready;
     }
 
-    function pushImageToDockerHub() {
-        console.log("currentImageName : " + currentImageName);
-        // currentImageName = 'jupyter/scipy-notebook';
-        docker.command('tag'+' '+currentImageName+' '+ "jdadaptivealgo" +'/'+currentImageName, function(err, data){
-            docker.command('push'+' '+ "jdadaptivealgo" +'/'+currentImageName, function(err, data){
-                console.log(data);
-            });
-        });
-    }
+    // function pushImageToDockerHub() {
+    //     console.log("currentImageName : " + currentImageName);
+    //     // currentImageName = 'jupyter/scipy-notebook';
+    //     docker.command('tag'+' '+currentImageName+' '+ "jdadaptivealgo" +'/'+currentImageName, function(err, data){
+    //         docker.command('push'+' '+ "jdadaptivealgo" +'/'+currentImageName, function(err, data){
+    //             console.log(data);
+    //         });
+    //     });
+    // }
 
     function createDockerImage(req, res) {
         var PythonShell = require('python-shell');
-
-        // while(1) {
-        //     var waitTill = new Date(new Date().getTime() + 1000);
-        //     while(waitTill > new Date()){
-        //     }
-        //     console.log("Print");
-        //     if(isImageReady()) {
-        //         break;
-        //     }
-        // }
-        // console.log("Image Ready");
-
-
-
 
         PythonShell.run('./private/services/dockerimage_generator.py', function (err) {
             if (err) {
                 console.log(err);
             }
-            // var imageReady = false;
-            // while(1) {
-            //     setTimeout(function () {
-            //         imageReady = isImageReady();
-            //     }, 1000);
-            //     console.log("Print");
-            //     if(imageReady) {
-            //         break;
-            //     }
-            // }
-        //     pushImageToDockerHub();
-        //     return res.sendStatus(200);
-        var waitTill = new Date(new Date().getTime() + 100000);
-        while(waitTill > new Date()) {
 
-        }
-        console.log('Image created');
-        pushImageToDockerHub();
         return res.sendStatus(200);
-
-         });
+        });
     }
 
     function createOutputJSON(req, res) {
         var imageName = req.params.imageName + Date.now().toString();
-        currentImageName = imageName;
         var packageList = req.body;
         var output = {"name" : imageName, "data" : packageList};
+
+        //put image details in Image database
+        model
+            .dockerImageModel
+            .saveDockerImageFile(req.user, imageName, output)
+            .then(
+                function () {
+                    console.log("DockerImage details saved in database and file");
+                },
+                function () {
+                    console.log("Error saving Image details");
+                }
+            );
+
         var file = './private/services/output.json';
         jsonfile.writeFile(file, output, function (err) {
             if (err) {
                 console.error(err);
                 return res.sendStatus(400).send(err);
             } else {
-                return res.sendStatus(200);
+                return res.json(imageName);
             }
         });
     }
@@ -121,32 +133,18 @@ module.exports = function (app, model) {
                 }
             );
 
-        //testing
-        var imageDesrc = 'Python2.7 \r\nnumpy : 1.2 \r\nmatplotlib : 2.4';
-        model
-            .dockerImageModel
-            .saveDockerImageFile(req.user.id, Date.now().toString() , imageDesrc)
-            .then(
-                function (allPackages) {
-                    //res.json(allPackages);
-                },
-                function (err) {
-                    //res.sendStatus(400).send(err);
-                }
-            );
-
-        //testing
-        model
-            .dockerImageModel
-            .getImagesForUser(req.user.id)
-            .then(
-                function (allPackages) {
-                    //res.json(allPackages);
-                },
-                function (err) {
-                    //res.sendStatus(400).send(err);
-                }
-            );
+        // //testing
+        // model
+        //     .dockerImageModel
+        //     .getImagesForUser(req.user.id)
+        //     .then(
+        //         function (allPackages) {
+        //             //res.json(allPackages);
+        //         },
+        //         function (err) {
+        //             //res.sendStatus(400).send(err);
+        //         }
+        //     );
 
     }
 

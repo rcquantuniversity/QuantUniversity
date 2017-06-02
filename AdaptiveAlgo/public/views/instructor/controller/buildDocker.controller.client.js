@@ -1,7 +1,7 @@
 (function () {
     angular
     .module("AdaptiveAlgoApp")
-    .controller("BuildDockerController", function($scope, $http, UserService) {
+    .controller("BuildDockerController", function($scope, $http, UserService, $location) {
         // $http.get("masterPackageJSON.json").then(function(response) {
         //     $scope.myData = response.data.data;
         // });
@@ -9,6 +9,8 @@
         var vm = this;
 
         vm.createOutputJSON = createOutputJSON;
+        vm.uploadToDockerHub = uploadToDockerHub;
+        vm.showAllImages = showAllImages;
 
         function init() {
             UserService
@@ -104,7 +106,8 @@
             UserService
                 .createOutputJSON(allPackageArray, imageName)
                 .then(
-                    function () {
+                    function (imageName) {
+                        vm.uniqueImageName = imageName;
                         vm.message = "JSON created successfully! Creating Docker Image";
                         UserService
                             .createDockerImage()
@@ -121,6 +124,23 @@
                         vm.error = "Could not create JSON. Try again.";
                     }
                 );
+        }
+
+        function uploadToDockerHub() {
+            UserService
+                .uploadToDockerHub(vm.uniqueImageName)
+                .then(
+                    function (status) {
+                        vm.message = "Docker Image Uploaded succesfully!";
+                    },
+                    function (err) {
+                        vm.error = "Could not upload Docker image. " + err;
+                    }
+                );
+        }
+
+        function showAllImages() {
+            $location.url("/instructor/listImages");
         }
 
 

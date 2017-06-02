@@ -29,21 +29,32 @@ module.exports = function () {
     
     function saveDockerImageFile(userid, imagename, imageDescription) {
         var deferred = Q.defer();
-        // var file = './private/services/dockerImages/'+imagename +'.txt';
-        // var record = {userid : userid, imageName : imagename, descriptionFile : file};
-        // DockerImageModel
-        //     .create(record, function (err, status) {
-        //         if (err) {
-        //             deferred.reject(err);
-        //         } else {
-        //             deferred.resolve(status);
-        //             fs.writeFile(file, imageDescription, function(err) {
-        //                 if (err) {
-        //                     console.log(err);
-        //                 }
-        //             });
-        //         }
-        //     });
+        var file = './private/services/dockerImages/'+imagename +'.txt';
+        var record = {userid : userid, imageName : imagename, descriptionFile : file};
+        DockerImageModel
+            .create(record, function (err, status) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(status);
+                    var packages = [];
+                    for (var i in imageDescription.data) {
+                        var record = imageDescription.data[i];
+                        if (record.packages.length > 0) {
+                            for (var j in record.packages) {
+                                var p = record.packages[j];
+                                packages.push(p.name);
+                            }
+                        }
+                    }
+                    var str = "Packages in this image are : "+packages;
+                    fs.writeFile(file, str, function(err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
         return deferred.promise;
     }
 

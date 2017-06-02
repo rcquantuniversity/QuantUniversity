@@ -13,8 +13,8 @@
 
         $routeProvider
             .when("/", {
-                templateUrl: "views/user/templates/register.view.client.html",
-                controller: "RegisterController",
+                templateUrl: "views/user/templates/login.view.client.html",
+                controller: "LoginController",
                 controllerAs: "model"
             })
             .when("/login", {
@@ -54,6 +54,14 @@
             .when("/instructor/buildDocker", {
                 templateUrl: "views/instructor/templates/buildDocker.view.client.html",
                 controller: "BuildDockerController",
+                controllerAs: "model",
+                resolve : {
+                    checkLogin : checkLogin
+                }
+            })
+            .when("/instructor/listImages", {
+                templateUrl: "views/instructor/templates/listAllImages.view.client.html",
+                controller: "ListImagesController",
                 controllerAs: "model",
                 resolve : {
                     checkLogin : checkLogin

@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 25px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -56,6 +56,10 @@ a:hover {
 .rc-black-navbar {
   background-color: black;
   opacity: 0.8;
+}
+
+.rc-bottom-margin {
+  margin-bottom: 2%;
 }
 
 .rc-top-margin {

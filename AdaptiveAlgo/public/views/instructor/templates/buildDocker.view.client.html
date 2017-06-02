@@ -1,8 +1,7 @@
-<h2>
-    Build Docker
-</h2>
-
 <div class="col-md-12">
+	<h3>
+		Build Docker
+	</h3>
 	<form action="" method="post" id="buildDockerForm" enctype="multipart/form-data">
 		<div class="row">
 			<div class="col-md-4">
@@ -120,19 +119,42 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-5"></div>
-			<div class="col-md-2">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
 				<label for="imageName">Image Name</label>
-				<input type="text" class="form-control" ng-model="model.imageName" id="imageName" required>
+				<input type="text"
+					   class="form-control"
+					   ng-model="model.imageName"
+					   id="imageName"
+					   placeholder="Image Name"
+					   required>
 				<br>
-				<a class="btn btn-primary btn-block" ng-click="model.createOutputJSON(model.folder1, model.folder2, model.folder3, model.imageName)">Submit</a>
 			</div>
-			<div class="col-md-5"></div>
+			<div class="col-md-2"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<a class="btn btn-primary btn-block"
+				   ng-click="model.createOutputJSON(model.folder1, model.folder2, model.folder3, model.imageName)">
+					Create Docker Image
+				</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-primary btn-block"
+				   ng-click="model.uploadToDockerHub()">
+					Upload Docker Image to DockerHub
+				</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-primary btn-block"
+				   ng-click="model.showAllImages()">
+					List All Images
+				</a>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-primary btn-block" ng-click="model.logout()">Logout</a>
+			</div>
 		</div>
 		<br/>
 	</form>
-</div>
-<br/>
-<div class="col-md-12">
-	<a class="btn btn-primary btn-block" ng-click="model.logout()">Logout</a>
 </div>
