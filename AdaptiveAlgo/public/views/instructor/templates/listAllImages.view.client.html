@@ -2,7 +2,19 @@
     <h2>Docker Images : </h2><br>
     <ul class="list-group">
         <li class="list-group-item" ng-repeat = "image in model.images.data">
-            {{image.imageName}}
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    {{image.imageName}}
+                </div>
+                <div class="col-md-4">
+                    <a class=""
+                       ng-click="model.uploadToDockerHub()">
+                        Upload to DockerHub
+                    </a>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
         </li>
     </ul>
 </div>

@@ -118,10 +118,12 @@
 			    </div>
 			</div>
 		</div>
+		<br>
+		<br>
 		<div class="row">
 			<div class="col-md-2"></div>
-			<div class="col-md-8">
-				<label for="imageName">Image Name</label>
+			<div class="col-md-4">
+				<!--<label for="imageName">Image Name</label>-->
 				<input type="text"
 					   class="form-control"
 					   ng-model="model.imageName"
@@ -130,31 +132,44 @@
 					   required>
 				<br>
 			</div>
-			<div class="col-md-2"></div>
-		</div>
-		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<a class="btn btn-primary btn-block"
-				   ng-click="model.createOutputJSON(model.folder1, model.folder2, model.folder3, model.imageName)">
+				   ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName)">
 					Create Docker Image
 				</a>
 			</div>
-			<div class="col-md-3">
-				<a class="btn btn-primary btn-block"
-				   ng-click="model.uploadToDockerHub()">
-					Upload Docker Image to DockerHub
-				</a>
-			</div>
-			<div class="col-md-3">
-				<a class="btn btn-primary btn-block"
-				   ng-click="model.showAllImages()">
-					List All Images
-				</a>
-			</div>
-			<div class="col-md-3">
-				<a class="btn btn-primary btn-block" ng-click="model.logout()">Logout</a>
-			</div>
+			<div class="col-md-2"></div>
 		</div>
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<a class="btn btn-danger btn-block" ng-click="model.logout()">Logout</a>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+		<!--<div class="row">-->
+			<!--<div class="col-md-3">-->
+				<!--<a class="btn btn-primary btn-block"-->
+				   <!--ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName)">-->
+					<!--Create Docker Image-->
+				<!--</a>-->
+			<!--</div>-->
+			<!--<div class="col-md-3">-->
+				<!--<a class="btn btn-primary btn-block"-->
+				   <!--ng-click="model.uploadToDockerHub()">-->
+					<!--Upload Docker Image to DockerHub-->
+				<!--</a>-->
+			<!--</div>-->
+			<!--<div class="col-md-3">-->
+				<!--<a class="btn btn-primary btn-block"-->
+				   <!--ng-click="model.showAllImages()">-->
+					<!--List All Images-->
+				<!--</a>-->
+			<!--</div>-->
+			<!--<div class="col-md-3">-->
+				<!--<a class="btn btn-primary btn-block" ng-click="model.logout()">Logout</a>-->
+			<!--</div>-->
+		<!--</div>-->
 		<br/>
 	</form>
 </div>
