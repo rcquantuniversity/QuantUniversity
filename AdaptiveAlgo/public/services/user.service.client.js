@@ -17,16 +17,22 @@
             "createOutputJSON" : createOutputJSON,
             "createDockerImage" : createDockerImage,
             "uploadToDockerHub" : uploadToDockerHub,
-            "listAllImages" : listAllImages
+            "listAllImages" : listAllImages,
+            "listAllImagesForStudent" : listAllImagesForStudent
         };
         return api;
+
+        function listAllImagesForStudent() {
+            return $http.get("/api/listAllImagesForStudent");
+        }
 
         function listAllImages() {
             return $http.get("/api/listAllImages");
         }
 
         function uploadToDockerHub(imageName) {
-            return $http.post("/api/uploadToDockerHub", imageName);
+            var imageNameJSON = {imageName : imageName};
+            return $http.post("/api/uploadToDockerHub", imageNameJSON);
         }
 
         function createDockerImage() {

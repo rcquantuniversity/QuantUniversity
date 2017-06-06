@@ -122,7 +122,8 @@
 		<br>
 		<div class="row">
 			<div class="col-md-2"></div>
-			<div class="col-md-4">
+			<div class="col-md-8">
+				<div class="col-md-4">
 				<!--<label for="imageName">Image Name</label>-->
 				<input type="text"
 					   class="form-control"
@@ -131,12 +132,19 @@
 					   placeholder="Image Name"
 					   required>
 				<br>
-			</div>
-			<div class="col-md-4">
-				<a class="btn btn-primary btn-block"
-				   ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName)">
-					Create Docker Image
-				</a>
+				</div>
+				<div class="col-md-4">
+					<a class="btn btn-primary btn-block"
+				   		ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName)">
+						Create Docker Image
+					</a>
+				</div>
+				<div class="col-md-4">
+					<a class="btn btn-primary btn-block"
+						ng-click="model.showAllImages()">
+						List All Images
+					</a>
+				</div>
 			</div>
 			<div class="col-md-2"></div>
 		</div>

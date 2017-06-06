@@ -22,12 +22,14 @@
             return $http.get("/api/publish");
         }
 
-        function stopLab() {
-            return $http.get("/api/stopLab");
+        function stopLab(imageName) {
+            var imageNameJSON = {imageName : imageName};
+            return $http.post("/api/stopLab",imageNameJSON);
         }
 
-        function startLab() {
-            return $http.get("/api/startLab");
+        function startLab(imageName) {
+            var imageNameJSON = {imageName : imageName};
+            return $http.post("/api/startLab", imageNameJSON);
         }
 
         function showAvailableCourses() {

@@ -1,5 +1,6 @@
 module.exports = function (app, model) {
 
+    app.post("/api/uploadToDockerHub", uploadToDockerHub);
     app.get("/api/user/:userId", findUserById);
     app.post("/api/checkLogin", checkLogin);
     app.post("/api/logout", logout);
@@ -9,8 +10,8 @@ module.exports = function (app, model) {
     app.get("/api/getAllPackages", getAllPackages);
     app.post("/api/createOutputJSON/:imageName", createOutputJSON);
     app.post("/api/createDockerImage", createDockerImage);
-    app.post("/api/uploadToDockerHub", uploadToDockerHub);
     app.get("/api/listAllImages", listAllImages);
+    app.get("/api/listAllImagesForStudent", listAllImagesForStudent);
 
     var request = require('request');
     var jsonfile = require('jsonfile');
@@ -25,6 +26,20 @@ module.exports = function (app, model) {
         });
     }
     init();
+
+    function listAllImagesForStudent(req, res) {
+        model
+            .dockerImageModel
+            .getImagesForStudent()
+            .then(
+                function (images) {
+                    res.json(images);
+                },
+                function (err) {
+                    res.sendStatus(400).send(err);
+                }
+            );
+    }
     
     function listAllImages(req, res) {
         model
@@ -41,8 +56,23 @@ module.exports = function (app, model) {
     }
 
     function uploadToDockerHub(req, res) {
-        var imageName = req.body.data;
-        console.log(imageName);
+        console.log("Here : ", req.body);
+        var imageName = req.body.imageName;
+
+        // try {
+        //     var myVar = setInterval(function () {
+        //         docker.command('inspect --type=image ' + imageName, function(err, data){
+        //             if (err){
+        //                 console.log('errjaja');
+        //             } else {
+        //                 console.log('yesjaja');
+        //                 throw "Found";
+        //             }
+        //         })}, 500);
+        // } catch (ex) {
+        //     console.log(ex);
+        //     clearInterval(myVar);
+        // }
 
         // while(1) {
         //     var waitTill = new Date(new Date().getTime() + 2000);
@@ -54,8 +84,9 @@ module.exports = function (app, model) {
         // }
         // console.log("image ready");
 
-        var waitTill = new Date(new Date().getTime() + 60000);
-        while(waitTill > new Date()) {}
+        // var waitTill = new Date(new Date().getTime() + 60000);
+        // while(waitTill > new Date()) {}
+
         docker.command('tag'+' '+imageName+' '+ "jdadaptivealgo" +'/'+imageName, function(err, data){
             docker.command('push'+' '+ "jdadaptivealgo" +'/'+imageName, function(err, data){
                 console.log(data);

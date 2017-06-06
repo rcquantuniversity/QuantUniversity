@@ -1,8 +1,8 @@
 module.exports = function (app, model) {
 
     app.get("/api/getAvailableCourses", getAvailableCourses);
-    app.get("/api/startLab", startLab);
-    app.get("/api/stopLab", stopLab);
+    app.post("/api/startLab", startLab);
+    app.post("/api/stopLab", stopLab);
     app.get("/api/publish", publish);
     app.get("/api/consume", consume);
 
@@ -46,34 +46,40 @@ module.exports = function (app, model) {
     }
 
     function stopLab(req, res) {
+        var imageName = req.body.imageName;
 
+        var PythonShell = require('python-shell');
 
-        // var PythonShell = require('python-shell');
+        PythonShell.run('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\aws_stop.py', function (err) {
+            if (err) throw err;
+            console.log('finished');
+        });
 
-        // PythonShell.run('C:\\Users\\QuantUniversity-6\\Rohan\\AdaptiveAlgo\\private\\services\\aws_stop.py', function (err) {
-        //     if (err) throw err;
-        //     console.log('finished');
-        // });
-
-        // return res.sendStatus(200);
+        return res.sendStatus(200);
     }
 
     function startLab(req, res) {
 
-        // // Option 1
-        // var spawn = require('child_process').spawn,
-        //     py    = spawn('python', ['C:\\Users\\QuantUniversity-6\\Rohan\\AdaptiveAlgo\\private\\services\\compute_input.py']),
-        //     data = [1,2,3,4,5,6,7,8,9,10],
-        //     dataString = '';
+        var imageName = req.body.imageName;
 
-        // py.stdout.on('data', function(data){
-        //     dataString += data.toString();
-        // });
-        // py.stdout.on('end', function(){
-        //     console.log('Sum of numbers=',dataString);
-        // });
-        // py.stdin.write(JSON.stringify(data));
-        // py.stdin.end();
+        // // Option 1
+        var spawn = require('child_process').spawn,
+            py    = spawn('python', ['C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\aws_start.py']),
+            data = [1,2,3,4,5,6,7,8,9,10],
+            dataString = '';
+
+        py.stdout.on('data', function(data){
+            console.log(data.toString());
+            if (data) {
+                res.json(data.toString().split("ip: ")[1]);
+            }
+            dataString += data.toString();
+        });
+        py.stdout.on('end', function(){
+            //console.log('Sum of numbers=',dataString);
+        });
+        py.stdin.write(JSON.stringify(data));
+        py.stdin.end();
 
 
         // // Option 2

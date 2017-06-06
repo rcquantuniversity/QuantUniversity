@@ -5,6 +5,7 @@
 
     function ListImagesController(UserService) {
         var vm = this;
+        vm.uploadToDockerHub = uploadToDockerHub;
 
         function init() {
             UserService
@@ -21,7 +22,19 @@
         }
         init();
 
-
+        function uploadToDockerHub(imageName) {
+            console.log(imageName);
+            UserService
+                .uploadToDockerHub(imageName)
+                .then(
+                    function (status) {
+                        vm.message = "Docker Image Uploaded succesfully!";
+                    },
+                    function (err) {
+                        vm.error = "Could not upload Docker image. " + err;
+                    }
+                );
+        }
     }
 
 })();

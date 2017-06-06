@@ -43,6 +43,14 @@
                     checkLogin : checkLogin
                 }
             })
+            .when("/student/availableProjects", {
+                templateUrl: "views/student/templates/availableProjectList.view.client.html",
+                controller: "AvailableProjectsController",
+                controllerAs: "model",
+                resolve : {
+                    checkLogin : checkLogin
+                }
+            })
             .when("/user/instructor", {
                 templateUrl: "views/instructor/templates/instructor.view.client.html",
                 controller: "InstructorController",

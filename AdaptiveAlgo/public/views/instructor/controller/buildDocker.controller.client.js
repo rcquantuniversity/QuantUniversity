@@ -9,8 +9,9 @@
         var vm = this;
 
         vm.createDockerImage = createDockerImage;
-        vm.uploadToDockerHub = uploadToDockerHub;
+        // vm.uploadToDockerHub = uploadToDockerHub;
         vm.showAllImages = showAllImages;
+        vm.logout = logout;
 
         function init() {
             UserService
@@ -127,22 +128,33 @@
                 );
         }
 
-        function uploadToDockerHub() {
-            UserService
-                .uploadToDockerHub(vm.uniqueImageName)
-                .then(
-                    function (status) {
-                        vm.message = "Docker Image Uploaded succesfully!";
-                    },
-                    function (err) {
-                        vm.error = "Could not upload Docker image. " + err;
-                    }
-                );
-        }
+        // function uploadToDockerHub() {
+        //     UserService
+        //         .uploadToDockerHub(vm.uniqueImageName)
+        //         .then(
+        //             function (status) {
+        //                 vm.message = "Docker Image Uploaded succesfully!";
+        //             },
+        //             function (err) {
+        //                 vm.error = "Could not upload Docker image. " + err;
+        //             }
+        //         );
+        // }
 
         function showAllImages() {
             $location.url("/instructor/listImages");
         }
+
+        function logout() {
+            UserService
+                .logout()
+                .then(
+                    function () {
+                        $location.url("/login");
+                    }
+                );
+        }
+
 
 
     });

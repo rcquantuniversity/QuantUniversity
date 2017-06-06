@@ -7,6 +7,7 @@
         var vm = this;
         vm.logout = logout;
         vm.showAvailableCourses = showAvailableCourses;
+        vm.showAllProjects = showAllProjects;
 
         function init() {
             UserService
@@ -35,6 +36,10 @@
                         vm.error = "Could not load available courses. Please try again";
                     }
                 );
+        }
+
+        function showAllProjects() {
+            $location.url("/student/availableProjects");
         }
 
         function logout() {

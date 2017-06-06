@@ -1,0 +1,47 @@
+<!--<script>-->
+    <!--$(document).ready(function(){-->
+        <!--$("#button").click(function () {-->
+            <!--var url = "https://en.wikipedia.org";-->
+            <!--$("#frame").attr("src", url);-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+
+<div class="container-fluid" ng-if="!model.isNotebookLoaded">
+    <h2>Projects : </h2><br>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat = "image in model.images.data">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            {{image.imageName}}
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <a class=""
+                               ng-click="model.runLab(image.imageName)">
+                                Start Lab
+                            </a>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <a class=""
+                               ng-click="model.stopLab(image.imageName)">
+                                Stop Lab
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    <div class="col-md-2"></div>
+</div>
+</div>
+
+<!--<div id="mydiv">-->
+    <!--<input id="url" type="text" value="https://en.wikipedia.org"/>-->
+    <!--<iframe id="frame" src="" width="100%" height="300">-->
+    <!--</iframe>-->
+<!--</div>-->
+<!--<button id="button">Load</button>-->
+<a ng-href="" ng-click="redirectToGoogle()">Hello</a>

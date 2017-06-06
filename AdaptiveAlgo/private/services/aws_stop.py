@@ -14,8 +14,8 @@ class ParseParameters(luigi.Task):
 
     def run(self):
         params = dict()
-        params['Approach'] = 'Terminate'
-        params['Module'] = 'Finace Modeling2'
+        params['Approach'] = 'Down'
+        params['Module'] = 'Risk Analysis'
         _out = self.output().open('w')
         json.dump(params,_out)
         _out.close()
@@ -41,8 +41,13 @@ class GetInstanceIP(luigi.Task):
         ec2 = boto3.resource('ec2')
         filters = [{'Name':'tag:Name', 'Values':[params['Module']]}]
         instances = ec2.instances.filter(Filters=filters)
+        counter = 0
         for instance in instances:
+            counter = counter + 1
             target_ins=instance
+        if(counter==0):
+            print('No module named '+params['Module'] + ' exit.')
+            return -1
         print(target_ins.id, target_ins.instance_type, target_ins.public_ip_address)
         
         _out = self.output().open('w')
@@ -79,14 +84,14 @@ class StopTask(luigi.Task):
             target_ins.terminate()
         #stop Jupyterhub service and all containers
         if (params['Approach']) == 'Down':
-            k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
+            k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
             c = paramiko.SSHClient()
             c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             print ('connecting')
             c.connect( hostname = ip, username = 'ec2-user', pkey = k)
             print ('connected')
 
-            commands = [ 'ls', 'cd wei; docker-compose down']
+            commands = [ 'ls', 'cd jupyterhub-deploy-docker; docker-compose down']
             for command in commands:
                 print ('Executing {}'.format( command ))
                 stdin , stdout, stderr = c.exec_command(command)
