@@ -4,6 +4,10 @@ body {
   background-color: #ebeff2;
 }
 
+*:focus {
+  outline: none !important;
+}
+
 .rc-background-login {
   background: url("/images/a75fdcab110ae11f155ed96f428a86ae.png");
   background-size: cover;
@@ -109,4 +113,133 @@ a:hover {
 
 .fullWidth {
   width: 100%;
+}
+
+.form-grp {
+  margin-bottom: 10px;
+}
+
+.btn-bordred.btn-success {
+  border-bottom: 2px solid #0da357 !important;
+}
+
+.btn-bordred.btn-primary {
+  border-bottom: 2px solid #1576c2 !important;
+}
+
+.addSection {
+  padding: 15px 0 10px;
+}
+
+.btn {
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+
+#addNewBtn span {
+  padding-right: 10px;
+}
+
+#addNewBtn .fa {
+  position: relative;
+  top: 1px;
+}
+
+#addNewBtn.collapsed .fa-plus:before {
+  content: "\f067";
+}
+
+#addNewBtn .fa-plus:before {
+  content: "\f068";
+}
+
+.checkbox input[type="checkbox"] {
+  margin-left: 0;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 1;
+  outline: none !important;
+}
+
+input, textarea, label {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+input[type="checkbox"]:checked + label::before {
+  background-color: #188ae2;
+  border-color: #188ae2;
+}
+
+.checkbox label::before {
+  -o-transition: 0.3s ease-in-out;
+  -webkit-transition: 0.3s ease-in-out;
+  background-color: #ffffff;
+  border-radius: 2px;
+  border: 1px solid #cccccc;
+  content: "";
+  display: inline-block;
+  height: 17px;
+  left: 0;
+  position: absolute;
+  transition: 0.3s ease-in-out;
+  width: 17px;
+  outline: none !important;
+}
+
+input[type="checkbox"]:checked + label::after {
+  color: #ffffff;
+}
+
+.checkbox input[type="checkbox"]:checked + label::after {
+  content: "\f00c";
+  font-family: 'FontAwesome';
+}
+
+.checkbox label::after {
+  color: #555555;
+  display: inline-block;
+  font-size: 11px;
+  height: 16px;
+  left: 0;
+  padding-left: 3px;
+  padding-top: 1px;
+  position: absolute;
+  top: 0;
+  width: 16px;
+}
+
+.radio label, .checkbox label {
+  padding-left: 25px;
+}
+
+#uploadFile {
+  width: 85%;
+  float: left;
+  border-radius: 0;
+}
+
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 0;
+  width: 15%;
+  border-radius: 0;
+}
+.fileUpload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.alignCenter {
+  text-align: center;
 }

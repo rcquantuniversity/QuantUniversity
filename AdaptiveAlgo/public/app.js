@@ -1,4 +1,4 @@
 (function () {
     angular
-        .module("AdaptiveAlgoApp", ["ngRoute"]);
+        .module("AdaptiveAlgoApp", ["ngRoute", "thatisuday.dropzone"]);
 })();

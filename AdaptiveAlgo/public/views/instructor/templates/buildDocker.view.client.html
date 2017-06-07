@@ -11,14 +11,36 @@
 			        </div>
 			        <div class="panel-body">
 			        	<div class="form-grp">
-			            	<label>Image File Name</label>
+			            	<label>Image Name</label>
 			            	<div class="input-group fullWidth">
-			                	<input type="text" name="gitRepo[]" class="form-control">
+			                	<input type="text"
+									   class="form-control"
+									   ng-model="model.imageName"
+									   id="imageName"
+									   placeholder="Image Name"
+									   required>
 			            	</div>
 			            </div>
 			        </div>
 			    </div>
-			</div>
+			</div>			
+			<div class="col-md-6">
+			    <div class="card-box panel-default">
+			        <div class="header-title panel-heading">
+			            Package Selection File
+			        </div>			        
+			        <div class="panel-body">
+			        	<p>Upload a CSV or JSON file to specify the packages to include in the Docker Image.</p>
+			        	<!-- <input type="file" ng-model="file" class="btn btn-primary btn-rounded" /> -->
+			        	<input id="uploadFile" class="form-control" placeholder="Choose File" disabled="disabled" />
+						<div class="fileUpload btn btn-primary">
+						    <span>Upload</span>
+						    <input id="uploadBtn" type="file" class="upload" />
+						</div>
+         				<!-- <button ng-click = "uploadFile()">upload me</button> -->
+			        </div>
+			    </div>
+			</div>	
 		</div>
 		<div class="row">
 			<div class="col-md-12">
@@ -31,9 +53,49 @@
 			        </div>
 			        <div class="panel-body">
 			        	<div class="checkbox" ng-repeat="x in model.py27">
-			                <label>
-			                	<input type="checkbox" ng-model="model.folder1[x.name]" value="x.name">{{x.name}}
-			                </label>
+			                <input id="checkbox_{{x.name}}" type="checkbox" ng-model="model.folder1[x.name]" value="x.name">
+			                <label for="checkbox_{{x.name}}">
+                                {{x.name}}
+                            </label>
+			            </div>
+			            <div class="addNewButton">
+							<button type="button" id="addNewBtn" class="btn btn-primary btn-bordred waves-effect w-md waves-light m-b-5 collapsed" data-toggle="collapse" data-target="#addSection"><span>Add New Package</span><i class="fa fa-plus m-r-5"></i></button>
+							<div class="collapse addSection" id="addSection">
+							  	<div class="form-grp">
+					            	<div class="input-group fullWidth">
+					                	<input type="text"
+											   class="form-control"
+											   ng-model="model.packageName"
+											   id="packageName"
+											   placeholder="Package Name"
+											   required>
+					            	</div>
+					            </div>
+					            <div class="form-grp">
+					            	<div class="input-group fullWidth">
+					                	<input type="text"
+											   class="form-control"
+											   ng-model="model.packageCommand"
+											   id="packageCommand"
+											   placeholder="Package Command"
+											   required>
+					            	</div>
+					            </div>
+					            <div class="form-grp">
+					            	<div class="input-group fullWidth">
+					                	<input type="text"
+											   class="form-control"
+											   ng-model="model.packageVersion"
+											   id="packageVersion"
+											   placeholder="Package Version"
+											   required>
+					            	</div>
+					            </div>
+					            <a class="btn btn-primary"
+							   		ng-click="">
+									Add Package
+								</a>
+							</div>
 			            </div>
 			        </div>
 			    </div>
@@ -45,9 +107,49 @@
 			        </div>
 			        <div class="panel-body">
 			        	<div class="checkbox" ng-repeat="y in model.py35">
-			        		<label>
-			                	<input type="checkbox" ng-model="model.folder2[y.name]" value="y.name">{{y.name}}
-			                </label>
+			                <input id="checkbox2_{{y.name}}" type="checkbox" ng-model="model.folder2[y.name]" value="y.name">
+			                <label for="checkbox2_{{y.name}}">
+                                {{y.name}}
+                            </label>
+			            </div>
+			            <div class="addNewButton">
+							<button type="button" id="addNewBtn" class="btn btn-primary btn-bordred waves-effect w-md waves-light m-b-5 collapsed" data-toggle="collapse" data-target="#addSection2"><span>Add New Package</span><i class="fa fa-plus m-r-5"></i></button>
+							<div class="collapse addSection" id="addSection2">
+							  	<div class="form-grp">
+					            	<div class="input-group fullWidth">
+					                	<input type="text"
+											   class="form-control"
+											   ng-model="model.packageName"
+											   id="packageName"
+											   placeholder="Package Name"
+											   required>
+					            	</div>
+					            </div>
+					            <div class="form-grp">
+					            	<div class="input-group fullWidth">
+					                	<input type="text"
+											   class="form-control"
+											   ng-model="model.packageCommand"
+											   id="packageCommand"
+											   placeholder="Package Command"
+											   required>
+					            	</div>
+					            </div>
+					            <div class="form-grp">
+					            	<div class="input-group fullWidth">
+					                	<input type="text"
+											   class="form-control"
+											   ng-model="model.packageVersion"
+											   id="packageVersion"
+											   placeholder="Package Version"
+											   required>
+					            	</div>
+					            </div>
+					            <a class="btn btn-primary btn-bordred"
+							   		ng-click="">
+									Add Package
+								</a>
+							</div>
 			            </div>
 			        </div>
 			    </div>
@@ -59,9 +161,49 @@
 			        </div>
 			        <div class="panel-body">
 			        	<div class="checkbox" ng-repeat="z in model.r">
-			        		<label>
-			                	<input type="checkbox" ng-model="model.folder3[z.name]" value="z.name">{{z.name}}
-			                </label>
+			        		<input id="checkbox3_{{z.name}}" type="checkbox" ng-model="model.folder3[z.name]" value="z.name">
+			                <label for="checkbox3_{{z.name}}">
+                                {{z.name}}
+                            </label>
+			            </div>
+			            <div class="addNewButton">
+							<button type="button" id="addNewBtn" class="btn btn-primary btn-bordred waves-effect w-md waves-light m-b-5 collapsed" data-toggle="collapse" data-target="#addSection3"><span>Add New Package</span><i class="fa fa-plus m-r-5"></i></button>
+							<div class="collapse addSection" id="addSection3">
+							  	<div class="form-grp">
+					            	<div class="input-group fullWidth">
+					                	<input type="text"
+											   class="form-control"
+											   ng-model="model.packageName"
+											   id="packageName"
+											   placeholder="Package Name"
+											   required>
+					            	</div>
+					            </div>
+					            <div class="form-grp">
+					            	<div class="input-group fullWidth">
+					                	<input type="text"
+											   class="form-control"
+											   ng-model="model.packageCommand"
+											   id="packageCommand"
+											   placeholder="Package Command"
+											   required>
+					            	</div>
+					            </div>
+					            <div class="form-grp">
+					            	<div class="input-group fullWidth">
+					                	<input type="text"
+											   class="form-control"
+											   ng-model="model.packageVersion"
+											   id="packageVersion"
+											   placeholder="Package Version"
+											   required>
+					            	</div>
+					            </div>
+					            <a class="btn btn-primary"
+							   		ng-click="">
+									Add Package
+								</a>
+							</div>
 			            </div>
 			        </div>
 			    </div>
@@ -69,8 +211,8 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<div class="panel panel-default">
-			        <div class="panel-heading">
+				<div class="card-box panel-default">
+			        <div class="header-title panel-heading">
 			            Additional installations
 			        </div>
 			        <div class="panel-body">
@@ -83,7 +225,6 @@
 			                	</span>
 			            	</div>
 			            </div>
-			            <br/>
 			            <div class="form-grp hide" id="gitRepoTemplate">
 			            	<label>Git Repository URL</label>
 			            	<div class="input-group">
@@ -103,7 +244,6 @@
 			                	</span>
 			            	</div>
 			            </div>
-			            <br/>
 			            <div class="form-grp hide" id="aptgetTemplate">
 			            	<label>Apt Get</label>
 			            	<div class="input-group">
@@ -117,26 +257,17 @@
 			    </div>
 			</div>
 			<div class="col-md-6">
-				<div class="panel panel-default">
-			        <div class="panel-heading">
+				<div class="card-box panel-default">
+			        <div class="header-title panel-heading">
 			            Datasets Upload
 			        </div>
 			        <div class="panel-body">
-			        	<input type="file" ng-model="files" multiple/>
+			        	<!-- <input type="file" ng-model="files" multiple/> -->
+			        	<div class="dropzone" options="dzOptions" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone></div>
          				<!-- <button ng-click = "uploadFile()">upload me</button> -->
 			        </div>
 			    </div>
-			    <div class="panel panel-default">
-			        <div class="panel-heading">
-			            Package Selection File
-			        </div>			        
-			        <div class="panel-body">
-			        	<p>Upload a CSV or JSON file to specify the packages to include in the Docker Image.</p>
-			        	<input type="file" ng-model="file"/>
-         				<!-- <button ng-click = "uploadFile()">upload me</button> -->
-			        </div>
-			    </div>
-			</div>
+			</div>		
 		</div>
 		<br>
 		<br>
@@ -145,29 +276,29 @@
 			<div class="col-md-8">
 				<div class="col-md-4">
 				<!--<label for="imageName">Image Name</label>-->
-				<input type="text"
+				<!-- <input type="text"
 					   class="form-control"
 					   ng-model="model.imageName"
 					   id="imageName"
 					   placeholder="Image Name"
-					   required>
-				<br>
+					   required> -->
 				</div>
-				<div class="col-md-4">
-					<a class="btn btn-primary btn-block"
+				<div class="col-md-4 alignCenter">
+					<a class="btn btn-primary btn-bordred"
 				   		ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName)">
 						Create Docker Image
 					</a>
 				</div>
 				<div class="col-md-4">
-					<a class="btn btn-primary btn-block"
+					<!-- <a class="btn btn-primary btn-block"
 						ng-click="model.showAllImages()">
 						List All Images
-					</a>
+					</a> -->
 				</div>
 			</div>
 			<div class="col-md-2"></div>
 		</div>
+		<br>
 		<div class="row">
 			<div class="col-md-2"></div>
 			<div class="col-md-8">

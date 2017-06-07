@@ -24,4 +24,13 @@ $(document).ready(function() {
 
         $row.remove();
     });
+
+    $('#uploadBtn').on('change', function() {
+        var value = $(this).val();
+        var path = value; 
+        var filename = path.replace(/^.*\\/, ""); 
+        $('#uploadFile').val(filename);
+    });
+
+    Dropzone.autoDiscover = false;
 });
