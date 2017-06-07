@@ -14,8 +14,8 @@ class ParseParameters(luigi.Task):
 
     def run(self):
         params = dict()
-        params['Image'] = 'jupyter/scipy-notebook:bb222f49222e'
-        params['Module'] = 'Risk Analysis5'
+        params['Image'] = 'jdadaptivealgo/test1496771071241'
+        params['Module'] = 'Risk Analysis8'
         _out = self.output().open('w')
         json.dump(params,_out)
         _out.close()
@@ -119,7 +119,7 @@ class StartHubTask(luigi.Task):
 
         DOCKER_NOTEBOOK_IMAGE = params['Image']
 
-        with open('.env', 'a') as envfile:
+        with open('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', 'a') as envfile:
             envfile.write('\n')
             envfile.write('DOCKER_NOTEBOOK_IMAGE=' + DOCKER_NOTEBOOK_IMAGE)
         

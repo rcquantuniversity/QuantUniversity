@@ -1,0 +1,5 @@
+Testing for start and stop lab
+1. pull existing image and start jupyter hub and get notebook instance for multiplt users.
+2. pull new image and and start jupyter hub and get notebook instance for multiplt users.
+3. for same VM instance, user data (notebook) gets saved.
+4. stop lab - stopping VM instance now. Need to be able to stop container for that student.

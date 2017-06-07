@@ -48,7 +48,7 @@
                         console.log(labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",''));
                         //vm.isNotebookLoaded = true;
                         console.log(vm.notebookUrl);
-                        // $window.open(vm.notebookUrl, '_blank');
+                        $window.open(vm.notebookUrl, '_blank');
                         $("#frame").attr("src", vm.notebookUrl);
                     },
                     function (err) {

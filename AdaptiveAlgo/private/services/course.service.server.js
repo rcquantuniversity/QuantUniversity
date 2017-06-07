@@ -49,9 +49,9 @@ module.exports = function (app, model) {
         var imageName = req.body.imageName;
         var loggedinUser = req.user.id;
         var labInfo = {imageName : imageName, userid : loggedinUser};
-        var fs = require('file-system');
+        var jsonFile = require('jsonfile');
         var file = './private/services/temp/labInfo.json';
-        fs.writeFile(file, imageInfo , function(err) {
+        jsonFile.writeFile(file, labInfo , function(err) {
             if (err) {
                 console.log("Error writing to file : " + err);
             }
@@ -59,11 +59,16 @@ module.exports = function (app, model) {
             var PythonShell = require('python-shell');
 
             PythonShell.run('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\aws_stop.py', function (err) {
-                if (err) throw err;
-                console.log('finished');
+                if (err) {
+                    console.log("Error while stopping VM : "+err);
+                    console.log('finished');
+                    return res.sendStatus(200);
+                } else {
+                    return res.sendStatus(400);
+                }
             });
         });
-        return res.sendStatus(200);
+
     }
 
 
@@ -71,9 +76,9 @@ module.exports = function (app, model) {
         var imageName = req.body.imageName;
         var moduleName = "Risk Analysis";
         var imageInfo = {imageName : imageName, module : moduleName};
-        var fs = require('file-system');
+        var jsonFile = require('jsonfile');
         var file = './private/services/temp/labInfo.json';
-        fs.writeFile(file, imageInfo , function(err) {
+        jsonFile.writeFile(file, imageInfo , function(err) {
             if (err) {
                 console.log("Error writing to file : "+err);
             }
@@ -87,6 +92,9 @@ module.exports = function (app, model) {
                 console.log(data.toString());
                 if (data) {
                     res.json(data.toString().split("ip: ")[1]);
+                }
+                else {
+                    return res.sendStatus(400);
                 }
                 // dataString += data.toString();
             });
@@ -104,7 +112,6 @@ module.exports = function (app, model) {
 
         });
 
-        // return res.sendStatus(200);
     }
 
     function getAvailableCourses(req, res) {

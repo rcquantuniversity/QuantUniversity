@@ -15,7 +15,7 @@ class ParseParameters(luigi.Task):
     def run(self):
         params = dict()
         params['Approach'] = 'Down'
-        params['Module'] = 'Risk Analysis'
+        params['Module'] = 'Risk Analysis8'
         _out = self.output().open('w')
         json.dump(params,_out)
         _out.close()
