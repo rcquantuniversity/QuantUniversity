@@ -10,6 +10,7 @@
     <link href ='https://fonts.googleapis.com/css?family=Sansita' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Karla:400,400i,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet">
 
     <script
             src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -47,6 +48,10 @@
     <script src="views/instructor/controller/listImages.controller.client.js"></script>
     <script src="views/student/controller/availableProjects.controller.client.js"></script>
 
+    <!--Header/Footer-->
+    <script src="header.js"></script>
+    <script src="footer.js"></script>
+
 
     <!--Services-->
     <script src="services/user.service.client.js"></script>
@@ -54,8 +59,14 @@
 
 </head>
 <body>
+<div ng-controller="headerCtrl as model"> 
+  <div ng-include="'header.html'"></div>
+</div>          
 <div ng-view>
 </div>
+<div ng-controller="footerCtrl as model"> 
+  <div ng-include="'footer.html'"></div>
+</div>  
 </body>
 </html>
 

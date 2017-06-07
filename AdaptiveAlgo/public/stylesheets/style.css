@@ -1,11 +1,11 @@
 body {
-  padding: 25px;
   font-family: 'Karla', sans-serif;
   background-color: #ebeff2;
 }
 
 *:focus {
   outline: none !important;
+  text-decoration: none;
 }
 
 .rc-background-login {
@@ -242,4 +242,106 @@ input[type="checkbox"]:checked + label::after {
 
 .alignCenter {
   text-align: center;
+}
+
+/* Header */
+#topnav {
+  position: fixed;
+  background-color: #435966;
+  right: 0;
+  left: 0;
+  top: 0;
+  z-index: 1030;
+  border: 0;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+  box-shadow: 0 0px 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+  padding: 0 25px;
+}
+
+.logo {
+  padding: 25px 0;
+}
+
+.logo a {
+  font-family: 'Rancho', cursive;
+  color: #fff;
+  font-size: 32px;
+  line-height: 32px;
+}
+.logo a span {
+  color: #10c469 !important;
+}
+
+.buildDockerPage {
+  padding: 0 25px;
+  padding-top: 80px;
+}
+
+.logout {
+  text-align: right;
+  padding: 20px 0;
+}
+
+.logout a {
+  font-size: 35px;
+  line-height: 41px;
+  color: #fff;
+  position: relative;
+  top: 2px;
+}
+
+footer {
+  border-top: 1px solid rgba(67, 89, 102, 0.1);
+  color: #58666e;
+  text-align: left !important;
+}
+
+.topFooter {
+  padding: 20px 25px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.topFooter a {
+  color: #435966;
+  padding: 0 10px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.topFooter a:hover {
+  color: #71b6f9 !important;
+}
+
+.bottomFooter {
+  padding: 20px 25px;
+  background-color: #435966;
+  text-align: center;
+  color: #fff;
+}
+
+.bottomFooter a {
+  color: #fff;
+  padding: 0 10px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.bottomFooter a:hover {
+  color: #71b6f9 !important;
+}
+
+.ng-scope:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.alignLeft {
+  text-align: left;
+}
+
+.alignRight {
+  text-align: right;
 }
