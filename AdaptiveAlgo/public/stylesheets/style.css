@@ -5,7 +5,7 @@ body {
 
 *:focus {
   outline: none !important;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .rc-background-login {
@@ -14,11 +14,12 @@ body {
   background-position: center;
   overflow: hidden;
   opacity: 1;
-  position: absolute;
+  position: relative;
+  padding-top: 82px;
   top:0;
   left:0;
   min-width: 100%;
-  min-height: 100%;
+  min-height: 550px;
 }
 
 .rc-login-button {
@@ -38,6 +39,9 @@ body {
 
 .rc-register-top-margin {
   margin-top: 2%;
+}
+.rc-register-bottom-margin {
+  margin-bottom: 2%;
 }
 
 a:hover {
@@ -295,6 +299,8 @@ footer {
   border-top: 1px solid rgba(67, 89, 102, 0.1);
   color: #58666e;
   text-align: left !important;
+  // position: relative;
+  // z-index: 1;
 }
 
 .topFooter {
