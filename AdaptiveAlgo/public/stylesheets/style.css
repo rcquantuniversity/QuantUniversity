@@ -1,6 +1,7 @@
 body {
   padding: 25px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Karla', sans-serif;
+  background-color: #ebeff2;
 }
 
 .rc-background-login {
@@ -68,4 +69,44 @@ a:hover {
 
 .wbdv-font-color-white {
   color: white;
+}
+
+/* Build Docker */
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  line-height: 70px;  
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.header-title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  padding: 15px 20px;
+  margin: 0;
+}
+
+.card-box {
+  box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  background-clip: padding-box;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+}
+
+.m-b-30 {
+  margin-bottom: 30px !important;
+}
+
+.fullWidth {
+  width: 100%;
 }

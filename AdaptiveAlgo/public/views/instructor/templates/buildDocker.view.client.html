@@ -1,12 +1,32 @@
 <div class="col-md-12">
-	<h3>
+	<h4 class="page-title">
 		Build Docker
-	</h3>
+	</h4>
 	<form action="" method="post" id="buildDockerForm" enctype="multipart/form-data">
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-6">
 				<div class="panel panel-default">
 			        <div class="panel-heading">
+			            Project Name
+			        </div>
+			        <div class="panel-body">
+			        	<div class="form-grp">
+			            	<label>Image File Name</label>
+			            	<div class="input-group fullWidth">
+			                	<input type="text" name="gitRepo[]" class="form-control">
+			            	</div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h5 class="section-title">Please select packages: </h5>
+			</div>
+			<div class="col-md-4">
+				<div class="card-box panel-default">
+			        <div class="header-title panel-heading">
 			            Python 2.7
 			        </div>
 			        <div class="panel-body">
@@ -19,8 +39,8 @@
 			    </div>
 			</div>
 			<div class="col-md-4">
-				<div class="panel panel-default">
-			        <div class="panel-heading">
+				<div class="card-box panel-default">
+			        <div class="header-title panel-heading">
 			            Python 3.5
 			        </div>
 			        <div class="panel-body">
@@ -33,8 +53,8 @@
 			    </div>
 			</div>
 			<div class="col-md-4">
-				<div class="panel panel-default">
-			        <div class="panel-heading">
+				<div class="card-box panel-default">
+			        <div class="header-title panel-heading">
 			            R
 			        </div>
 			        <div class="panel-body">
