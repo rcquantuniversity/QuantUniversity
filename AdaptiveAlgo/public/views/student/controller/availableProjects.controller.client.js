@@ -43,12 +43,13 @@
                 .startLab(imageName)
                 .then(
                     function (labURL) {
-                        vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/';
+                        vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/user/a/notebooks/Untitled.ipynb';
                         console.log(labURL);
                         console.log(labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",''));
                         //vm.isNotebookLoaded = true;
                         console.log(vm.notebookUrl);
-                        $window.open(vm.notebookUrl, '_blank');
+                        // $window.open(vm.notebookUrl, '_blank');
+                        // https://35.166.73.218/user/a/notebooks/Untitled.ipynb
                         $("#frame").attr("src", vm.notebookUrl);
                     },
                     function (err) {

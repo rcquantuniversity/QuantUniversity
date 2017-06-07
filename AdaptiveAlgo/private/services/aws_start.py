@@ -14,7 +14,7 @@ class ParseParameters(luigi.Task):
 
     def run(self):
         params = dict()
-        params['Image'] = 'jdadaptivealgo/test1496771071241'
+        params['Image'] = 'jhub/header-test'
         params['Module'] = 'Risk Analysis8'
         _out = self.output().open('w')
         json.dump(params,_out)
