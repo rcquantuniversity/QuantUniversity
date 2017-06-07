@@ -9,10 +9,6 @@
         vm.runLab = runLab;
         vm.stopLab = stopLab;
 
-        $scope.redirectToGoogle = function () {
-            $window.open('https://34.210.103.247', '_blank');
-        };
-
         function init() {
             vm.isNotebookLoaded = false;
             UserService
@@ -47,7 +43,13 @@
                 .startLab(imageName)
                 .then(
                     function (labURL) {
+                        vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/';
                         console.log(labURL);
+                        console.log(labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",''));
+                        //vm.isNotebookLoaded = true;
+                        console.log(vm.notebookUrl);
+                        // $window.open(vm.notebookUrl, '_blank');
+                        $("#frame").attr("src", vm.notebookUrl);
                     },
                     function (err) {
                         console.log("Error : "+err);
