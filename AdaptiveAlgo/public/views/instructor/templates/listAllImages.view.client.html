@@ -1,20 +1,51 @@
-<div class="container-fluid">
-    <h2>Docker Images : </h2><br>
-    <ul class="list-group">
-        <li class="list-group-item" ng-repeat = "image in model.images.data">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 buildDockerPage">
             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
-                    {{image.imageName}}
+                <div class="col-md-6">
+                    <h4 class="page-title">
+                        List of Projects
+                    </h4>
                 </div>
-                <div class="col-md-4">
-                    <a class=""
-                       ng-click="model.uploadToDockerHub(image.imageName)">
-                        Upload to DockerHub
-                    </a>
+                <div class="col-md-6">
+                    <h4 class="page-title alignRight">
+                        <a class="btn btn-primary btn-bordred"
+                           href="/#/instructor/buildDocker">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            <span>Build Docker</span>
+                        </a>
+                    </h4>
                 </div>
-                <div class="col-md-2"></div>
             </div>
-        </li>
-    </ul>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-responsive m-0">
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th colspan="2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat = "image in model.images.data">
+                                <td>{{image.imageName}}</td>
+                                <td>
+                                    <a class="btn btn-primary btn-rounded btn-bordred"
+                                       ng-click="model.uploadToDockerHub(image.imageName)">
+                                        Upload to DockerHub
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-rounded btn-bordred"
+                                       ng-click="model.uploadToS3(image.imageName)">
+                                        Upload to S3
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

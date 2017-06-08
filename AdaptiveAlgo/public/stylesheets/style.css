@@ -353,3 +353,26 @@ footer {
 .alignRight {
   text-align: right;
 }
+
+.page-title a span {
+  padding-left: 5px;
+}
+
+.page-title a i {
+  position: relative;
+  top: 1px;
+}
+
+table {
+  background-color: #fff;
+  text-align: center;
+}
+
+table th {
+  text-align: center;
+}
+
+table td {
+  border: 1px solid #ddd;
+  border-right: 0;
+}

@@ -21,7 +21,7 @@
                             if (user.data.userType === "STUDENT") {
                                 $location.url("/user/student");
                             } else if (user.data.userType === "INSTRUCTOR") {
-                                $location.url('/user/instructor');
+                                $location.url('/instructor/listImages');
                             }
                         } else {
                             vm.error = "User not found !! Please check your credentials.";
