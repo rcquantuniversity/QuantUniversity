@@ -3,3 +3,9 @@ Testing for start and stop lab
 2. pull new image and and start jupyter hub and get notebook instance for multiplt users.
 3. for same VM instance, user data (notebook) gets saved.
 4. stop lab - stopping VM instance now. Need to be able to stop container for that student.
+
+
+
+Testing for docker image generation 
+1. check if docker image is getting created successfully (then put image details in the database)
+2. chek if docker image is getting uploaded to docker hub

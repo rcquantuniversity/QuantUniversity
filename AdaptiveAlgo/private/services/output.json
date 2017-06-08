@@ -1,1 +1,1 @@
-{"name":"undefined1496866603878","data":[{"packages":[],"base":"python2.7"},{"packages":[],"base":"python3.5"},{"packages":[],"base":"R"}]}
+{"username":"i1","name":"temp31496932879274","data":[{"packages":[],"base":"python2.7"},{"packages":[{"_id":"592de54287aa4829f0fcca24","command":"pip install scipy","name":"scipy","version":"0.19"}],"base":"python3.5"},{"packages":[],"base":"R"}]}

@@ -91,9 +91,9 @@ module.exports = function (app, model) {
         docker.command('tag'+' '+imageName+' '+ "jdadaptivealgo" +'/'+imageName, function(err, data){
             docker.command('push'+' '+ "jdadaptivealgo" +'/'+imageName, function(err, data){
                 console.log(data);
+                return res.sendStatus(200);
             });
         });
-        return res.sendStatus(200);
     }
 
     function isImageReady() {
@@ -132,9 +132,11 @@ module.exports = function (app, model) {
     function createOutputJSON(req, res) {
         var imageName = req.params.imageName + Date.now().toString();
         var packageList = req.body;
-        var output = {"name" : imageName, "data" : packageList};
+        var output = {"username": req.user.username ,"name" : imageName, "data" : packageList};
 
+        //*****************************************************************
         //put image details in Image database
+        // check if image is created or not then do this
         model
             .dockerImageModel
             .saveDockerImageFile(req.user, imageName, output)
