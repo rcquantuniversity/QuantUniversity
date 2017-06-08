@@ -2,7 +2,7 @@
 import subprocess
 import json
 import os
-
+import re
 #parse JSON file
 service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
 with open(service_dir+'/output.json') as data_file:    
@@ -29,6 +29,38 @@ elif num_pkg_r > 0:
         baseImage = 'jupyter/scipy-notebook'
 else:
     baseImage = 'jupyter/scipy-notebook'
+
+#package version checking
+pip_pattern = b'[\((][\s\S]*[\))]'
+if num_pkg_py27 > 0:
+    for index,pkg in enumerate(data['data'][0]['packages']):
+        if(pkg['version'] != 'latest'):
+            process = subprocess.Popen(['pip2 install '+pkg['name']+'=='],stderr=subprocess.PIPE, shell=True)
+            out, err = process.communicate()
+            #print(err)
+            trim = re.search(pip_pattern, err, flags=0)
+            #print(trim)
+            liststr = trim.group().decode("utf-8")[16:-1]
+            liststr = liststr.split(', ')
+            #print(liststr)
+            if pkg['version'] in liststr:
+                print('exist '+pkg['name']+'-'+pkg['version'])
+            else:
+                print('no such pakcage '+pkg['name']+'-'+pkg['version'])
+
+if num_pkg_py35 > 0:
+    for index,pkg in enumerate(data['data'][1]['packages']):
+        if(pkg['version'] != 'latest'):
+            process = subprocess.Popen(['pip3 install '+pkg['name']+'=='],stderr=subprocess.PIPE, shell=True)
+            out, err = process.communicate()
+            trim = re.search(pip_pattern, err, flags=0)
+            liststr = trim.group().decode("utf-8")[16:-1]
+            liststr = liststr.split(', ')
+            #print(liststr)
+            if pkg['version'] in liststr:
+                print('exist '+pkg['name']+'-'+pkg['version'])
+            else:
+                print('no such pakcage '+pkg['name']+'-'+pkg['version'])
 
 #write the Dockerfile
 with open(module_dir+'/Dockerfile', 'wb') as dockerfile:
@@ -92,7 +124,7 @@ with open(module_dir+'/Dockerfile', 'wb') as dockerfile:
     dockerfile.write('USER $NB_USER\n')
 
 #execute the building process
-print(os.name)
+# print(os.name)
 if os.name == 'nt':
     print('under windows')
     str = subprocess.Popen('docker build -t ' + module_name + ' .', cwd=module_dir, shell=True)
