@@ -58,7 +58,7 @@ module.exports = function (app, model) {
 
             var PythonShell = require('python-shell');
 
-            PythonShell.run('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\aws_stop.py', function (err) {
+            PythonShell.run('./private/services/aws_stop.py', function (err) {
                 if (err) {
                     console.log("Error while stopping VM : "+err);
                     console.log('finished');
@@ -84,7 +84,7 @@ module.exports = function (app, model) {
             }
             // // Option 1
             var spawn = require('child_process').spawn,
-                py = spawn('python', ['C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\aws_start.py']),
+                py = spawn('python', ['./private/services/aws_start.py']),
                 data = [1,2,3,4,5,6,7,8,9,10],
                 dataString = '';
 

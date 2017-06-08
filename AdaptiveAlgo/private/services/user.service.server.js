@@ -21,7 +21,8 @@ module.exports = function (app, model) {
     var docker = new Docker();
 
     function init() {
-        docker.command('login'+' -e '+ "jd.adaptivealgo@gmail.com" +' -p '+ "JDadaptivealgo2017" +' -u '+"jdadaptivealgo", function(err, data){
+        docker.command('login'+' -e '+ "jd.adaptivealgo@gmail.com" +' -p '+
+            "JDadaptivealgo2017" +' -u '+"jdadaptivealgo", function(err, data){
             console.log(data);
         });
     }

@@ -119,7 +119,7 @@ class StartHubTask(luigi.Task):
 
         DOCKER_NOTEBOOK_IMAGE = params['Image']
 
-        with open('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', 'a') as envfile:
+        with open('./private/services/.env', 'a') as envfile:
             envfile.write('\n')
             envfile.write('DOCKER_NOTEBOOK_IMAGE=' + DOCKER_NOTEBOOK_IMAGE)
         
@@ -131,7 +131,7 @@ class StartHubTask(luigi.Task):
         #ip = '52.41.21.8'
         print(ip)
  
-        k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file('./private/services/adaptivealgo.pem')
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -139,7 +139,7 @@ class StartHubTask(luigi.Task):
         print ('connected')
 
         with SCPClient(c.get_transport()) as scp:
-            scp.put('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', '/home/ec2-user/jupyterhub-deploy-docker')
+            scp.put('./private/services/.env', '/home/ec2-user/jupyterhub-deploy-docker')
 
         commands = [ 'ls','docker pull '+DOCKER_NOTEBOOK_IMAGE, 'cd /home/ec2-user/jupyterhub-deploy-docker; docker-compose up -d; docker-compose up -d']
         for command in commands:
