@@ -72,20 +72,21 @@
                                     <div class="collapse addSection" id="addSection">
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageName" id="packageName" placeholder="Package Name" required>
+                                                <input type="text" class="form-control" ng-model="model.packageName1" id="packageName" placeholder="Package Name" required>
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageCommand" id="packageCommand" placeholder="Package Command" required>
+                                                <input type="text" class="form-control" ng-model="model.packageCommand1" id="packageCommand" placeholder="Package Command" required>
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageVersion" id="packageVersion" placeholder="Package Version" required>
+                                                <input type="text" class="form-control" ng-model="model.packageVersion1" id="packageVersion" placeholder="Package Version" required>
                                             </div>
                                         </div>
-                                        <a class="btn btn-primary" ng-click="">
+                                        <a class="btn btn-primary"
+										   ng-click="model.addPackage('python2.7',model.packageName1,model.packageCommand1,model.packageVersion1)">
 									Add Package
 								</a>
                                     </div>
@@ -110,20 +111,21 @@
                                     <div class="collapse addSection" id="addSection2">
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageName" id="packageName" placeholder="Package Name" required>
+                                                <input type="text" class="form-control" ng-model="model.packageName2" id="packageName" placeholder="Package Name" required>
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageCommand" id="packageCommand" placeholder="Package Command" required>
+                                                <input type="text" class="form-control" ng-model="model.packageCommand2" id="packageCommand" placeholder="Package Command" required>
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageVersion" id="packageVersion" placeholder="Package Version" required>
+                                                <input type="text" class="form-control" ng-model="model.packageVersion2" id="packageVersion" placeholder="Package Version" required>
                                             </div>
                                         </div>
-                                        <a class="btn btn-primary btn-bordred" ng-click="">
+                                        <a class="btn btn-primary btn-bordred"
+										   ng-click="model.addPackage('python3.5',model.packageName2,model.packageCommand2,model.packageVersion2)">
 									Add Package
 								</a>
                                     </div>
@@ -148,20 +150,21 @@
                                     <div class="collapse addSection" id="addSection3">
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageName" id="packageName" placeholder="Package Name" required>
+                                                <input type="text" class="form-control" ng-model="model.packageName3" id="packageName" placeholder="Package Name" required>
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageCommand" id="packageCommand" placeholder="Package Command" required>
+                                                <input type="text" class="form-control" ng-model="model.packageCommand3" id="packageCommand" placeholder="Package Command" required>
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageVersion" id="packageVersion" placeholder="Package Version" required>
+                                                <input type="text" class="form-control" ng-model="model.packageVersion3" id="packageVersion" placeholder="Package Version" required>
                                             </div>
                                         </div>
-                                        <a class="btn btn-primary" ng-click="">
+                                        <a class="btn btn-primary"
+										   ng-click="model.addPackage('R',model.packageName3,model.packageCommand3,model.packageVersion3)">
 									Add Package
 								</a>
                                     </div>

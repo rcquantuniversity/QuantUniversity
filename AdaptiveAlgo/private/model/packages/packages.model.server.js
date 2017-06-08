@@ -10,7 +10,8 @@ module.exports = function () {
     var api = {
         setModel: setModel,
         addPackage : addPackage,
-        getAllPackages : getAllPackages
+        getAllPackages : getAllPackages,
+        updatePackageDatabase : updatePackageDatabase
     };
     return api;
 
@@ -39,12 +40,12 @@ module.exports = function () {
 
     function addPackage(base, package) {
         var deferred = Q.defer();
-        base = "python3.5";
-        package = {
-                    "name": "XYZ",
-                    "command": "pip install SciPy",
-                    "version" : "1.9"
-        };
+        // base = "python3.5";
+        // package = {
+        //             "name": "XYZ",
+        //             "command": "pip install SciPy",
+        //             "version" : "1.9"
+        // };
         PackagesModel
             .findOne({base : base}, function (err, matchingRecords) {
                 if (err) {
@@ -64,17 +65,19 @@ module.exports = function () {
                                     deferred.reject(err);
                                 } else {
                                     deferred.resolve(package);
+
                                     // Update master file with this newly added package
                                     PackagesModel
                                         .find({}, function (err, allPackages) {
                                            if (err) {
                                                deferred.reject(err);
                                            } else {
-                                               console.log(allPackages.length);
                                                var jsonOutput = {"data" : allPackages};
                                                var file = './private/services/masterPackageJSON.json';
                                                jsonfile.writeFile(file, jsonOutput, function (err) {
-                                                   console.error(err);
+                                                   if (err) {
+                                                       console.error(err);
+                                                   }
                                                });
                                                deferred.resolve(package);
                                            }
@@ -89,9 +92,32 @@ module.exports = function () {
         return deferred.promise;
     }
 
+    function updatePackageDatabase() {
+        var file = './private/services/masterPackageJSON.json';
+        jsonfile.readFile(file, function(err, packageObject) {
+            PackagesModel
+                .remove(function (err, status) {
+                    if (err) {
+                        console.log("error dropping table")
+                    } else {
+                        for (var recordIndex in packageObject.data) {
+                            var record = packageObject.data[recordIndex];
+                            PackagesModel
+                                .create(record, function (err, records) {
+                                    if (err) {
+                                        console.log("Error");
+                                    }
+                                });
+                        }
+                    }
+                });
+        });
+    }
+
     function setModel(_model) {
         model = _model;
 
+        updatePackageDatabase();
 
         // getAllPackages()
         //     .then(
@@ -118,24 +144,5 @@ module.exports = function () {
         //     ]
         // };
 
-        var file = './private/services/masterPackageJSON.json';
-        jsonfile.readFile(file, function(err, packageObject) {
-            PackagesModel
-                .remove(function (err, status) {
-                    if (err) {
-                        console.log("error dropping table")
-                    } else {
-                        for (var recordIndex in packageObject.data) {
-                            var record = packageObject.data[recordIndex];
-                            PackagesModel
-                                .create(record, function (err, records) {
-                                    if (err) {
-                                        console.log("Error");
-                                    }
-                                });
-                        }
-                    }
-                    });
-        });
     }
 };

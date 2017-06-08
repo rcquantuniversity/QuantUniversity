@@ -9,7 +9,7 @@ body {
 }
 
 .rc-background-login {
-  background: url("/images/a75fdcab110ae11f155ed96f428a86ae.png");
+  /*background: url("/images/a75fdcab110ae11f155ed96f428a86ae.png");*/
   background-size: cover;
   background-position: center;
   overflow: hidden;

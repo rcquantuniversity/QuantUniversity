@@ -18,9 +18,15 @@
             "createDockerImage" : createDockerImage,
             "uploadToDockerHub" : uploadToDockerHub,
             "listAllImages" : listAllImages,
-            "listAllImagesForStudent" : listAllImagesForStudent
+            "listAllImagesForStudent" : listAllImagesForStudent,
+            "addPackage" : addPackage
         };
         return api;
+
+        function addPackage(base, package) {
+            var packageJSON = {"base" : base, "package" : package};
+            return $http.post("/api/addPackage", packageJSON);
+        }
 
         function listAllImagesForStudent() {
             return $http.get("/api/listAllImagesForStudent");

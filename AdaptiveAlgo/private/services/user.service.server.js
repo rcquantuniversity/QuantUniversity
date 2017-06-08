@@ -12,6 +12,7 @@ module.exports = function (app, model) {
     app.post("/api/createDockerImage", createDockerImage);
     app.get("/api/listAllImages", listAllImages);
     app.get("/api/listAllImagesForStudent", listAllImagesForStudent);
+    app.post("/api/addPackage", addPackage);
 
     var request = require('request');
     var jsonfile = require('jsonfile');
@@ -21,12 +22,33 @@ module.exports = function (app, model) {
     var docker = new Docker();
 
     function init() {
+        var logger = require('./logger.js');
         docker.command('login'+' -e '+ "jd.adaptivealgo@gmail.com" +' -p '+
             "JDadaptivealgo2017" +' -u '+"jdadaptivealgo", function(err, data){
-            console.log(data);
+            logger.log('Info',data);
+            logger.log('Info',"Logged in to docker hub");
         });
     }
     init();
+
+    function addPackage(req, res) {
+        var logger = require('./logger.js');
+        model
+            .packagesModel
+            .addPackage(req.body.base, req.body.package)
+            .then(
+                function (status) {
+                    logger.log('Info','Following package added successfully');
+                    logger.log('Info', req.body.package);
+                    res.json(status);
+                },
+                function (err) {
+                    logger.log('Error','Following package could not be added');
+                    logger.log('Info', req.body.package);
+                    res.sendStatus(400).send(err);
+                }
+            );
+    }
 
     function listAllImagesForStudent(req, res) {
         model

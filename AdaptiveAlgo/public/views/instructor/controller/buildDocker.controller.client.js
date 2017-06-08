@@ -1,7 +1,7 @@
 (function () {
     angular
     .module("AdaptiveAlgoApp")
-    .controller("BuildDockerController", function($scope, $http, UserService, $location) {
+    .controller("BuildDockerController", function($scope, $http, UserService, $location, $window) {
         // $http.get("masterPackageJSON.json").then(function(response) {
         //     $scope.myData = response.data.data;
         // });
@@ -12,6 +12,7 @@
         // vm.uploadToDockerHub = uploadToDockerHub;
         vm.showAllImages = showAllImages;
         vm.logout = logout;
+        vm.addPackage = addPackage;
 
         function init() {
             UserService
@@ -37,6 +38,26 @@
                 );
         }
         init();
+
+        function addPackage(base, packageName, packageCommand, packageVersion) {
+            var package = {
+                "name": packageName,
+                "command": packageCommand,
+                "version" : packageVersion
+            };
+            console.log(base, package);
+            UserService
+                .addPackage(base, package)
+                .then(
+                    function () {
+                        vm.messagePackageAdded = "Package added successfully !";
+                        $window.location.reload();
+                    },
+                    function () {
+                        vm.errorPackageAdded = "Package could not be added. Please try again !";
+                    }
+                )
+        }
 
         $scope.dzOptions = {
             url : '/images',

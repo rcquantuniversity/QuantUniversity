@@ -3,6 +3,8 @@ import subprocess
 import json
 import os
 import re
+import sys
+
 #parse JSON file
 service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
 with open(service_dir+'/output.json') as data_file:    
@@ -35,7 +37,7 @@ pip_pattern = b'[\((][\s\S]*[\))]'
 if num_pkg_py27 > 0:
     for index,pkg in enumerate(data['data'][0]['packages']):
         if(pkg['version'] != 'latest'):
-            process = subprocess.Popen(['pip2 install '+pkg['name']+'=='],stderr=subprocess.PIPE, shell=True)
+            process = subprocess.Popen('pip install '+pkg['name']+'==',stderr=subprocess.PIPE, shell=True)
             out, err = process.communicate()
             #print(err)
             trim = re.search(pip_pattern, err, flags=0)
@@ -46,13 +48,16 @@ if num_pkg_py27 > 0:
             if pkg['version'] in liststr:
                 print('exist '+pkg['name']+'-'+pkg['version'])
             else:
-                print('no such pakcage '+pkg['name']+'-'+pkg['version'])
-
+				print('no such pakcage '+pkg['name']+'-'+pkg['version'])
+				sys.exit()
+				
 if num_pkg_py35 > 0:
     for index,pkg in enumerate(data['data'][1]['packages']):
         if(pkg['version'] != 'latest'):
-            process = subprocess.Popen(['pip3 install '+pkg['name']+'=='],stderr=subprocess.PIPE, shell=True)
-            out, err = process.communicate()
+            process = subprocess.Popen('pip install '+pkg['name']+'==',stderr=subprocess.PIPE, shell=True)
+	    out, err = process.communicate()
+            print(err)
+            print('aaa')
             trim = re.search(pip_pattern, err, flags=0)
             liststr = trim.group().decode("utf-8")[16:-1]
             liststr = liststr.split(', ')
@@ -60,7 +65,8 @@ if num_pkg_py35 > 0:
             if pkg['version'] in liststr:
                 print('exist '+pkg['name']+'-'+pkg['version'])
             else:
-                print('no such pakcage '+pkg['name']+'-'+pkg['version'])
+				print('no such pakcage '+pkg['name']+'-'+pkg['version'])
+				sys.exit()
 
 #write the Dockerfile
 with open(module_dir+'/Dockerfile', 'wb') as dockerfile:

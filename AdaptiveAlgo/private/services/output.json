@@ -1,1 +1,1 @@
-{"username":"i1","name":"temp31496932879274","data":[{"packages":[],"base":"python2.7"},{"packages":[{"_id":"592de54287aa4829f0fcca24","command":"pip install scipy","name":"scipy","version":"0.19"}],"base":"python3.5"},{"packages":[],"base":"R"}]}
+{"username":"i1","name":"asd1496956909956","data":[{"packages":[],"base":"python2.7"},{"packages":[{"name":"matplotlib","command":"pip install matplotlib","_id":"592de4fc87aa4829f0fcca20","version":"latest"},{"_id":"5939bcae5687ea1ad4410a05","command":"a","name":"a","version":"a"}],"base":"python3.5"},{"packages":[],"base":"R"}]}
