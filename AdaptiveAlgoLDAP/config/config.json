@@ -1,0 +1,15 @@
+{
+	"ldap": {
+		"url": "ldap://localhost:10389/",
+		"bindCredentials": "password",
+		"searchBase": "ou=system",
+		"searchFilter": "(uid={{username}})",
+		"timeout": 5000,
+		"connectTimeout": 10000,
+		"reconnect": true
+
+	},
+	"jwt": {
+		"secret": "test_secret"
+	}
+}
