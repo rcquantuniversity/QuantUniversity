@@ -1,0 +1,152 @@
+version: 1
+
+dn: ou=partitions,ou=configuration,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: partitions
+
+dn: cn=Administrators,ou=groups,ou=system
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: Administrators
+uniqueMember: 0.9.2342.19200300.100.1.1=admin,2.5.4.11=system
+
+dn: ou=users,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: users
+
+dn: uid=pj,ou=User,ou=ActiveMQ,ou=system
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: organizationalPerson
+objectClass: top
+cn: Pratik
+sn: Jaipuria
+uid: pj
+userPassword:: e1NTSEF9anNwSFQ3SVVhMzRlZWk2VTZGRFEzYUxmdEpkbVZrU1NxakJnbkE9P
+ Q==
+
+dn: ou=User,ou=ActiveMQ,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: User
+
+dn: uid=admin,ou=system
+objectClass: tlsKeyInfo
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: system administrator
+keyAlgorithm: RSA
+privateKey:: MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEAvfptnAQWShAnPlB
+ vRIfFbjRiGF8TwzkSq61gKrKJtlmCUc1JlgsHtyUCILL+gn61M9NzgF7tCzJVmrTtB5Cq7wIDAQ
+ ABAkEAsNl/T80+MpP29DtMWS9KytxYtPdNHl7y0n4DF7w8FlJ+Ai62/dZZtCdSKKubTVJMkJK/H
+ whu/rHOFNOvxbL0AQIhAP5xEOCnp1Fcl9uL8Nh7xWVy2uLShA4ijZdPNwY4KVDPAiEAvyRKkjxq
+ djEwijcKxqbcHXRviUlRCw5fRK3GhsMsS+ECIFcu9tGDoNlIGOCpesUy49h3GnlOGOGfBVUrV3d
+ SFxYRAiBT8+uw+UpFaWuJeY2JHSbW5RpMMWCgO4rKjo0BCd594QIhAIfBPtC54sKPYzGEPVcTzK
+ vBrPLGEcDyXsCK2IY4OMRc
+privateKeyFormat: PKCS#8
+publicKey:: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL36bZwEFkoQJz5Qb0SHxW40YhhfE8M5
+ EqutYCqyibZZglHNSZYLB7clAiCy/oJ+tTPTc4Be7QsyVZq07QeQqu8CAwEAAQ==
+publicKeyFormat: X.509
+sn: administrator
+displayName: Directory Superuser
+uid: admin
+userCertificate:: MIIBdDCCAR4CBgFcgu02izANBgkqhkiG9w0BAQUFADBCMQswCQYDVQQGEw
+ JVUzEMMAoGA1UEChMDQVNGMRIwEAYDVQQLEwlEaXJlY3RvcnkxETAPBgNVBAMTCEFwYWNoZURTM
+ B4XDTE3MDYwNzE0MjAwM1oXDTE4MDYwNzE0MjAwM1owQzELMAkGA1UEBhMCVVMxDDAKBgNVBAoT
+ A0FTRjESMBAGA1UECxMJRGlyZWN0b3J5MRIwEAYDVQQDEwlQcmF0aWstUEMwXDANBgkqhkiG9w0
+ BAQEFAANLADBIAkEAvfptnAQWShAnPlBvRIfFbjRiGF8TwzkSq61gKrKJtlmCUc1JlgsHtyUCIL
+ L+gn61M9NzgF7tCzJVmrTtB5Cq7wIDAQABMA0GCSqGSIb3DQEBBQUAA0EAIRA/pExLAontGRvOv
+ E87eBrkykih2OfNaQLoWmx1l3eVPvMVYb+NAGbjNDoQpL1hfaIG1iDc84Jf2XT2CwiuuA==
+userPassword:: c2VjcmV0
+
+dn: ou=consumers,ou=system
+objectclass: organizationalUnit
+objectclass: top
+ou: consumers
+
+dn: uid=admin,ou=User,ou=ActiveMQ,ou=system
+objectClass: account
+objectClass: simpleSecurityObject
+objectClass: top
+uid: admin
+userPassword:: e1NTSEF9QmNsa0ZhR3VIUTJlWWhHMEhKRjVvTzhjTEY2SWcvNm9kWGFGZFE9P
+ Q==
+
+dn: ou=services,ou=configuration,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: services
+
+dn: prefNodeName=sysPrefRoot,ou=system
+objectClass: extensibleObject
+objectClass: organizationalUnit
+objectClass: top
+prefNodeName: sysPrefRoot
+
+dn: ou=groups,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: groups
+
+dn: ou=configuration,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: configuration
+
+dn: uid=jp,ou=User,ou=InactiveMQ,ou=system
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: Jaipuria
+sn: Pratik
+uid: jp
+userPassword:: e1NTSEF9RTM5ZHNNT2Y4cklSeVV4WndzNDJzUFlvc3p5VHNFT3B3R2ljbmc9P
+ Q==
+
+dn: ou=ActiveMQ,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: ActiveMQ
+
+dn: ou=User,ou=InactiveMQ,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: User
+
+dn: ou=InactiveMQ,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: InactiveMQ
+
+dn: ou=system
+objectClass: extensibleObject
+objectClass: organizationalUnit
+objectClass: top
+ou: system
+
+dn: ou=Group,ou=ActiveMQ,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: Group
+
+dn: uid=jdoe,ou=User,ou=ActiveMQ,ou=system
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: John
+sn: Doe
+uid: jdoe
+userPassword:: e1NTSEF9R1p4c2F0MkhqdWFVeTJhSExVUCtUazZOUGdYamxueEFJNGRrZEE9P
+ Q==
+
+dn: ou=interceptors,ou=configuration,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: interceptors
+
