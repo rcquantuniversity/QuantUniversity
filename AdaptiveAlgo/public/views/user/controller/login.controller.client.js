@@ -19,7 +19,7 @@
                     function (user) {
                         if(user) {
                             if (user.data.userType === "STUDENT") {
-                                $location.url("/user/student");
+                                $location.url("/student/availableProjects");
                             } else if (user.data.userType === "INSTRUCTOR") {
                                 $location.url('/instructor/listImages');
                             }
