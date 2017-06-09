@@ -1,6 +1,6 @@
 // Copyright 2011 Mark Cavage, Inc.  All rights reserved.
 
-var assert = require('assert-plus');
+var assert = require('assert');
 var util = require('util');
 
 var LDAPResult = require('./result');
@@ -13,11 +13,14 @@ var parseURL = require('../url').parse;
 var Protocol = require('../protocol');
 
 
+
 ///--- API
 
 function SearchResponse(options) {
-  options = options || {};
-  assert.object(options);
+  if (!options)
+    options = {};
+  if (typeof (options) !== 'object')
+    throw new TypeError('options must be an object');
 
   options.protocolOp = Protocol.LDAP_REP_SEARCH;
   LDAPResult.call(this, options);
@@ -27,6 +30,8 @@ function SearchResponse(options) {
   this.sentEntries = 0;
 }
 util.inherits(SearchResponse, LDAPResult);
+module.exports = SearchResponse;
+
 
 /**
  * Allows you to send a SearchEntry back to the client.
@@ -113,17 +118,24 @@ SearchResponse.prototype.send = function (entry, nofiltering) {
   }
 };
 
+
+
 SearchResponse.prototype.createSearchEntry = function (object) {
-  assert.object(object);
+  if (!object || typeof (object) !== 'object')
+    throw new TypeError('object required');
+
+  var self = this;
 
   var entry = new SearchEntry({
-    messageID: this.messageID,
-    log: this.log,
+    messageID: self.messageID,
+    log: self.log,
     objectName: object.objectName || object.dn
   });
   entry.fromObject((object.attributes || object));
+
   return entry;
 };
+
 
 SearchResponse.prototype.createSearchReference = function (uris) {
   if (!uris)
@@ -144,8 +156,3 @@ SearchResponse.prototype.createSearchReference = function (uris) {
     uris: uris
   });
 };
-
-
-///--- Exports
-
-module.exports = SearchResponse;

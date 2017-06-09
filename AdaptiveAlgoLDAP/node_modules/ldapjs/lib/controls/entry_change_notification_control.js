@@ -1,9 +1,10 @@
-var assert = require('assert-plus');
+var assert = require('assert');
 var util = require('util');
 
 var asn1 = require('asn1');
 
 var Control = require('./control');
+
 
 
 ///--- Globals
@@ -12,11 +13,13 @@ var BerReader = asn1.BerReader;
 var BerWriter = asn1.BerWriter;
 
 
+
 ///--- API
 
 function EntryChangeNotificationControl(options) {
-  assert.optionalObject(options);
-  options = options || {};
+  if (!options)
+    options = {};
+
   options.type = EntryChangeNotificationControl.OID;
   if (options.value) {
     if (Buffer.isBuffer(options.value)) {
@@ -29,14 +32,15 @@ function EntryChangeNotificationControl(options) {
     options.value = null;
   }
   Control.call(this, options);
+
+  var self = this;
+  this.__defineGetter__('value', function () {
+    return self._value || {};
+  });
 }
 util.inherits(EntryChangeNotificationControl, Control);
-Object.defineProperties(EntryChangeNotificationControl.prototype, {
-  value: {
-    get: function () { return this._value || {}; },
-    configurable: false
-  }
-});
+module.exports = EntryChangeNotificationControl;
+
 
 EntryChangeNotificationControl.prototype.parse = function parse(buffer) {
   assert.ok(buffer);
@@ -59,6 +63,7 @@ EntryChangeNotificationControl.prototype.parse = function parse(buffer) {
   return false;
 };
 
+
 EntryChangeNotificationControl.prototype._toBer = function (ber) {
   assert.ok(ber);
 
@@ -77,13 +82,12 @@ EntryChangeNotificationControl.prototype._toBer = function (ber) {
   ber.writeBuffer(writer.buffer, 0x04);
 };
 
+
 EntryChangeNotificationControl.prototype._json = function (obj) {
   obj.controlValue = this.value;
   return obj;
 };
 
+
+
 EntryChangeNotificationControl.OID = '2.16.840.1.113730.3.4.7';
-
-
-///--- Exports
-module.exports = EntryChangeNotificationControl;

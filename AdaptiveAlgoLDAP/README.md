@@ -1,17 +1,66 @@
-This README.md file is displayed on your project page. You should edit this 
-file to describe your project, including instructions for building and 
-running the project, pointers to the license under which you are making the 
-project available, and anything else you think would be useful for others to
-know.
+# Simple "ldap-jwt" service
+Lightweight node.js based web service that provides user authentication against LDAP server (Active Directory / Windows network) credentials and returns a JSON Web Token.
 
-We have created an empty license.txt file for you. Well, actually, it says,
-"<Replace this text with the license you've chosen for your project.>" We 
-recommend you edit this and include text for license terms under which you're
-making your code available. A good resource for open source licenses is the 
-[Open Source Initiative](http://opensource.org/).
+Heavily based on the work of [gregfroese/ldapservice](https://github.com/gregfroese/ldapservice).
 
-Be sure to update your project's profile with a short description and 
-eye-catching graphic.
 
-Finally, consider defining some sprints and work items in Track & Plan to give 
-interested developers a sense of your cadence and upcoming enhancements.
+## Changes
+
+* Replaced yaml config-files with json
+* Removed support for RabbitMQ
+* Updated npm dependencies
+* Simplified endpoints
+
+
+## Usage
+
+1. Rename/Copy `config.test.json` to `config.json`
+2. Update config in `config.json`
+3. Deploy
+
+
+## Endpoints
+
+### /authenticate
+
+**Payload**
+
+```json
+{
+    "username": "euler",
+    "password": "password"
+}
+```
+
+**Response**
+
+```json
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NjE3OTQxMjY0NjAsInVzZXJfbmFtZSI6ImV1bGVyIiwiZnVsbF9uYW1lIjoiTGVvbmhhcmQgRXVsZXIiLCJtYWlsIjoiZXVsZXJAbGRhcC5mb3J1bXN5cy5jb20ifQ.bqSjshvLnHsTJwcXBXsNVtGGNatvQHyqhL8MSXuMwFI",
+  "full_name": "Leonhard Euler"
+}
+```
+
+### /verify
+
+**Payload**
+
+```json
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NjE3OTQxMjY0NjAsInVzZXJfbmFtZSI6ImV1bGVyIiwiZnVsbF9uYW1lIjoiTGVvbmhhcmQgRXVsZXIiLCJtYWlsIjoiZXVsZXJAbGRhcC5mb3J1bXN5cy5jb20ifQ.bqSjshvLnHsTJwcXBXsNVtGGNatvQHyqhL8MSXuMwFI"
+}
+```
+
+**Response**
+
+```json
+{
+  "user_name": "euler",
+  "full_name": "Leonhard Euler",
+  "mail": "euler@ldap.forumsys.com"
+}
+```
+
+## ToDo
+
+* Write Tests

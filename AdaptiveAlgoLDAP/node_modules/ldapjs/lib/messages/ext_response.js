@@ -1,6 +1,6 @@
 // Copyright 2011 Mark Cavage, Inc.  All rights reserved.
 
-var assert = require('assert-plus');
+var assert = require('assert');
 var util = require('util');
 
 var LDAPResult = require('./result');
@@ -10,44 +10,45 @@ var Protocol = require('../protocol');
 ///--- API
 
 function ExtendedResponse(options) {
-  options = options || {};
-  assert.object(options);
-  assert.optionalString(options.responseName);
-  assert.optionalString(options.responsevalue);
+  if (options) {
+    if (typeof (options) !== 'object')
+      throw new TypeError('options must be an object');
+    if (options.responseName && typeof (options.responseName) !== 'string')
+      throw new TypeError('options.responseName must be a string');
+    if (options.responseValue && typeof (options.responseValue) !== 'string')
+      throw new TypeError('options.responseValue must be a string');
+  } else {
+    options = {};
+  }
 
   this.responseName = options.responseName || undefined;
   this.responseValue = options.responseValue || undefined;
 
   options.protocolOp = Protocol.LDAP_REP_EXTENSION;
   LDAPResult.call(this, options);
+
+  this.__defineGetter__('name', function () {
+    return this.responseName;
+  });
+  this.__defineGetter__('value', function () {
+    return this.responseValue;
+  });
+  this.__defineSetter__('name', function (name) {
+    if (typeof (name) !== 'string')
+      throw new TypeError('name must be a string');
+
+    this.responseName = name;
+  });
+  this.__defineSetter__('value', function (val) {
+    if (typeof (val) !== 'string')
+      throw new TypeError('value must be a string');
+
+    this.responseValue = val;
+  });
 }
 util.inherits(ExtendedResponse, LDAPResult);
-Object.defineProperties(ExtendedResponse.prototype, {
-  type: {
-    get: function getType() { return 'ExtendedResponse'; },
-    configurable: false
-  },
-  _dn: {
-    get: function getDN() { return this.responseName; },
-    configurable: false
-  },
-  name: {
-    get: function getName() { return this.responseName; },
-    set: function setName(val) {
-      assert.string(val);
-      this.responseName = val;
-    },
-    configurable: false
-  },
-  value: {
-    get: function getValue() { return this.responseValue; },
-    set: function (val) {
-      assert.string(val);
-      this.responseValue = val;
-    },
-    configurable: false
-  }
-});
+module.exports = ExtendedResponse;
+
 
 ExtendedResponse.prototype._parse = function (ber) {
   assert.ok(ber);
@@ -63,6 +64,7 @@ ExtendedResponse.prototype._parse = function (ber) {
   return true;
 };
 
+
 ExtendedResponse.prototype._toBer = function (ber) {
   assert.ok(ber);
 
@@ -77,6 +79,7 @@ ExtendedResponse.prototype._toBer = function (ber) {
   return ber;
 };
 
+
 ExtendedResponse.prototype._json = function (j) {
   assert.ok(j);
 
@@ -87,8 +90,3 @@ ExtendedResponse.prototype._json = function (j) {
 
   return j;
 };
-
-
-///--- Exports
-
-module.exports = ExtendedResponse;

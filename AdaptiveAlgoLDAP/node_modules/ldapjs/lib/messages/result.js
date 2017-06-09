@@ -1,6 +1,6 @@
 // Copyright 2011 Mark Cavage, Inc.  All rights reserved.
 
-var assert = require('assert-plus');
+var assert = require('assert');
 var util = require('util');
 
 var asn1 = require('asn1');
@@ -10,21 +10,38 @@ var LDAPMessage = require('./message');
 var Protocol = require('../protocol');
 
 
+
 ///--- Globals
 
 var Ber = asn1.Ber;
 var BerWriter = asn1.BerWriter;
 
 
+
 ///--- API
 
 function LDAPResult(options) {
-  options = options || {};
-  assert.object(options);
-  assert.optionalNumber(options.status);
-  assert.optionalString(options.matchedDN);
-  assert.optionalString(options.errorMessage);
-  assert.optionalArrayOfString(options.referrals);
+  if (options) {
+    if (typeof (options) !== 'object')
+      throw new TypeError('options (object) required');
+    if (options.status && typeof (options.status) !== 'number')
+      throw new TypeError('options.status must be a number');
+    if (options.matchedDN && typeof (options.matchedDN) !== 'string')
+      throw new TypeError('options.matchedDN must be a string');
+    if (options.errorMessage && typeof (options.errorMessage) !== 'string')
+      throw new TypeError('options.errorMessage must be a string');
+
+    if (options.referrals) {
+      if (!(options.referrals instanceof Array))
+        throw new TypeError('options.referrrals must be an array[string]');
+      options.referrals.forEach(function (r) {
+        if (typeof (r) !== 'string')
+          throw new TypeError('options.referrals must be an array[string]');
+      });
+    }
+  } else {
+    options = {};
+  }
 
   LDAPMessage.call(this, options);
 
@@ -34,14 +51,12 @@ function LDAPResult(options) {
   this.referrals = options.referrals || [];
 
   this.connection = options.connection || null;
+
+  this.__defineGetter__('type', function () { return 'LDAPResult'; });
 }
 util.inherits(LDAPResult, LDAPMessage);
-Object.defineProperties(LDAPResult.prototype, {
-  type: {
-    get: function getType() { return 'LDAPResult'; },
-    configurable: false
-  }
-});
+module.exports = LDAPResult;
+
 
 LDAPResult.prototype.end = function (status) {
   assert.ok(this.connection);
@@ -78,6 +93,7 @@ LDAPResult.prototype.end = function (status) {
 
 };
 
+
 LDAPResult.prototype._parse = function (ber) {
   assert.ok(ber);
 
@@ -96,6 +112,7 @@ LDAPResult.prototype._parse = function (ber) {
   return true;
 };
 
+
 LDAPResult.prototype._toBer = function (ber) {
   assert.ok(ber);
 
@@ -112,6 +129,7 @@ LDAPResult.prototype._toBer = function (ber) {
   return ber;
 };
 
+
 LDAPResult.prototype._json = function (j) {
   assert.ok(j);
 
@@ -122,8 +140,3 @@ LDAPResult.prototype._json = function (j) {
 
   return j;
 };
-
-
-///--- Exports
-
-module.exports = LDAPResult;

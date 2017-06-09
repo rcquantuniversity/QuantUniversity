@@ -1,9 +1,10 @@
-var assert = require('assert-plus');
+var assert = require('assert');
 var util = require('util');
 
 var asn1 = require('asn1');
 
 var Control = require('./control');
+
 
 
 ///--- Globals
@@ -12,11 +13,13 @@ var BerReader = asn1.BerReader;
 var BerWriter = asn1.BerWriter;
 
 
+
 ///--- API
 
 function PagedResultsControl(options) {
-  assert.optionalObject(options);
-  options = options || {};
+  if (!options)
+    options = {};
+
   options.type = PagedResultsControl.OID;
   if (options.value) {
     if (Buffer.isBuffer(options.value)) {
@@ -29,14 +32,15 @@ function PagedResultsControl(options) {
     options.value = null;
   }
   Control.call(this, options);
+
+  var self = this;
+  this.__defineGetter__('value', function () {
+    return self._value || {};
+  });
 }
 util.inherits(PagedResultsControl, Control);
-Object.defineProperties(PagedResultsControl.prototype, {
-  value: {
-    get: function () { return this._value || {}; },
-    configurable: false
-  }
-});
+module.exports = PagedResultsControl;
+
 
 PagedResultsControl.prototype.parse = function parse(buffer) {
   assert.ok(buffer);
@@ -55,6 +59,7 @@ PagedResultsControl.prototype.parse = function parse(buffer) {
 
   return false;
 };
+
 
 PagedResultsControl.prototype._toBer = function (ber) {
   assert.ok(ber);
@@ -75,13 +80,12 @@ PagedResultsControl.prototype._toBer = function (ber) {
   ber.writeBuffer(writer.buffer, 0x04);
 };
 
+
 PagedResultsControl.prototype._json = function (obj) {
   obj.controlValue = this.value;
   return obj;
 };
 
+
+
 PagedResultsControl.OID = '1.2.840.113556.1.4.319';
-
-
-///--- Exports
-module.exports = PagedResultsControl;

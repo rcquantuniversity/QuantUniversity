@@ -1,6 +1,6 @@
 // Copyright 2011 Mark Cavage, Inc.  All rights reserved.
 
-var assert = require('assert-plus');
+var assert = require('assert');
 var util = require('util');
 
 var dtrace = require('../dtrace');
@@ -15,19 +15,18 @@ var Protocol = require('../protocol');
 // not such a one-off.
 
 function UnbindResponse(options) {
-  options = options || {};
-  assert.object(options);
+  if (!options)
+    options = {};
+  if (typeof (options) !== 'object')
+    throw new TypeError('options must be an object');
 
   options.protocolOp = 0;
   LDAPMessage.call(this, options);
+  this.__defineGetter__('type', function () { return 'UnbindResponse'; });
 }
 util.inherits(UnbindResponse, LDAPMessage);
-Object.defineProperties(UnbindResponse.prototype, {
-  type: {
-    get: function getType() { return 'UnbindResponse'; },
-    configurable: false
-  }
-});
+module.exports = UnbindResponse;
+
 
 /**
  * Special override that just ends the connection, if present.
@@ -57,11 +56,7 @@ UnbindResponse.prototype.end = function (status) {
   }
 };
 
+
 UnbindResponse.prototype._json = function (j) {
   return j;
 };
-
-
-///--- Exports
-
-module.exports = UnbindResponse;
