@@ -24,7 +24,7 @@
                 <thead>
                     <tr>
                         <th>Project Name</th>
-                        <th colspan="2">Action</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,11 +35,11 @@
                                 Start Lab
                             </a>
                         </td>
-                        <td>
+                        <!-- <td>
                             <a class="btn btn-primary btn-rounded btn-bordred" ng-click="model.stopLab(image.imageName)">
                                 Stop Lab
                             </a>
-                        </td>                        
+                        </td> -->                        
                     </tr>
                 </tbody>
             </table>
@@ -50,13 +50,18 @@
 <modal id="startModal">
     <div class="modal">
         <div class="modal-body">
+            <div class="closeIcon">
+                <button ng-click="model.closeModal('startModal');"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+            </div>
             <div id="mydiv">
                 <!--<input id="url" type="text" value="https://en.wikipedia.org"/>-->
                 <iframe id="frame" src="" width="100%" height="500" style="border: none">
                 </iframe>
             </div>
-            <div class="closeBtn">
-                <button ng-click="model.closeModal('startModal');">Close</button>
+            <div class="closeBtn">                
+                <a class="btn btn-primary btn-rounded btn-bordred" ng-click="model.stopLab(image.imageName)">
+                    Stop Lab
+                </a>
             </div>
         </div>
     </div>

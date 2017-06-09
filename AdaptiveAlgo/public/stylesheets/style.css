@@ -428,3 +428,20 @@ body.modal-open {
   margin: 20px 0;
   text-align: center;
 }
+
+.closeIcon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.closeIcon button {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+}
+
+.closeIcon button i {
+  font-size: 40px;
+  color: #337ab7;
+}
