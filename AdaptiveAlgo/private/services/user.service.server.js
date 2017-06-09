@@ -51,6 +51,7 @@ module.exports = function (app, model) {
     }
 
     function listAllImagesForStudent(req, res) {
+        // Add userid and permission parameters
         model
             .dockerImageModel
             .getImagesForStudent()
@@ -65,22 +66,30 @@ module.exports = function (app, model) {
     }
     
     function listAllImages(req, res) {
+        var logger = require('./logger.js');
         model
             .dockerImageModel
             .getImagesForUser(req.user.id)
             .then(
                 function (images) {
+                    logger.log('Info','Returning all images for instructor : '+req.user.id);
                     res.json(images);
                 },
                 function (err) {
                     res.sendStatus(400).send(err);
+                    logger.log('Error','Could not return images for instructor : '+req.user.id);
                 }
             );
     }
 
     function uploadToDockerHub(req, res) {
-        console.log("Here : ", req.body);
+        var logger = require('./logger.js');
         var imageName = req.body.imageName;
+
+
+        // *******************************************
+        // Check for image first and then upload
+
 
         // try {
         //     var myVar = setInterval(function () {
@@ -111,8 +120,13 @@ module.exports = function (app, model) {
         // while(waitTill > new Date()) {}
 
         docker.command('tag'+' '+imageName+' '+ "jdadaptivealgo" +'/'+imageName, function(err, data){
+            logger.log('Info','Image is tagged successfully');
+            console.log(data);
+            console.log(err);
             docker.command('push'+' '+ "jdadaptivealgo" +'/'+imageName, function(err, data){
                 console.log(data);
+                console.log(err);
+                logger.log('Info','Image is pushed to DockerHub successfully');
                 return res.sendStatus(200);
             });
         });

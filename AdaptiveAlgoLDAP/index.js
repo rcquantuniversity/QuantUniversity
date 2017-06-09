@@ -29,9 +29,9 @@ var authenticate = function (username, password) {
 	});
 };
 
-app.get('/authenticate', function (req, res) {
-	if(req.query.username && req.query.password) {
-		authenticate(req.query.username, req.query.password)
+app.post('/authenticate', function (req, res) {
+	if(req.body.username && req.body.password) {
+		authenticate(req.body.username, req.body.password)
 			.then(function(user) {
 				var expires = parseInt(moment().add(2, 'days').format("X"));
 				var token = jwt.encode({

@@ -3,12 +3,23 @@
         .module("AdaptiveAlgoApp")
         .controller("LoginController", LoginController);
 
-    function LoginController($location, UserService) {
+    function LoginController($location, UserService, $http) {
         var vm = this;
 
         vm.login = login;
         function init() {
 
+            //testing
+            var credential = {"username" : "jdoe", "password" : "jdoe"};
+            $http.post('http://localhost:3000/authenticate',credential)
+                .then(
+                    function (data) {
+                        console.log(data);
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
         }
         init();
         
