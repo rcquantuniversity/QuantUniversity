@@ -55,8 +55,8 @@
                 .startLab(imageName)
                 .then(
                     function (labURL) {
-                        // vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/user/a/notebooks/Untitled.ipynb';
-                        vm.notebookUrl = 'https://www.google.com/';
+                        vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/user/a/notebooks/Untitled.ipynb';
+                        // vm.notebookUrl = 'https://www.google.com/';
                         //console.log(labURL);
                         //console.log(labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",''));
                         //vm.isNotebookLoaded = true;

@@ -154,57 +154,66 @@ module.exports = function (app, model) {
     // }
 
     function createDockerImage(req, res) {
+        var logger = require('./logger.js');
         var PythonShell = require('python-shell');
 
         PythonShell.run('./private/services/dockerimage_generator.py', function (err) {
             if (err) {
-                console.log(err);
+                logger.log('Error','Could not generate docker image due to below error');
+                logger.log(err);
             }
-
-        return res.sendStatus(200);
+            logger.log('Info','Docker Image created successfully');
+            return res.sendStatus(200);
         });
     }
 
     function createOutputJSON(req, res) {
+        var logger = require('./logger.js');
         var imageName = req.params.imageName + Date.now().toString();
         var packageList = req.body;
         var output = {"username": req.user.username ,"name" : imageName, "data" : packageList};
 
         //*****************************************************************
-        //put image details in Image database
+        // put image details in Image database
         // check if image is created or not then do this
         model
             .dockerImageModel
             .saveDockerImageFile(req.user, imageName, output)
             .then(
                 function () {
-                    console.log("DockerImage details saved in database and file");
+                    logger.log("Info","DockerImage details saved in database");
                 },
                 function () {
-                    console.log("Error saving Image details");
+                    logger.log("Error","Error saving Image details in database");
                 }
             );
 
         var file = './private/services/output.json';
         jsonfile.writeFile(file, output, function (err) {
             if (err) {
-                console.error(err);
+                logger.log("Error","DockerImage details could not be saved in JSON file due to error below");
+                logger.log("Error",err);
                 return res.sendStatus(400).send(err);
             } else {
+                logger.log("Info","DockerImage details saved in JSON file successfully");
                 return res.json(imageName);
             }
         });
     }
     
     function getAllPackages(req, res) {
+        var logger = require('./logger.js');
         model
             .packagesModel
             .getAllPackages()
             .then(
                 function (allPackages) {
+                    logger.log("Info","All packages returned successfully");
                     res.json(allPackages);
                 },
                 function (err) {
+                    logger.log("Error","Could not return packages due to error below");
+                    logger.log("Error",err);
                     res.sendStatus(400).send(err);
                 }
             );
