@@ -23,7 +23,7 @@
                         <thead>
                             <tr>
                                 <th>Project Name</th>
-                                <th colspan="2">Actions</th>
+                                <th colspan="4">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,13 +32,29 @@
                                 <td>
                                     <a class="btn btn-primary btn-rounded btn-bordred"
                                        ng-click="model.uploadToDockerHub(image.imageName)">
-                                        Upload to DockerHub
+                                        <i class="fa fa-docker"></i>
+                                        <span>Publish to DockerHub</span>
                                     </a>
                                 </td>
                                 <td>
                                     <a class="btn btn-primary btn-rounded btn-bordred"
                                        ng-click="model.uploadToS3(image.imageName)">
-                                        Upload to S3
+                                       <i class="fa fa-amazon" aria-hidden="true"></i>
+                                        <span>Publish to S3</span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-rounded btn-bordred"
+                                       ng-click="">
+                                        <i class="fa fa-github" aria-hidden="true"></i>
+                                        <span>Publish to GitHub</span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-rounded btn-bordred"
+                                       ng-click="">
+                                       <i class="fa fa-download" aria-hidden="true"></i>
+                                        <span>Download</span>
                                     </a>
                                 </td>
                             </tr>

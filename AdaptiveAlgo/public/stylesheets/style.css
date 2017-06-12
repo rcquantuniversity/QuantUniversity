@@ -281,6 +281,15 @@ input[type="checkbox"]:checked + label::after {
   padding: 0 25px;
 }
 
+.buildDockerPage td i {
+  position: relative;
+  top: 1px;
+}
+
+.buildDockerPage td span {
+  padding-left: 5px;
+}
+
 .logout {
   text-align: right;
   padding: 30px 0;
