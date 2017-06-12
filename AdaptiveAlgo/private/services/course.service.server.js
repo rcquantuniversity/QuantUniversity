@@ -75,7 +75,7 @@ module.exports = function (app, model) {
     function startLab(req, res) {
         var imageName = req.body.imageName;
         var moduleName = "Risk Analysis";
-        var imageInfo = {imageName : imageName, module : moduleName};
+        var imageInfo = {imageName : imageName, module : moduleName, username : req.user.username};
         var jsonFile = require('jsonfile');
         var file = './private/services/temp/labInfo.json';
         jsonFile.writeFile(file, imageInfo , function(err) {
