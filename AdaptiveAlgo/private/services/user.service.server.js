@@ -72,15 +72,18 @@ module.exports = function (app, model) {
     }
 
     function listAllImagesForStudent(req, res) {
+        var logger = require('./logger.js');
         // Add userid and permission parameters
         model
             .dockerImageModel
             .getImagesForStudent()
             .then(
                 function (images) {
+                    logger.log('Info','Returning images for student');
                     res.json(images);
                 },
                 function (err) {
+                    logger.log('Error','Could not return images for student');
                     res.sendStatus(400).send(err);
                 }
             );
@@ -273,21 +276,26 @@ module.exports = function (app, model) {
     app.post('/api/login', passport.authenticate('local'), login);
 
     function registerUser(req, res) {
+        var logger = require('./logger.js');
         var user = req.body;
         model
             .userModel
             .createUser(user)
             .then(
                 function () {
+                    logger.log('Info','User registered successfully');
                     res.sendStatus(200);
                 },
                 function (err) {
+                    logger.log('Error','User registration failed due to error below');
+                    logger.log('Error',err);
                     res.sendStatus(400).send(err);
                 }
             );
     }
 
     function localStrategy(username, password, done) {
+        var logger = require('./logger.js');
         model
             .userModel
             .findUserByUsername(username)
