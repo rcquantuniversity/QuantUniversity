@@ -3,6 +3,7 @@ import luigi
 import paramiko
 import time
 import json
+import os
 from luigi.mock import MockFile
 from scp import SCPClient
 
@@ -13,13 +14,17 @@ class ParseParameters(luigi.Task):
         return MockFile('InstanceParams')
 
     def run(self):
+        service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
+        with open(service_dir+'/start_params.json') as data_file:    
+            data = json.load(data_file)
         params = dict()
-        params['Image'] = 'jhub/header-test'
-        params['Module'] = 'Risk Analysis8'
+        params['Image'] = data['imageName']
+        params['Module'] = data['module']
+        params['Username'] = data['username']
+        print(params)
         _out = self.output().open('w')
         json.dump(params,_out)
         _out.close()
-
 
 class StartInstanceTask(luigi.Task):
     task_namespace = 'aws'
@@ -46,6 +51,7 @@ class StartInstanceTask(luigi.Task):
         for instance in instances:
             counter = counter + 1
         if counter>0:
+
             print('Module already started. Restart the service ' + instance.public_ip_address)
             _out = self.output().open('w')
             _out.write(instance.public_ip_address)
@@ -56,7 +62,7 @@ class StartInstanceTask(luigi.Task):
             #print(ins.id)
 
         imgid = ''
-        filter = {'Name': 'name', 'Values' : ['testone']}
+        filter = {'Name': 'name', 'Values' : ['jeff']}
         for img in ec2.images.filter(Filters = [filter]):
             imgid = img.id
             print(imgid)
@@ -103,8 +109,31 @@ class StartInstanceTask(luigi.Task):
         #_out.write('52.41.21.8')
         _out.close()
         #sleep for VM initialization
-        time.sleep(90) 
+        time.sleep(70) 
+        #efs init
+        k = paramiko.RSAKey.from_private_key_file('/home/parallels/.ssh/adaptivealgo.pem')
+        c = paramiko.SSHClient()
+        c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        print ('connecting')
+        c.connect( hostname = new_ip, username = 'ec2-user', pkey = k)
+        print ('connected')
 
+        commands = ['sudo service docker stop',
+                    'sleep 5',
+                    'sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-8430e32d.efs.us-west-2.amazonaws.com:/ nbdata',
+                    'sleep 5',
+                    'sudo service docker start']
+        #stop docker 
+        #mount efs
+        #start docker
+        for command in commands:
+        	print ('Executing {}'.format( command ))
+        	stdin , stdout, stderr = c.exec_command(command)
+        	print (stdout.read())
+        	print ('Errors')
+        	print (stderr.read())
+        c.close()
+    
 class StartHubTask(luigi.Task):
     task_namespace = 'aws'
 
@@ -118,7 +147,9 @@ class StartHubTask(luigi.Task):
             params = json.load(infile)
 
         DOCKER_NOTEBOOK_IMAGE = params['Image']
-
+        USER_NAME = params['Username']
+        USER_DIR_NAME = 'jhub-'+USER_NAME
+        #todo: override .env
         with open('./private/services/.env', 'a') as envfile:
             envfile.write('\n')
             envfile.write('DOCKER_NOTEBOOK_IMAGE=' + DOCKER_NOTEBOOK_IMAGE)
@@ -140,8 +171,27 @@ class StartHubTask(luigi.Task):
 
         with SCPClient(c.get_transport()) as scp:
             scp.put('./private/services/.env', '/home/ec2-user/jupyterhub-deploy-docker')
+        
+        #is the image on local machine?
+        commands = ['docker images -q '+DOCKER_NOTEBOOK_IMAGE]
+        for command in commands:
+            print ('Executing {}'.format( command ))
+            stdin , stdout, stderr = c.exec_command(command)
+            returnVal = stdout.read()
+            print (returnVal)
+            if(returnVal.decode("utf-8") != ''):
+                print('image exists on local')
+                isOnLocalMachine = True
+            print ('Errors')
+            print (stderr.read())
 
-        commands = [ 'ls','docker pull '+DOCKER_NOTEBOOK_IMAGE, 'cd /home/ec2-user/jupyterhub-deploy-docker; docker-compose up -d; docker-compose up -d']
+        commands = ['ls','docker pull '+DOCKER_NOTEBOOK_IMAGE, 'sleep 5',
+                    'mkdir -p /home/ec2-user/nbdata/'+USER_DIR_NAME, 'sudo chown 1000 /home/ec2-user/nbdata/'+USER_DIR_NAME, 
+                    'cd /home/ec2-user/jupyterhub-deploy-docker; docker-compose up -d; docker-compose up -d'
+                    ]
+        #if image exists, skip pulling
+        # if(isOnLocalMachine == True):
+        #     del commands[1]
         for command in commands:
         	print ('Executing {}'.format( command ))
         	stdin , stdout, stderr = c.exec_command(command)
