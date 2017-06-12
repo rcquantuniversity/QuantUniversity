@@ -32,5 +32,12 @@ $(document).ready(function() {
         $('#uploadFile').val(filename);
     });
 
+    var headerHeight = $('header').height();
+    var windowHeight = $(window).height();
+    var footerheight = $('footer').height();
+
+    var minheight = windowHeight - headerHeight - footerheight;
+    $('#backgroundImage').css('min-height', minheight);
+
     Dropzone.autoDiscover = false;
 });

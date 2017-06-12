@@ -1,8 +1,8 @@
 <div id="backgroundImage" class="rc-background-login">
     <div class="row rc-login-top-margin">
-        <div class="col-md-3"></div>
-        <div class="col-md-6 rc-margin">
-            <h2 class="text-center">Welcome !</h2>
+        <div class="col-md-4"></div>
+        <div class="col-md-4 rc-margin loginBox card-box">
+            <h2 class="text-center">Login</h2>
             <br>
             <form name = "loginpage">
                 <div class="form-group">
@@ -25,15 +25,17 @@
                            required>
                 </div>
                 <div>
-                    <input class="btn btn-block rc-login-button"
+                    <input class="btn btn-block btn-primary btn-bordered"
                            type="submit"
                            ng-click="loginpage.$valid && model.login(model.user)"
                            value="Login">
                 </div><br>
-                <a class="wbdv-left-right-margin pull-right wbdv-font-color-white"
-                   href="#/register">Not A Member?</a>
+                <div class="additionalLinks">
+                  <a class="wbdv-left-right-margin pull-left wbdv-font-color-white" href="#/reset">Forgot Password?</a>
+                  <a class="wbdv-left-right-margin pull-right wbdv-font-color-white" href="#/register">Already have an account?</a>
+                </div>
             </form>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-4"></div>
     </div>
 </div>

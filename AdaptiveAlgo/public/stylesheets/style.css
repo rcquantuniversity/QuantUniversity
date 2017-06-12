@@ -6,6 +6,8 @@ body {
 *:focus {
   outline: none !important;
   text-decoration: none !important;
+  border-color: #ccc !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075) !important;
 }
 
 .rc-background-login {
@@ -18,7 +20,7 @@ body {
   top:0;
   left:0;
   min-width: 100%;
-  min-height: 550px;
+  // min-height: 550px;
 }
 
 .rc-login-button {
@@ -282,7 +284,7 @@ input[type="checkbox"]:checked + label::after {
 
 .logout {
   text-align: right;
-  padding: 20px 0;
+  padding: 30px 0;
 }
 
 .logout a {
@@ -337,7 +339,7 @@ footer {
 }
 
 .mainContent {
-  padding-top: 82px;
+  padding-top: 100px;
 }
 
 .ng-scope:after {
@@ -444,4 +446,23 @@ body.modal-open {
 .closeIcon button i {
   font-size: 40px;
   color: #337ab7;
+}
+
+.logo img {
+  position: relative;
+  top: -2px;
+}
+
+.loginBox {
+  background-color: #fff;
+  padding: 15px 25px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+.loginBox h2, .loginBox label, .loginBox a {
+  color: #435966;
 }
