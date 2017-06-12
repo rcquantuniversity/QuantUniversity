@@ -20,7 +20,6 @@ body {
   top:0;
   left:0;
   min-width: 100%;
-  // min-height: 550px;
 }
 
 .rc-login-button {
@@ -456,11 +455,6 @@ body.modal-open {
 .loginBox {
   background-color: #fff;
   padding: 15px 25px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
 }
 
 .loginBox h2, .loginBox label, .loginBox a {
