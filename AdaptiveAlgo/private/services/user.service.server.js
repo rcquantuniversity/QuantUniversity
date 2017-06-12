@@ -13,9 +13,9 @@ module.exports = function (app, model) {
     app.get("/api/listAllImages", listAllImages);
     app.get("/api/listAllImagesForStudent", listAllImagesForStudent);
     app.post("/api/addPackage", addPackage);
+    app.get("/api/getUserPackageFile", getUserPackageFile);
 
     var request = require('request');
-    var jsonfile = require('jsonfile');
     var dockerCLI = require('docker-cli-js');
     var DockerOptions = dockerCLI.Options;
     var Docker = dockerCLI.Docker;
@@ -30,6 +30,27 @@ module.exports = function (app, model) {
         });
     }
     init();
+
+    function getUserPackageFile(req, res) {
+        var logger = require('./logger.js');
+        var jsonfile = require('jsonfile');
+        // var file = './private/services/' + 'i1' + '/' + filename +'.json';
+        var file = './private/services/' + req.user.username + '/' + req.body.fileName +'.json';
+        try {
+            jsonfile.readFile(file, function(err, obj) {
+                if (err) {
+                    throw err;
+                } else {
+                    console.log(obj);
+                    res.json(obj);
+                }
+            });
+        }catch (ex) {
+            logger.log('Error','File Read in getUserPackageFile() unsuccessful');
+            logger.log('Error',ex);
+            res.sendStatus(400).send(ex);
+        }
+    }
 
     function addPackage(req, res) {
         var logger = require('./logger.js');
@@ -188,6 +209,7 @@ module.exports = function (app, model) {
                 }
             );
 
+        var jsonfile = require('jsonfile');
         var file = './private/services/output.json';
         jsonfile.writeFile(file, output, function (err) {
             if (err) {
