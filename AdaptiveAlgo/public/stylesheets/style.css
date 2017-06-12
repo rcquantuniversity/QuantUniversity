@@ -504,3 +504,7 @@ body.modal-open {
 .marginBottom30 .card-box {
   margin-bottom: 0;
 }
+
+#customImportSection .form-grp {
+  margin-bottom: 0;
+}
