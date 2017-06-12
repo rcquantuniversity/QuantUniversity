@@ -32,5 +32,12 @@ $(document).ready(function() {
         $('#uploadFile').val(filename);
     });
 
+    $('#importBtn').on('change', function() {
+        var value = $(this).val();
+        var path = value; 
+        var filename = path.replace(/^.*\\/, ""); 
+        $('#importFile').val(filename);
+    });
+
     Dropzone.autoDiscover = false;
 });

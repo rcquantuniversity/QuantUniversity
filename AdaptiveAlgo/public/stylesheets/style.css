@@ -218,7 +218,7 @@ input[type="checkbox"]:checked + label::after {
   padding-left: 25px;
 }
 
-#uploadFile {
+#uploadFile, #importFile {
   width: 85%;
   float: left;
   border-radius: 0;
@@ -459,4 +459,39 @@ body.modal-open {
 
 .loginBox h2, .loginBox label, .loginBox a {
   color: #435966;
+}
+
+.separatorOr {
+  padding: 10px 0 5px;
+}
+
+.separatorOr p {
+  margin-bottom: 0;
+  position: relative;
+  text-align: center;
+}
+
+.separatorOr p span {  
+  background-color: #ebeff2;
+  position: relative;
+  z-index: 1;
+  padding: 0 10px;
+}
+
+.separatorOr p:after {
+  content: '';
+  width: 100%;
+  background-color: #000;
+  height: 1px;
+  display: block;
+  position: absolute;
+  top: 9px;
+}
+
+.marginBottom30 {
+  margin-bottom: 30px;
+}
+
+.marginBottom30 .card-box {
+  margin-bottom: 0;
 }

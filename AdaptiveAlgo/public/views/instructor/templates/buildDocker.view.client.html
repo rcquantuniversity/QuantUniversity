@@ -176,8 +176,39 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    Upload JSON
+                <div class="row">
+                    <div class="col-md-12 marginBottom30">
+                        <div class="separatorOr">
+                            <p><span>OR</span></p>
+                        </div>
+                        <div class="checkbox">
+                            <input id="customImport" type="checkbox" data-toggle="collapse" data-target="#customImportSection">
+                            <label for="customImport">
+                                Would you like to import your own custom files? <i>(only .zip files)</i>
+                            </label>
+                        </div>
+                        <div id="customImportSection" class="card-box panel-default collapse">
+                            <div class="header-title panel-heading">
+                                Import Custom File
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-6">
+                                    <input id="importFile" class="form-control" placeholder="Choose File" disabled="disabled" accept="application/zip" />
+                                    <div class="fileUpload btn btn-primary">
+                                        <span>Upload</span>
+                                        <input id="importBtn" type="file" class="upload" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-grp">
+                                        <div class="input-group fullWidth">
+                                            <input type="text" class="form-control" ng-model="model.location" id="location" placeholder="Specify the Location" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -302,3 +333,4 @@
         </div>
     </div>
 </div>
+<script src="javascripts/dynamic-height.js"></script>
