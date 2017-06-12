@@ -3,6 +3,7 @@ import luigi
 import paramiko
 import time
 import json
+import os
 from luigi.mock import MockFile
 from scp import SCPClient
 
@@ -13,9 +14,14 @@ class ParseParameters(luigi.Task):
         return MockFile('InstanceParams')
 
     def run(self):
+        service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
+        with open(service_dir+'/stop_params.json') as data_file:    
+            data = json.load(data_file)
         params = dict()
-        params['Approach'] = 'Down'
-        params['Module'] = 'Risk Analysis8'
+        params['Approach'] = data['approach']
+        params['Module'] = data['module']
+        params['Username'] = data['username']
+        print(params)
         _out = self.output().open('w')
         json.dump(params,_out)
         _out.close()
@@ -72,8 +78,40 @@ class StopTask(luigi.Task):
             ips = infile.read().splitlines()
         ip = ips[0]
         print(ip)
-
-        #approach choosing
+        #make ssh connection
+        k = paramiko.RSAKey.from_private_key_file('./private/services/adaptivealgo.pem')
+        c = paramiko.SSHClient()
+        c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        print ('connecting')
+        c.connect( hostname = ip, username = 'ec2-user', pkey = k)
+        print ('connected')
+        
+        
+        #stop Jupyterhub service and all containers
+        if (params['Approach']) == 'Exit':
+            #get container id
+            USERNAME = params['Username']
+            commands = ['docker ps -aqf \"name=' + 'jupyter-' + USERNAME +'\"']
+            for command in commands:
+                print ('Executing {}'.format( command ))
+                stdin , stdout, stderr = c.exec_command(command)
+                returnVal = stdout.read()
+                print (returnVal)
+                if(returnVal.decode("utf-8") == ''):
+                    print('no such container named ' + USERNAME)
+                    c.close()
+                    return
+                print('container found')
+                CONTAINER_ID = returnVal.decode("utf-8")
+                print ('Errors')
+                print (stderr.read())
+            commands = ['docker rm -f ' + CONTAINER_ID]
+            for command in commands:
+                print ('Executing {}'.format( command ))
+                stdin , stdout, stderr = c.exec_command(command)
+                print (stdout.read())
+                print ('Errors')
+                print (stderr.read())
         #terminate the AWS instance
         if (params['Approach']) == 'Terminate':
             ec2 = boto3.resource('ec2')
@@ -82,15 +120,8 @@ class StopTask(luigi.Task):
             for instance in instances:
                 target_ins=instance
             target_ins.terminate()
-        #stop Jupyterhub service and all containers
+        #shutdown the service
         if (params['Approach']) == 'Down':
-            k = paramiko.RSAKey.from_private_key_file('./private/services/adaptivealgo.pem')
-            c = paramiko.SSHClient()
-            c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            print ('connecting')
-            c.connect( hostname = ip, username = 'ec2-user', pkey = k)
-            print ('connected')
-
             commands = [ 'ls', 'cd jupyterhub-deploy-docker; docker-compose down']
             for command in commands:
                 print ('Executing {}'.format( command ))
@@ -98,7 +129,6 @@ class StopTask(luigi.Task):
                 print (stdout.read())
                 print ('Errors')
                 print (stderr.read())
-            c.close()
-
+        c.close()
 if __name__ == '__main__':
     luigi.run(['aws.StopTask', '--local-scheduler'])
