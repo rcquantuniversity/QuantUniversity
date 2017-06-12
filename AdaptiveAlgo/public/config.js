@@ -27,6 +27,11 @@
                 controller: "RegisterController",
                 controllerAs: "model"
             })
+            .when("/reset", {
+                templateUrl: "views/user/templates/reset.view.client.html",
+                controller: "ResetController",
+                controllerAs: "model"
+            })
             .when("/user/student", {
                 templateUrl: "views/student/templates/student.view.client.html",
                 controller: "StudentController",

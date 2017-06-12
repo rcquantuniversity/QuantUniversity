@@ -2,26 +2,17 @@
     <div class="row rc-login-top-margin">
         <div class="col-md-4"></div>
         <div class="col-md-4 rc-margin loginBox card-box">
-            <h2 class="text-center">Sign In</h2>
+            <h2 class="text-center">Reset Password</h2>
             <br>
             <form name = "loginpage">
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input ng-model="model.user.username"
-                           type="text"
+                    <label for="email">Email ID</label>
+                    <input ng-model="model.user.email"
+                           type="email"
                            class="form-control"
-                           id="username"
-                           placeholder="Username"
+                           id="email"
+                           placeholder="Email ID"
                            autofocus
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input ng-model="model.user.password"
-                           type="password"
-                           class="form-control"
-                           id="password"
-                           placeholder="Password"
                            required>
                 </div>
                 <div>
@@ -31,7 +22,7 @@
                            value="Login">
                 </div><br>
                 <div class="additionalLinks">
-                  <a class="wbdv-left-right-margin pull-left wbdv-font-color-white" href="#/reset">Forgot Password?</a>
+                  <a class="wbdv-left-right-margin pull-left wbdv-font-color-white" href="#/login">Go Back to Login</a>
                   <a class="wbdv-left-right-margin pull-right wbdv-font-color-white" href="#/register">Don't have an account?</a>
                 </div>
             </form>
