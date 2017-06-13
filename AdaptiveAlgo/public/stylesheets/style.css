@@ -508,3 +508,23 @@ body.modal-open {
 #customImportSection .form-grp {
   margin-bottom: 0;
 }
+
+.palette.table > thead > tr > th {
+  border-bottom: 0;
+  border: 1px solid #ddd;
+  color: #fff;
+  background-color: #337ab7;
+}
+
+.palette {
+  margin-top: 20px;
+}
+
+.palette i {
+  font-size: 20px;
+}
+
+.projectsList .btn {
+  padding: 2px 6px;
+  font-size: 20px;
+}
