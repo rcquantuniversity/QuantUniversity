@@ -19,7 +19,7 @@
 					</h4>
                 </div>
             </div>
-            <form action="" method="post" id="buildDockerForm" enctype="multipart/form-data">
+            <form action="" method="post" id="buildDockerForm" enctype="multipart/form-data" name="model.upload_form">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card-box panel-default">
@@ -47,7 +47,13 @@
                                 <input id="uploadFile" class="form-control" placeholder="Choose File" disabled="disabled" />
                                 <div class="fileUpload btn btn-primary">
                                     <span>Upload</span>
-                                    <input id="uploadBtn" type="file" class="upload" />
+                                    <input 
+                                        id="uploadBtn"
+                                        type="file"
+                                        ngf-select
+                                        ng-model="model.file"
+                                        name="file"
+                                        class="upload" />
                                 </div>
                                 <!-- <button ng-click = "uploadFile()">upload me</button> -->
                             </div>
@@ -287,15 +293,15 @@
 					   required> -->
                         </div>
                         <div class="col-md-4 alignCenter">
-                            <a class="btn btn-primary btn-bordred" ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName)">
+                            <a class="btn btn-primary btn-bordred" ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName); model.submit();">
         						Create Docker Image
         					</a>
                         </div>
                         <div class="col-md-4">
-                            <!-- <a class="btn btn-primary btn-block"
-						ng-click="model.showAllImages()">
-						List All Images
-					</a> -->
+                            <!-- <button type="submit" class="btn btn-primary btn-block"
+        						ng-click="model.submit()">
+        						Submit
+        					</button> -->
                         </div>
                     </div>
                     <div class="col-md-2"></div>
