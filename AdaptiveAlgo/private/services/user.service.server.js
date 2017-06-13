@@ -34,22 +34,18 @@ module.exports = function (app, model) {
     function getUserPackageFile(req, res) {
         var logger = require('./logger.js');
         var jsonfile = require('jsonfile');
-        // var file = './private/services/' + 'i1' + '/' + filename +'.json';
-        var file = './private/services/' + req.user.username + '/' + req.body.fileName +'.json';
-        try {
+        var file = './private/services/i1/PackageFile1.json';
+        // var file = './private/services/' + req.user.username + '/' + req.body.fileName +'.json';
             jsonfile.readFile(file, function(err, obj) {
                 if (err) {
-                    throw err;
+                    logger.log('Error','File Read in getUserPackageFile() unsuccessful');
+                    logger.log('Error',err);
+                    res.sendStatus(400).send(err);
                 } else {
                     console.log(obj);
                     res.json(obj);
                 }
             });
-        }catch (ex) {
-            logger.log('Error','File Read in getUserPackageFile() unsuccessful');
-            logger.log('Error',ex);
-            res.sendStatus(400).send(ex);
-        }
     }
 
     function addPackage(req, res) {
@@ -182,6 +178,7 @@ module.exports = function (app, model) {
         var PythonShell = require('python-shell');
 
         PythonShell.run('./private/services/dockerimage_generator.py', function (err) {
+            console.log(err);
             if (err) {
                 logger.log('Error','Could not generate docker image due to below error');
                 logger.log(err);

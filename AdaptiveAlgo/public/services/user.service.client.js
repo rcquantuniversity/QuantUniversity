@@ -19,9 +19,14 @@
             "uploadToDockerHub" : uploadToDockerHub,
             "listAllImages" : listAllImages,
             "listAllImagesForStudent" : listAllImagesForStudent,
-            "addPackage" : addPackage
+            "addPackage" : addPackage,
+            "getPackageFromJSON" : getPackageFromJSON
         };
         return api;
+
+        function getPackageFromJSON() {
+            return $http.get("/api/getUserPackageFile");
+        }
 
         function addPackage(base, package) {
             var packageJSON = {"base" : base, "package" : package};
