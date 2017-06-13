@@ -12,8 +12,8 @@
 	    		.findCurrentUser()
 	    		.then(
 	    			function(user) {
+	    				vm.userData = user.data;
 	    				vm.userType = user.data.userType;
-	    				console.log(vm.userType);
 	    			},
 	    			function(err) {
 	    				vm.err = "No User Found";
