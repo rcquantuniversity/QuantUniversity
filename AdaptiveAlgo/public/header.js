@@ -7,6 +7,21 @@
 
 	    vm.logout = logout;
 
+	    function init() {
+	    	UserService
+	    		.findCurrentUser()
+	    		.then(
+	    			function(user) {
+	    				vm.userType = user.data.userType;
+	    				console.log(vm.userType);
+	    			},
+	    			function(err) {
+	    				vm.err = "No User Found";
+	    			}
+	    		);
+	    }
+	    init();
+
 	    function logout() {
 	        UserService
 	            .logout()

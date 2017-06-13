@@ -1,8 +1,20 @@
 <header id="topnav">
     <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <div class="logo">
+        <div class="col-md-4" ng-switch="model.userType">
+            <div ng-switch-when = 'INSTRUCTOR'" class="logo">
+                <a href="/#/instructor/listImages">
+                    <img src="images/logo.png">
+                    QU <span>Sandbox</span>
+                </a>
+            </div>
+            <div ng-switch-when = 'STUDENT'" class="logo">
+                <a href="/#/student/availableProjects">
+                    <img src="images/logo.png">
+                    QU <span>Sandbox</span>
+                </a>
+            </div>
+            <div ng-switch-default class="logo">
                 <a href="/#/">
                     <img src="images/logo.png">
                     QU <span>Sandbox</span>
