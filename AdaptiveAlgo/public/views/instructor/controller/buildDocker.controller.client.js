@@ -211,10 +211,11 @@
                 .createOutputJSON(allPackageArray, imageName)
                 .then(
                     function (imageName) {
-                        vm.uniqueImageName = imageName;
+                        vm.uniqueImageName = imageName.data;
+                        console.log("vm.uniqueImageName "+imageName.data.replace('"','').replace('"',''));
                         vm.message = "JSON created successfully! Creating Docker Image";
                         UserService
-                            .createDockerImage()
+                            .createDockerImage(imageName.data.replace('"','').replace('"',''), allPackageArray)
                             .then(
                                 function (status) {
                                     vm.message = "Docker Image created successfully!";

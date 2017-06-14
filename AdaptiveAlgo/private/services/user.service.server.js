@@ -42,7 +42,6 @@ module.exports = function (app, model) {
                     logger.log('Error',err);
                     res.sendStatus(400).send(err);
                 } else {
-                    console.log(obj);
                     res.json(obj);
                 }
             });
@@ -109,6 +108,8 @@ module.exports = function (app, model) {
 
         // *******************************************
         // Check for image first and then upload
+        // do not need to check - when image is created, the database entry is made only when image creation is
+        // successful.
 
 
         // try {
@@ -152,8 +153,8 @@ module.exports = function (app, model) {
         });
     }
 
-    function isImageReady() {
-        docker.command('inspect --type=image' + ' ' + 'jupyter/scipy-notebook', function(err, data){
+    function isImageReady(imageName) {
+        docker.command('inspect --type=image' + ' ' + imageName, function(err, data){
             console.log("Inside isImageReady() : "+ err);
             console.log("Inside isImageReady() : "+ data);
             if (err) {
@@ -175,16 +176,35 @@ module.exports = function (app, model) {
 
     function createDockerImage(req, res) {
         var logger = require('./logger.js');
+        var imageName = req.body.imageName;
+        var packageList = req.body.packageList;
         var PythonShell = require('python-shell');
 
         PythonShell.run('./private/services/dockerimage_generator.py', function (err) {
-            console.log(err);
-            if (err) {
-                logger.log('Error','Could not generate docker image due to below error');
-                logger.log(err);
-            }
-            logger.log('Info','Docker Image created successfully');
-            return res.sendStatus(200);
+            docker.command('inspect --type=image' + ' ' + imageName, function(err, data){
+                if (err) {
+                    logger.log('Error','Could not generate docker image due to below error');
+                    logger.log(err);
+                    return res.sendStatus(400);
+                } else {
+                    //*****************************************************************
+                    // put image details in Image database
+                    // check if image is created or not then do this
+                    model
+                        .dockerImageModel
+                        .saveDockerImageFile(req.user, imageName, packageList)
+                        .then(
+                            function () {
+                                logger.log("Info","DockerImage details saved in database");
+                            },
+                            function () {
+                                logger.log("Error","Error saving Image details in database");
+                            }
+                        );
+                    logger.log('Info','Docker Image created successfully');
+                    return res.sendStatus(200);
+                }
+        });
         });
     }
 
@@ -193,21 +213,6 @@ module.exports = function (app, model) {
         var imageName = req.params.imageName + Date.now().toString();
         var packageList = req.body;
         var output = {"username": req.user.username ,"name" : imageName, "data" : packageList};
-
-        //*****************************************************************
-        // put image details in Image database
-        // check if image is created or not then do this
-        model
-            .dockerImageModel
-            .saveDockerImageFile(req.user, imageName, output)
-            .then(
-                function () {
-                    logger.log("Info","DockerImage details saved in database");
-                },
-                function () {
-                    logger.log("Error","Error saving Image details in database");
-                }
-            );
 
         var jsonfile = require('jsonfile');
         var file = './private/services/output.json';

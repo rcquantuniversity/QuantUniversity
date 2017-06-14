@@ -46,8 +46,8 @@
             return $http.post("/api/uploadToDockerHub", imageNameJSON);
         }
 
-        function createDockerImage() {
-            return $http.post("/api/createDockerImage");
+        function createDockerImage(imageName, packageList) {
+            return $http.post("/api/createDockerImage",{imageName : imageName, packageList : packageList});
         }
 
         function createOutputJSON(packageList, imageName) {
