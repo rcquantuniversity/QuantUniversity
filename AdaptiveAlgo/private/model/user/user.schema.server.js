@@ -11,6 +11,12 @@ module.exports = function() {
             type: String,
             enum: ['STUDENT', 'INSTRUCTOR'],
             default: 'INSTRUCTOR'
+        },
+        dateCreated: {type: Date, default: Date.now},
+        lab : {
+            labId : {type: mongoose.Schema.Types.ObjectId, ref:'NewDockerImageModel'},
+            startTime : Date,
+            stopTime : Date
         }
     }, {collection: "UserDB"});
 

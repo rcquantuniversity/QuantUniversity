@@ -28,6 +28,17 @@ module.exports = function (app, model) {
             logger.log('Info',data);
             logger.log('Info',"Logged in to docker hub");
         });
+
+        // testing - push dockerfile to github
+        // var simpleGit = require('simple-git')('./private/services');
+        // simpleGit.add('./temp/Dockerfile', function (err, data) {
+        //     simpleGit.push('./i1',function (err, data) {
+        //         console.log("push"+err);
+        //         console.log("push"+data);
+        //     });
+        //     console.log(err);
+        //     console.log(data);
+        // });
     }
     init();
 

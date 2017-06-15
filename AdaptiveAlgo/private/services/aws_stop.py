@@ -78,7 +78,7 @@ class StopTask(luigi.Task):
         ip = ips[0]
         print(ip)
         #make ssh connection
-        k = paramiko.RSAKey.from_private_key_file('./private/services/adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')

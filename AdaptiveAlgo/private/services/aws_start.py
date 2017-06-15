@@ -59,7 +59,7 @@ class StartInstanceTask(luigi.Task):
             return
 
         imgid = ''
-        filter = {'Name': 'name', 'Values' : ['jeff']}
+        filter = {'Name': 'name', 'Values' : ['yayaya']}
         for img in ec2.images.filter(Filters = [filter]):
             imgid = img.id
             print(imgid)
@@ -106,7 +106,7 @@ class StartInstanceTask(luigi.Task):
         #sleep for VM initialization
         time.sleep(70) 
         #efs init
-        k = paramiko.RSAKey.from_private_key_file('/home/parallels/.ssh/adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -146,7 +146,7 @@ class StartHubTask(luigi.Task):
         USER_DIR_NAME = 'jhub-'+USER_NAME
         
         #write new .env file
-        with open('.env', 'r') as f:
+        with open('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', 'r') as f:
             content = f.readlines()
         
         newcontent=[]
@@ -156,7 +156,7 @@ class StartHubTask(luigi.Task):
         newcontent.append('DOCKER_NOTEBOOK_IMAGE=' + DOCKER_NOTEBOOK_IMAGE)
 
         print(newcontent)
-        with open('.env', 'w') as f:
+        with open('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', 'w') as f:
             for line in newcontent:
                 f.write("%s" % line)
 
@@ -167,7 +167,7 @@ class StartHubTask(luigi.Task):
         ip = ips[0]
         print(ip)
  
-        k = paramiko.RSAKey.from_private_key_file('/home/parallels/.ssh/adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -175,7 +175,7 @@ class StartHubTask(luigi.Task):
         print ('connected')
 
         with SCPClient(c.get_transport()) as scp:
-            scp.put('.env', '/home/ec2-user/jupyterhub-deploy-docker')
+            scp.put('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', '/home/ec2-user/jupyterhub-deploy-docker')
         
         #is the image on local machine?
         commands = ['docker images -q '+DOCKER_NOTEBOOK_IMAGE]

@@ -46,11 +46,12 @@ module.exports = function (app, model) {
     }
 
     function stopLab(req, res) {
+        req.setTimeout(600000);
         var imageName = req.body.imageName;
         var loggedinUser = req.user.id;
         var labInfo = {imageName : imageName, userid : loggedinUser};
         var jsonFile = require('jsonfile');
-        var file = './private/services/temp/labInfo.json';
+        var file = './private/services/temp/stopLabInfo.json';
         jsonFile.writeFile(file, labInfo , function(err) {
             if (err) {
                 console.log("Error writing to file : " + err);
@@ -73,11 +74,12 @@ module.exports = function (app, model) {
 
 
     function startLab(req, res) {
+        req.setTimeout(600000);
         var imageName = req.body.imageName;
-        var moduleName = "Risk Analysis";
+        var moduleName = "Risk Analysis4";
         var imageInfo = {imageName : imageName, module : moduleName, username : req.user.username};
         var jsonFile = require('jsonfile');
-        var file = './private/services/temp/labInfo.json';
+        var file = './private/services/start_params.json';
         jsonFile.writeFile(file, imageInfo , function(err) {
             if (err) {
                 console.log("Error writing to file : "+err);

@@ -15,7 +15,8 @@ module.exports = function() {
                     type: String,
                     default: 'latest'
                 }
-            }]
+            }],
+        dateCreated: {type: Date, default: Date.now}
     }, {collection: "PackagesDB"});
 
     return PackagesSchema;
