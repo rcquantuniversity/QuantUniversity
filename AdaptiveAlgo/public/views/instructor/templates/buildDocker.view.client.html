@@ -7,19 +7,19 @@
             <div class="row">
                 <div class="col-md-6">
                     <h4 class="page-title">
-						Build Docker
-					</h4>
+                        Build Docker
+                    </h4>
                 </div>
                 <div class="col-md-6">
                     <h4 class="page-title alignRight">
-						<a class="btn btn-primary btn-bordred"
-						   ng-click="model.showAllImages()">
-							<i class="fa fa-arrow-circle-left" aria-hidden="true"></i><span>List All Projects</span>
-						</a>
-					</h4>
+                        <a class="btn btn-primary btn-bordred"
+                           ng-click="model.showAllImages()">
+                            <i class="fa fa-arrow-circle-left" aria-hidden="true"></i><span>List All Projects</span>
+                        </a>
+                    </h4>
                 </div>
             </div>
-            <form action="" method="post" id="buildDockerForm" enctype="multipart/form-data" name="model.upload_form">
+            <form action="/upload" method="post" id="buildDockerForm" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card-box panel-default">
@@ -30,7 +30,7 @@
                                 <div class="form-grp">
                                     <label>Image Name</label>
                                     <div class="input-group fullWidth">
-                                        <input type="text" class="form-control" ng-model="model.imageName" id="imageName" placeholder="Image Name" required>
+                                        <input type="text" class="form-control" ng-model="model.imageName" id="imageName" placeholder="Image Name" >
                                     </div>
                                 </div>
                             </div>
@@ -47,13 +47,7 @@
                                 <input id="uploadFile" class="form-control" placeholder="Choose File" disabled="disabled" />
                                 <div class="fileUpload btn btn-primary">
                                     <span>Upload</span>
-                                    <input 
-                                        id="uploadBtn"
-                                        type="file"
-                                        ngf-select
-                                        ng-model="model.file"
-                                        name="file"
-                                        class="upload" />
+                                    <input id="uploadBtn" type="file" name="userPhoto" class="upload" />
                                 </div>
                                 <!-- <button ng-click = "uploadFile()">upload me</button> -->
                             </div>
@@ -82,23 +76,23 @@
                                     <div class="collapse addSection" id="addSection">
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageName1" id="packageName" placeholder="Package Name" required>
+                                                <input type="text" class="form-control" ng-model="model.packageName1" id="packageName" placeholder="Package Name" >
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageCommand1" id="packageCommand" placeholder="Package Command" required>
+                                                <input type="text" class="form-control" ng-model="model.packageCommand1" id="packageCommand" placeholder="Package Command" >
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageVersion1" id="packageVersion" placeholder="Package Version" required>
+                                                <input type="text" class="form-control" ng-model="model.packageVersion1" id="packageVersion" placeholder="Package Version" >
                                             </div>
                                         </div>
                                         <a class="btn btn-primary"
-										   ng-click="model.addPackage('python2.7',model.packageName1,model.packageCommand1,model.packageVersion1)">
-									Add Package
-								</a>
+                                           ng-click="model.addPackage('python2.7',model.packageName1,model.packageCommand1,model.packageVersion1)">
+                                    Add Package
+                                </a>
                                     </div>
                                 </div>
                             </div>
@@ -122,23 +116,23 @@
                                     <div class="collapse addSection" id="addSection2">
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageName2" id="packageName" placeholder="Package Name" required>
+                                                <input type="text" class="form-control" ng-model="model.packageName2" id="packageName" placeholder="Package Name" >
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageCommand2" id="packageCommand" placeholder="Package Command" required>
+                                                <input type="text" class="form-control" ng-model="model.packageCommand2" id="packageCommand" placeholder="Package Command" >
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageVersion2" id="packageVersion" placeholder="Package Version" required>
+                                                <input type="text" class="form-control" ng-model="model.packageVersion2" id="packageVersion" placeholder="Package Version" >
                                             </div>
                                         </div>
                                         <a class="btn btn-primary btn-bordred"
-										   ng-click="model.addPackage('python3.5',model.packageName2,model.packageCommand2,model.packageVersion2)">
-									Add Package
-								</a>
+                                           ng-click="model.addPackage('python3.5',model.packageName2,model.packageCommand2,model.packageVersion2)">
+                                    Add Package
+                                </a>
                                     </div>
                                 </div>
                             </div>
@@ -162,23 +156,23 @@
                                     <div class="collapse addSection" id="addSection3">
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageName3" id="packageName" placeholder="Package Name" required>
+                                                <input type="text" class="form-control" ng-model="model.packageName3" id="packageName" placeholder="Package Name" >
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageCommand3" id="packageCommand" placeholder="Package Command" required>
+                                                <input type="text" class="form-control" ng-model="model.packageCommand3" id="packageCommand" placeholder="Package Command" >
                                             </div>
                                         </div>
                                         <div class="form-grp">
                                             <div class="input-group fullWidth">
-                                                <input type="text" class="form-control" ng-model="model.packageVersion3" id="packageVersion" placeholder="Package Version" required>
+                                                <input type="text" class="form-control" ng-model="model.packageVersion3" id="packageVersion" placeholder="Package Version" >
                                             </div>
                                         </div>
                                         <a class="btn btn-primary"
-										   ng-click="model.addPackage('R',model.packageName3,model.packageCommand3,model.packageVersion3)">
-									Add Package
-								</a>
+                                           ng-click="model.addPackage('R',model.packageName3,model.packageCommand3,model.packageVersion3)">
+                                    Add Package
+                                </a>
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +205,7 @@
                                 <div class="col-md-6">
                                     <div class="form-grp">
                                         <div class="input-group fullWidth">
-                                            <input type="text" class="form-control" ng-model="model.location" id="location" placeholder="Specify the Location" required>
+                                            <input type="text" class="form-control" ng-model="model.location" id="location" placeholder="Specify the Location" >
                                         </div>
                                     </div>
                                 </div>
@@ -231,8 +225,8 @@
                                     <div class="input-group">
                                         <input type="text" name="gitRepo[]" class="form-control" placeholder="Git Repo...">
                                         <span class="input-group-btn">
-			                		<button class="btn btn-secondary addRepo" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
-			                	</span>
+                                    <button class="btn btn-secondary addRepo" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                </span>
                                     </div>
                                 </div>
                                 <div class="form-grp hide" id="gitRepoTemplate">
@@ -240,8 +234,8 @@
                                     <div class="input-group">
                                         <input type="text" name="gitRepo[]" class="form-control" placeholder="Git Repo...">
                                         <span class="input-group-btn">
-			                		<button class="btn btn-secondary removeRepo" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
-			                	</span>
+                                    <button class="btn btn-secondary removeRepo" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                </span>
                                     </div>
                                 </div>
                                 <br/>
@@ -250,8 +244,8 @@
                                     <div class="input-group">
                                         <input type="text" name="aptget[]" class="form-control" placeholder="Package Name">
                                         <span class="input-group-btn">
-			                		<button class="btn btn-secondary addAptget" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
-			                	</span>
+                                    <button class="btn btn-secondary addAptget" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                </span>
                                     </div>
                                 </div>
                                 <div class="form-grp hide" id="aptgetTemplate">
@@ -259,8 +253,8 @@
                                     <div class="input-group">
                                         <input type="text" name="aptget[]" class="form-control" placeholder="Package Name">
                                         <span class="input-group-btn">
-			                		<button class="btn btn-secondary removeAptget" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
-			                	</span>
+                                    <button class="btn btn-secondary removeAptget" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                </span>
                                     </div>
                                 </div>
                             </div>
@@ -273,7 +267,16 @@
                             </div>
                             <div class="panel-body">
                                 <!-- <input type="file" ng-model="files" multiple/> -->
-                                <div class="dropzone" options="dzOptions" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone></div>
+                                <!-- <div class="dropzone" options="dzOptions" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone></div> -->
+                                <!-- <button ng-click = "uploadFile()">upload me</button> -->
+                                <!-- <input type="file" name="userPhoto" /> -->
+                                <input id="multipleFile" class="form-control" placeholder="Choose File" disabled="disabled">
+                                <div class="fileUpload btn btn-primary">
+                                    <span>Upload</span>
+                                    <input id="multipleUpload" type="file" name="userPhoto" class="upload" multiple />
+                                </div>
+
+
                                 <!-- <button ng-click = "uploadFile()">upload me</button> -->
                             </div>
                         </div>
@@ -286,34 +289,29 @@
                         <div class="col-md-4">
                             <!--<label for="imageName">Image Name</label>-->
                             <!-- <input type="text"
-					   class="form-control"
-					   ng-model="model.imageName"
-					   id="imageName"
-					   placeholder="Image Name"
-					   required> -->
+                       class="form-control"
+                       ng-model="model.imageName"
+                       id="imageName"
+                       placeholder="Image Name"
+                       > -->
                         </div>
                         <div class="col-md-4 alignCenter">
-                            <a class="btn btn-primary btn-bordred" ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName); model.submit();">
-        						Create Docker Image
-        					</a>
+                            <input type="submit" class="btn btn-primary btn-bordred" value="Create Docker Image" ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName); model.submit();" />
                         </div>
                         <div class="col-md-4">
-                            <!-- <button type="submit" class="btn btn-primary btn-block"
-        						ng-click="model.submit()">
-        						Submit
-        					</button> -->
+                            <!-- <input type="submit" class="btn btn-primary btn-block" value="Upload Image" name="submit" ng-click="model.upload()" /> -->
                         </div>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
                 <br>
                 <!-- <div class="row">
-			<div class="col-md-2"></div>
-			<div class="col-md-8">
-				<a class="btn btn-danger btn-block" ng-click="model.logout()">Logout</a>
-			</div>
-			<div class="col-md-2"></div>
-		</div> -->
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <a class="btn btn-danger btn-block" ng-click="model.logout()">Logout</a>
+            </div>
+            <div class="col-md-2"></div>
+        </div> -->
                 <!--<div class="row">-->
                 <!--<div class="col-md-3">-->
                 <!--<a class="btn btn-primary btn-block"-->

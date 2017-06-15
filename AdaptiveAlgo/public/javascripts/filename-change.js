@@ -12,4 +12,10 @@ $(document).ready(function() {
         var filename = path.replace(/^.*\\/, ""); 
         $('#importFile').val(filename);
     });
+
+    $('#multipleUpload').on('change', function() {
+        var file = $(this);
+        var total = file.get(0).files.length;
+        $('#multipleFile').val(total + " files");
+    });            
 });

@@ -31,18 +31,17 @@ var storage = multer.diskStorage({ //multers disk storage settings
     }
 });
 
-var upload = multer({ //multer settings
-		        storage: storage
-		    }).single('file');
+// var upload = multer({ storage : storage}).single('userPhoto');
+
+var upload = multer({ storage : storage }).array('userPhoto',99);
 
 /** API path that will upload the files */
 app.post('/upload', function(req, res) {
     upload(req,res,function(err){
-        if(err){
-            res.json({error_code:1,err_desc:err});
-            return;
+        if(err) {
+            return res.end("Error uploading file.");
         }
-        res.json({error_code:0,err_desc:null});
+        res.end("File is uploaded");
     });
 });
 
