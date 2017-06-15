@@ -41,7 +41,8 @@ app.post('/upload', function(req, res) {
         if(err) {
             return res.end("Error uploading file.");
         }
-        res.end("File is uploaded");
+        // res.end("File is uploaded");
+        res.redirect('/#/instructor/listImages');
     });
 });
 
