@@ -11,7 +11,12 @@ module.exports = function() {
             type: String,
             enum: ['STUDENT', 'INSTRUCTOR'],
             default: 'INSTRUCTOR'
-        }
+        },
+        dateCreated: {type: Date, default: Date.now},
+        labs : [{
+            imageName: String,
+            timeRemaining : Number
+        }]
     }, {collection: "UserDB"});
 
     return UserSchema;

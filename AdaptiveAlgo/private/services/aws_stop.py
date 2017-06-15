@@ -58,7 +58,6 @@ class GetInstanceIP(luigi.Task):
         
         _out = self.output().open('w')
         _out.write(target_ins.public_ip_address)
-        #_out.write('52.41.21.8')
         _out.close()
 
 class StopTask(luigi.Task):
@@ -79,7 +78,7 @@ class StopTask(luigi.Task):
         ip = ips[0]
         print(ip)
         #make ssh connection
-        k = paramiko.RSAKey.from_private_key_file('./private/services/adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -91,6 +90,7 @@ class StopTask(luigi.Task):
         if (params['Approach']) == 'Exit':
             #get container id
             USERNAME = params['Username']
+            USER_DIR_NAME = 'jhub-'+USERNAME
             commands = ['docker ps -aqf \"name=' + 'jupyter-' + USERNAME +'\"']
             for command in commands:
                 print ('Executing {}'.format( command ))
@@ -105,7 +105,8 @@ class StopTask(luigi.Task):
                 CONTAINER_ID = returnVal.decode("utf-8")
                 print ('Errors')
                 print (stderr.read())
-            commands = ['docker rm -f ' + CONTAINER_ID]
+            commands = ['docker rm -f ' + CONTAINER_ID, 
+                        'sudo mv /home/ec2-user/nbdata/'+USER_DIR_NAME+' /home/ec2-user/nbdata/'+USER_DIR_NAME+'bak']
             for command in commands:
                 print ('Executing {}'.format( command ))
                 stdin , stdout, stderr = c.exec_command(command)

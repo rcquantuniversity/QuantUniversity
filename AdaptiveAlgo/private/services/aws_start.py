@@ -43,8 +43,8 @@ class StartInstanceTask(luigi.Task):
             print(infile)
             params = json.load(infile)
         
-        #s3 = boto3.resource('s3')
         ec2 = boto3.resource('ec2')
+        
         filters = [{'Name':'tag:Name', 'Values':[params['Module']]}]
         counter = 0
         instances = ec2.instances.filter(Filters=filters)
@@ -55,14 +55,11 @@ class StartInstanceTask(luigi.Task):
             print('Module already started. Restart the service ' + instance.public_ip_address)
             _out = self.output().open('w')
             _out.write(instance.public_ip_address)
-            #_out.write('52.41.21.8')
             _out.close()
             return
-            #print(type(ins))#<class 'boto3.resources.factory.ec2.Instance'>
-            #print(ins.id)
 
         imgid = ''
-        filter = {'Name': 'name', 'Values' : ['jeff']}
+        filter = {'Name': 'name', 'Values' : ['yayaya']}
         for img in ec2.images.filter(Filters = [filter]):
             imgid = img.id
             print(imgid)
@@ -99,19 +96,17 @@ class StartInstanceTask(luigi.Task):
         new_ip = ''
         ec2 = boto3.resource('ec2')
         for ins in ec2.instances.all():
-            #print(type(ins))#<class 'boto3.resources.factory.ec2.Instance'>
             if ins.id == new_id:
                 print(ins.public_ip_address)
                 new_ip = ins.public_ip_address
         
         _out = self.output().open('w')
         _out.write(new_ip)
-        #_out.write('52.41.21.8')
         _out.close()
         #sleep for VM initialization
         time.sleep(70) 
         #efs init
-        k = paramiko.RSAKey.from_private_key_file('/home/parallels/.ssh/adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -149,20 +144,30 @@ class StartHubTask(luigi.Task):
         DOCKER_NOTEBOOK_IMAGE = params['Image']
         USER_NAME = params['Username']
         USER_DIR_NAME = 'jhub-'+USER_NAME
-        #todo: override .env
-        with open('./private/services/.env', 'a') as envfile:
-            envfile.write('\n')
-            envfile.write('DOCKER_NOTEBOOK_IMAGE=' + DOCKER_NOTEBOOK_IMAGE)
         
+        #write new .env file
+        with open('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', 'r') as f:
+            content = f.readlines()
+        
+        newcontent=[]
+        for line in content:
+            if not line.startswith('DOCKER_NOTEBOOK_IMAGE'):
+                newcontent.append(line)
+        newcontent.append('DOCKER_NOTEBOOK_IMAGE=' + DOCKER_NOTEBOOK_IMAGE)
+
+        print(newcontent)
+        with open('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', 'w') as f:
+            for line in newcontent:
+                f.write("%s" % line)
+
         # read IP address from the out put
         with self.input()[1].open('r') as infile:
             ips = infile.read().splitlines()
 
         ip = ips[0]
-        #ip = '52.41.21.8'
         print(ip)
  
-        k = paramiko.RSAKey.from_private_key_file('./private/services/adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -170,7 +175,7 @@ class StartHubTask(luigi.Task):
         print ('connected')
 
         with SCPClient(c.get_transport()) as scp:
-            scp.put('./private/services/.env', '/home/ec2-user/jupyterhub-deploy-docker')
+            scp.put('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', '/home/ec2-user/jupyterhub-deploy-docker')
         
         #is the image on local machine?
         commands = ['docker images -q '+DOCKER_NOTEBOOK_IMAGE]
@@ -184,7 +189,33 @@ class StartHubTask(luigi.Task):
                 isOnLocalMachine = True
             print ('Errors')
             print (stderr.read())
-
+        #is the backup folder for USER_NAME existing?
+        bakdirExists = False
+        commands = ['ls /home/ec2-user/nbdata']
+        for command in commands:
+            print ('Executing {}'.format( command ))
+            stdin , stdout, stderr = c.exec_command(command)
+            dirlist = stdout.read()
+            dirlist = dirlist.decode("utf-8")
+            dirlist = dirlist.splitlines()
+            print('dirlist: ')
+            print (dirlist)
+            print(type(dirlist))
+            if USER_DIR_NAME+'bak' in dirlist:
+                bakdirExists = True
+                print('backup exists')
+            print ('Errors')
+            print (stderr.read())
+        if bakdirExists == True:
+            commands = ['docker rm `docker ps --no-trunc -aq`',
+                        'rm -r /home/ec2-user/nbdata/'+USER_DIR_NAME, 
+                        'mv /home/ec2-user/nbdata/'+USER_DIR_NAME+'bak'+' /home/ec2-user/nbdata/'+USER_DIR_NAME]
+            for command in commands:
+                print ('Executing {}'.format( command ))
+                stdin , stdout, stderr = c.exec_command(command)
+                print(stdout.read())
+                print ('Errors')
+                print (stderr.read())
         commands = ['ls','docker pull '+DOCKER_NOTEBOOK_IMAGE, 'sleep 5',
                     'mkdir -p /home/ec2-user/nbdata/'+USER_DIR_NAME, 'sudo chown 1000 /home/ec2-user/nbdata/'+USER_DIR_NAME, 
                     'cd /home/ec2-user/jupyterhub-deploy-docker; docker-compose up -d; docker-compose up -d'

@@ -46,11 +46,12 @@ module.exports = function (app, model) {
     }
 
     function stopLab(req, res) {
+        req.setTimeout(600000);
         var imageName = req.body.imageName;
         var loggedinUser = req.user.id;
         var labInfo = {imageName : imageName, userid : loggedinUser};
         var jsonFile = require('jsonfile');
-        var file = './private/services/temp/labInfo.json';
+        var file = './private/services/temp/stopLabInfo.json';
         jsonFile.writeFile(file, labInfo , function(err) {
             if (err) {
                 console.log("Error writing to file : " + err);
@@ -73,11 +74,12 @@ module.exports = function (app, model) {
 
 
     function startLab(req, res) {
+        req.setTimeout(600000);
         var imageName = req.body.imageName;
-        var moduleName = "Risk Analysis";
+        var moduleName = "Risk Analysis4";
         var imageInfo = {imageName : imageName, module : moduleName, username : req.user.username};
         var jsonFile = require('jsonfile');
-        var file = './private/services/temp/labInfo.json';
+        var file = './private/services/start_params.json';
         jsonFile.writeFile(file, imageInfo , function(err) {
             if (err) {
                 console.log("Error writing to file : "+err);
@@ -91,7 +93,20 @@ module.exports = function (app, model) {
             py.stdout.on('data', function(data){
                 console.log(data.toString());
                 if (data) {
-                    res.json(data.toString().split("ip: ")[1]);
+
+                    // add metering info into userDB
+                    model
+                        .userModel
+                        .updateStartOfLab(req.user._id, imageName)
+                        .then(
+                            function (timeRemaining) {
+                                var labParameters = {"ip" : data.toString().split("ip: ")[1], timeRemaining : timeRemaining};
+                                res.json(labParameters);
+                            },
+                            function (err) {
+                                console.log(err);
+                            }
+                        );
                 }
                 else {
                     return res.sendStatus(400);

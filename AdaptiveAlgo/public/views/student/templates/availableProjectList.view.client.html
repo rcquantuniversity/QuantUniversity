@@ -6,6 +6,9 @@
 <!--});-->
 <!--});-->
 <!--</script>-->
+<div ng-controller="headerCtrl as model"> 
+  <div ng-include="'header.html'"></div>
+</div> 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -23,13 +26,17 @@
             <table class="table table-responsive m-0">
                 <thead>
                     <tr>
+                        <th>Project ID</th>
                         <th>Project Name</th>
+                        <th>Project Description</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="image in model.images.data">
+                        <td>{{$index+1}}</td>
                         <td>{{image.imageName}}</td>
+                        <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</td>
                         <td>
                             <a class="btn btn-primary btn-rounded btn-bordred" ng-click=" model.runLab(image.imageName); model.openModal('startModal');">
                                 Start Lab
@@ -67,5 +74,8 @@
     </div>
     <div class="modal-background"></div>
 </modal>
+<div ng-controller="footerCtrl as model"> 
+  <div ng-include="'footer.html'"></div>
+</div> 
 <!--<button id="button">Load</button>-->
 <!--<a ng-href="" ng-click="redirectToGoogle()">Hello</a>-->

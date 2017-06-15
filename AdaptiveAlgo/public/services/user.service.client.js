@@ -19,9 +19,14 @@
             "uploadToDockerHub" : uploadToDockerHub,
             "listAllImages" : listAllImages,
             "listAllImagesForStudent" : listAllImagesForStudent,
-            "addPackage" : addPackage
+            "addPackage" : addPackage,
+            "getPackageFromJSON" : getPackageFromJSON
         };
         return api;
+
+        function getPackageFromJSON() {
+            return $http.get("/api/getUserPackageFile");
+        }
 
         function addPackage(base, package) {
             var packageJSON = {"base" : base, "package" : package};
@@ -41,8 +46,8 @@
             return $http.post("/api/uploadToDockerHub", imageNameJSON);
         }
 
-        function createDockerImage() {
-            return $http.post("/api/createDockerImage");
+        function createDockerImage(imageName, packageList) {
+            return $http.post("/api/createDockerImage",{imageName : imageName, packageList : packageList});
         }
 
         function createOutputJSON(packageList, imageName) {

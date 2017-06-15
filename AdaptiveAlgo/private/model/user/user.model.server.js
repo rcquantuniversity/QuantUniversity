@@ -11,9 +11,24 @@ module.exports = function () {
         setModel: setModel,
         findUserById: findUserById,
         findUserByUsername: findUserByUsername,
-        createUser : createUser
+        createUser : createUser,
+        updateStartOfLab : updateStartOfLab
     };
     return api;
+
+    function updateStartOfLab(userid, imagename) {
+        var deferred = Q.defer();
+        UserModel
+            .findOne({_id : userid}, function (err, user) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    var labs = user.labs;
+                }
+            });
+        return deferred.promise;
+    }
+
 
     function createUser(user) {
         var deferred = Q.defer();

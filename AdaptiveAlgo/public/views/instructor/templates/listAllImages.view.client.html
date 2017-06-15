@@ -1,13 +1,32 @@
+<div ng-controller="headerCtrl as model"> 
+  <div ng-include="'header.html'"></div>
+</div> 
 <div class="container">
     <div class="row">
         <div class="col-md-12 buildDockerPage">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <h4 class="page-title">
                         List of Projects
                     </h4>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <table class="table table-responsive m-0 palette">
+                        <thead>
+                            <th>Docker Hub</th>
+                            <th>Amazon S3</th>
+                            <th>GitHub</th>
+                            <th>Download / Export</th>
+                        </thead>
+                        <tbody>
+                            <td><i class="fa fa-docker"></i></td>
+                            <td><i class="fa fa-amazon" aria-hidden="true"></i></td>
+                            <td><i class="fa fa-github" aria-hidden="true"></i></td>
+                            <td><i class="fa fa-download" aria-hidden="true"></i></td>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4">
                     <h4 class="page-title alignRight">
                         <a class="btn btn-primary btn-bordred"
                            href="/#/instructor/buildDocker">
@@ -19,42 +38,46 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-responsive m-0">
+                    <table class="table table-responsive m-0 projectsList">
                         <thead>
                             <tr>
+                                <th>Project ID</th>
                                 <th>Project Name</th>
+                                <th>Project Description</th>
                                 <th colspan="4">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat = "image in model.images.data">
+                                <td>{{$index+1}}</td>
                                 <td>{{image.imageName}}</td>
+                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</td>
                                 <td>
                                     <a class="btn btn-primary btn-rounded btn-bordred"
                                        ng-click="model.uploadToDockerHub(image.imageName)">
                                         <i class="fa fa-docker"></i>
-                                        <span>Publish to DockerHub</span>
+                                        <!-- <span>Publish to DockerHub</span> -->
                                     </a>
                                 </td>
                                 <td>
                                     <a class="btn btn-primary btn-rounded btn-bordred"
                                        ng-click="">
                                         <i class="fa fa-amazon" aria-hidden="true"></i>
-                                        <span>Publish to S3</span>
+                                        <!-- <span>Publish to S3</span> -->
                                     </a>
                                 </td>
                                 <td>
                                     <a class="btn btn-primary btn-rounded btn-bordred"
                                        ng-click="">
                                         <i class="fa fa-github" aria-hidden="true"></i>
-                                        <span>Publish to GitHub</span>
+                                        <!-- <span>Publish to GitHub</span> -->
                                     </a>
                                 </td>
                                 <td>
                                     <a class="btn btn-primary btn-rounded btn-bordred"
                                        ng-click="">
                                         <i class="fa fa-download" aria-hidden="true"></i>
-                                        <span>Download</span>
+                                        <!-- <span>Download</span> -->
                                     </a>
                                 </td>
                             </tr>
@@ -65,4 +88,7 @@
         </div>
     </div>
 </div>
+<div ng-controller="footerCtrl as model"> 
+  <div ng-include="'footer.html'"></div>
+</div>  
 <script src="javascripts/dynamic-height.js"></script>
