@@ -39,6 +39,43 @@
         }
         init();
 
+        vm.submit = function(){ //function to call on form submit
+            // if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
+            //     vm.upload(vm.file); //call upload function
+            // }
+            $('#buildDockerForm').on('submit', function() {
+                $(this).ajaxSubmit({
+                    error: function(xhr) {
+                        status('Error: ' + xhr.status);
+                    },
+                    success: function(response) {
+                        $("#status").empty().text(response);
+                    }
+                });
+            });
+        }
+
+        // vm.upload = function (file) {
+        //     Upload.upload({
+        //         url: 'http://localhost:3002/upload', //webAPI exposed to upload the file
+        //         data:{file:file} //pass file as data, should be user ng-model
+        //     }).then(function (resp) { //upload function returns a promise
+        //         if(resp.data.error_code === 0){ //validate success
+        //             $window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
+        //         } else {
+        //             $window.alert('an error occured');
+        //         }
+        //     }, function (resp) { //catch error
+        //         console.log('Error status: ' + resp.status);
+        //         $window.alert('Error status: ' + resp.status);
+        //     }, function (evt) { 
+        //         console.log(evt);
+        //         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        //         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        //         vm.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+        //     });
+        // };
+
         function addPackage(base, packageName, packageCommand, packageVersion) {
             var package = {
                 "name": packageName,
@@ -58,6 +95,14 @@
                     }
                 )
         }
+
+        $scope.dzOptions = {
+            url : '/images',
+            paramName : 'photo',
+            maxFilesize : '10',
+            acceptedFiles : '.jpeg, .jpg, .png, .gif, .csv, .pdf, .doc, .docx',
+            addRemoveLinks : true
+        };
 
         function createDockerImage(folder1, folder2, folder3, imageName) {
             // packageList = {"name" : "python123456", "package" : "rohan"};
