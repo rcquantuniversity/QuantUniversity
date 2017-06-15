@@ -93,7 +93,20 @@ module.exports = function (app, model) {
             py.stdout.on('data', function(data){
                 console.log(data.toString());
                 if (data) {
-                    res.json(data.toString().split("ip: ")[1]);
+
+                    // add metering info into userDB
+                    model
+                        .userModel
+                        .updateStartOfLab(req.user._id, imageName)
+                        .then(
+                            function (timeRemaining) {
+                                var labParameters = {"ip" : data.toString().split("ip: ")[1], timeRemaining : timeRemaining};
+                                res.json(labParameters);
+                            },
+                            function (err) {
+                                console.log(err);
+                            }
+                        );
                 }
                 else {
                     return res.sendStatus(400);

@@ -12,6 +12,7 @@
                 .listAllImages()
                 .then(
                     function (images) {
+                        console.log(images);
                         vm.images = images;
                     },
                     function (err) {

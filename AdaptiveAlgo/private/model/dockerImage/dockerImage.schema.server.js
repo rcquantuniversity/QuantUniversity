@@ -5,6 +5,7 @@ module.exports = function() {
         userid : {type: mongoose.Schema.Types.ObjectId, ref:'NewUserModel'},
         imageName: String,
         descriptionFile : String,
+        duration : Number,
         dateCreated: {type: Date, default: Date.now}
     }, {collection: "DockerImageDB"});
 

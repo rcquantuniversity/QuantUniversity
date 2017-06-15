@@ -13,11 +13,10 @@ module.exports = function() {
             default: 'INSTRUCTOR'
         },
         dateCreated: {type: Date, default: Date.now},
-        lab : {
-            labId : {type: mongoose.Schema.Types.ObjectId, ref:'NewDockerImageModel'},
-            startTime : Date,
-            stopTime : Date
-        }
+        labs : [{
+            imageName: String,
+            timeRemaining : Number
+        }]
     }, {collection: "UserDB"});
 
     return UserSchema;

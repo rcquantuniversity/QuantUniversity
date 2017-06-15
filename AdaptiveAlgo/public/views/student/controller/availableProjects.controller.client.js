@@ -56,7 +56,8 @@
                 .then(
                     function (labURL) {
                         // vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/user/a/notebooks/Untitled.ipynb';
-                        vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'');
+                        vm.notebookUrl = 'https://'+labURL.data.ip.replace('\\r\\n','').replace("\"",'').replace("\"",'');
+                        vm.timeRemaining = labURL.data.timeRemaining;
 
                         // vm.notebookUrl = 'https://www.google.com/';
                         //console.log(labURL);
