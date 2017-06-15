@@ -24,6 +24,39 @@ module.exports = function () {
                     deferred.reject(err);
                 } else {
                     var labs = user.labs;
+                    var labFound = false;
+                    for (var i in labs) {
+                        var lab = labs[i];
+                        if (lab.imageName === imagename) {
+                            labFound = true;
+                            deferred.resolve(lab.timeRemaining);
+                            break;
+                        }
+                    }
+                    if (!labFound) {
+                        // if lab is not in the list, add it and set timeRemaining to complete duration
+                        model
+                            .dockerImageModel
+                            .getImageDuration(imagename)
+                            .then(
+                                function (duration) {
+                                    UserModel
+                                        .update({_id : userid}, {$push : {labs : {
+                                            imageName: imagename,
+                                            timeRemaining : duration
+                                        }}}, function (err, data) {
+                                            if (err) {
+                                                deferred.reject(err);
+                                            } else {
+                                                deferred.resolve(duration);
+                                            }
+                                        });
+                                },
+                                function (err) {
+                                    deferred.reject(err);
+                                }
+                            );
+                    }
                 }
             });
         return deferred.promise;
