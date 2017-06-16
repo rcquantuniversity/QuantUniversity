@@ -75,6 +75,8 @@
                     Stop Lab
                 </a>
                 <span id="hm_timer"></span>
+                <button id="pauseBtnhms" class="hide">Pause</button>
+
             </div>
         </div>
     </div>
@@ -84,15 +86,14 @@
     <div class="modal">
         <div class="modal-body">
             <div class="closeIcon">
-                <button ng-click="model.closeModal('timeModal');"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+                <button id="closeTimeModal" ng-click="model.closeModal('timeModal');"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
             </div>
             <div id="mydiv">
                 Heya! You just have 5 more minutes before the session ends. Would you like to continue?
                 <div class="buttons">
-                    <a href="" class="btn btn-primary btn-rounded btn-bordred">Yes</a>
-                    <a href="" class="btn btn-primary btn-rounded btn-bordred">No</a>
+                    <a id="addTime" href="" class="btn btn-primary btn-rounded btn-bordred">Yes</a>
+                    <a id="doNotAddTime" href="" class="btn btn-primary btn-rounded btn-bordred">No</a>
                 </div>
-                <button id="pauseBtnhms">Pause</button>
             </div>
         </div>
     </div>

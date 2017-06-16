@@ -10,6 +10,7 @@
         vm.stopLab = stopLab;
 
         vm.openModal = openModal;
+        vm.openTimeModal = openTimeModal;
         vm.closeModal = closeModal;
 
         function init() {
@@ -38,22 +39,32 @@
                 seconds :10,
                 size : "lg",
                 timeUp : timeIsUp,
-                beforeExpiryTime : "00:00:00:03",
-                beforeExpiryTimeFunction :  beforeExpiryFunc                
+                beforeExpiryTime : "00:00:00:05",
+                beforeExpiryTimeFunction :  beforeExpiryFunc,
+                pauseButton : "pauseBtnhms"          
             });            
+        }
+
+        function openTimeModal(id){
+            ModalService.Open(id); 
+
+            $('#doNotAddTime, #closeTimeModal').on('click', function() {
+                $('#pauseBtnhms').trigger('click');
+                vm.closeModal('timeModal');
+            });       
         }
 
         function timeIsUp() {
             if($('#hm_timer').text() == "00:00:00") {
-                // vm.openModal('timeModal');
-            } else {
                 $(this).text("Stopped");
             }
         }
 
         function beforeExpiryFunc() {
             //Code to be executed before the timer expires (before 01:05).
+            vm.openTimeModal('timeModal');
             $('#hm_timer').addClass('red');
+            $('#pauseBtnhms').trigger('click');
         }
         function closeModal(id){
             ModalService.Close(id);
