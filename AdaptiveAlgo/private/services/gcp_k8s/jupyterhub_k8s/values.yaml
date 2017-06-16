@@ -1,0 +1,92 @@
+admin:
+  access: true
+  users: null
+auth:
+  dummy:
+    password: null
+  type: dummy
+builder:
+  enabled: false
+  image:
+    name: yuvipanda/jupyterhub-k8s-builder
+    tag: v0.3.1
+  registry:
+    host: gcr.io
+    password: null
+    prefix: null
+    username: _json_key
+  resources:
+    requests:
+      cpu: 0.2
+      memory: 512Mi
+createNamespace: false
+cull:
+  enabled: true
+  every: 600
+  timeout: 3600
+hub:
+  baseUrl: /
+  cookieSecret: null
+  db:
+    storageClass:
+      parameters:
+        type: pd-ssd
+      provisioner: kubernetes.io/gce-pd
+    type: sqlite-pvc
+    url: null
+  extraConfig: null
+  image:
+    name: yuvipanda/jupyterhub-k8s-hub
+    tag: v0.3.1
+  labels: null
+  publicURL: null
+  resources:
+    requests:
+      cpu: 0.2
+      memory: 512Mi
+name: null
+prePuller:
+  enabled: true
+  image:
+    name: yuvipanda/image-allnodes-puller
+    tag: v0.8
+proxy:
+  image:
+    name: yuvipanda/jupyterhub-k8s-proxy
+    tag: v0.3.1
+  labels: null
+  resources:
+    requests:
+      cpu: 0.2
+      memory: 512Mi
+  secretToken: generate with openssl rand -hex 64
+publicIP: null
+singleuser:
+  cmd: jupyterhub-singleuser
+  cpu:
+    guarantee: null
+    limit: null
+  extraEnv: {}
+  extraLabels: {}
+  image:
+    name: jupiter/minimal-notebook
+    tag: latest
+  lifecycleHooks: null
+  memory:
+    guarantee: 1G
+    limit: null
+  storage:
+    capacity: 10Gi
+    homeMountPath: /home/jovyan
+    storageClass:
+      parameters:
+        type: pd-ssd
+      provisioner: kubernetes.io/gce-pd
+    type: dynamic
+statsd:
+  enabled: false
+  host: statsd
+  port: 8125
+  prefix: jupyterhub
+token:
+  proxy: null
