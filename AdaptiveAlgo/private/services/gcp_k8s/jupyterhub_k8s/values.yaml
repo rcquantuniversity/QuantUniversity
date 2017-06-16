@@ -69,7 +69,7 @@ singleuser:
   extraEnv: {}
   extraLabels: {}
   image:
-    name: jupiter/minimal-notebook
+    name: jupyter/minimal-notebook
     tag: latest
   lifecycleHooks: null
   memory:

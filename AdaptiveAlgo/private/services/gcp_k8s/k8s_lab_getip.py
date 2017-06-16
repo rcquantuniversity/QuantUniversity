@@ -25,8 +25,8 @@ def get_lab_ip(namespace):
 
 if __name__ == '__main__':
     namespace=''
-    with open('start_params.json','r') as f:
-        data=json.loads(f)
+    with open('../start_params.json','r') as f:
+        data=json.load(f)
         namespace=data['module']
     ip=get_lab_ip(namespace)
     print(ip)

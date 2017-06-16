@@ -41,7 +41,7 @@ def wait_check(namespace):
 if __name__ == '__main__':
     namespace=''
     with open('../start_params.json','r') as f:
-        data=json.loads(f)
+        data=json.load(f)
         namespace=data['module']
 
     wait_check(namespace)
