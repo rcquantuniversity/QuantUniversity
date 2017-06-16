@@ -37,17 +37,17 @@ def create_lab(labName, namespace, imageName, imageVersion):
 if __name__ == '__main__':
     if (len(sys.argv) < 4):
         print(sys.argv, 'Error: More paras required..')
-    labName = sys.argv[1]
-    namespace = sys.argv[2]
-    imageName = sys.argv[3]
-    if (len(sys.argv) == 4):
-        imageVersion = 'latest'
-    else:
-        imageVersion = sys.argv[4]
+    labName = ''
+    namespace = ''
+    imageName = ''
+    imageVersion=''
+    with open('../start_params','r') as f:
+        data=json.loads(f)
+        namespace=data['module']
+        labName=namespace
+        imageName=data['imageName']
+        imageVersion=data['version']
     create_lab(labName, namespace, imageName, imageVersion)
     print('Done')
-    # time.sleep(20)
-    # wait_check(namespace)
-    # get_lab_ip(namespace)
-    # sys.exit(0)
+
 

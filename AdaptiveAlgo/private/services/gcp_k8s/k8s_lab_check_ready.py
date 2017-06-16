@@ -14,7 +14,7 @@ def get_lab_ip(namespace):
         # out, err = process.communicate()
         # errcode = process.returncode
         ip = json.loads(process.decode("utf-8"))['status']['loadBalancer']['ingress'][0]['ip']
-        print(ip)
+        # print(ip)
         return ip
     except subprocess.CalledProcessError as callerr:
         # print(callerr)
@@ -23,7 +23,25 @@ def get_lab_ip(namespace):
         # print(keyerr)
         return 'keyerr'
 
+
+def wait_check(namespace):
+    counter = 0
+    while(get_lab_ip(namespace)=='callerr' or get_lab_ip(namespace)=='keyerr'):
+        time.sleep(1)
+        print('sleep 1 sec..')
+        counter += 1
+        if (counter == 30):
+            print('time error')
+            return
+    print(get_lab_ip(namespace))
+    return
+
+# wait_check(namespace)
 if __name__ == '__main__':
-    namespace=sys.argv[1]
-    ip=get_lab_ip(namespace)
-    print(ip)
+    namespace=''
+    with open('../start_params','r') as f:
+        data=json.loads(f)
+        namespace=data['module']
+
+    wait_check(namespace)
+    print('Done')

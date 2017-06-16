@@ -20,12 +20,13 @@ def kill_lab(labName, namespace):
 	except subprocess.CalledProcessError as callerr:
 		print(callerr)
 		return False
-		
+
 # python3 ku8_lab_kill.py labName namespace
 if __name__ == '__main__':
-	if (len(sys.argv) != 3):
-		print('arg error')
-		sys.exit(1)
-	labName=sys.argv[1]
-	namespace=sys.argv[2]
+	labName=''
+	namespace=''
+	with open('../start_params','r') as f:
+        data=json.loads(f)
+        namespace=data['module']
+        labName=namespace
 	kill_lab(labName, namespace)
