@@ -5,6 +5,20 @@ module.exports = function (app, model) {
     app.post("/api/stopLab", stopLab);
     app.get("/api/publish", publish);
     app.get("/api/consume", consume);
+    app.get("/api/inspectDockerImage/:imageName", inspectDockerImage);
+
+
+    var dockerCLI = require('docker-cli-js');
+    var DockerOptions = dockerCLI.Options;
+    var Docker = dockerCLI.Docker;
+    var docker = new Docker();
+
+    function inspectDockerImage(req, res) {
+        var imageName = req.params.imageName;
+        docker.command('inspect --type=image' + ' ' + imageName, function(err, data){
+            res.json(data);
+        });
+    }
 
     function consume(req, res) {
         // var amqp = require('amqplib/callback_api');
@@ -48,14 +62,29 @@ module.exports = function (app, model) {
     function stopLab(req, res) {
         req.setTimeout(600000);
         var imageName = req.body.imageName;
+        var labStartTime = req.body.labStartTime;
         var loggedinUser = req.user.id;
         var labInfo = {imageName : imageName, userid : loggedinUser};
+        console.log(labInfo);
         var jsonFile = require('jsonfile');
         var file = './private/services/temp/stopLabInfo.json';
         jsonFile.writeFile(file, labInfo , function(err) {
             if (err) {
                 console.log("Error writing to file : " + err);
             }
+
+            // update lab timeRemaining in userDB
+            model
+                .userModel
+                .updateLabTimeRemaining(imageName, labStartTime, loggedinUser)
+                .then(
+                    function (newTimeRemaining) {
+                        console.log("Lab remaining time updated as : ", newTimeRemaining);
+                    },
+                    function (err) {
+                        console.log("Could not update lab time remaining : ", err);
+                    }
+                );
 
             var PythonShell = require('python-shell');
 

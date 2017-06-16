@@ -10,9 +10,14 @@
             "startLab" : startLab,
             "stopLab" : stopLab,
             "publish" : publish,
-            "consume" : consume
+            "consume" : consume,
+            "inspectDockerImage" : inspectDockerImage
         };
         return api;
+
+        function inspectDockerImage(imageName) {
+            return $http.get("/api/inspectDockerImage/"+imageName);
+        }
 
         function consume() {
             return $http.get("/api/consume");
@@ -22,8 +27,8 @@
             return $http.get("/api/publish");
         }
 
-        function stopLab(imageName) {
-            var imageNameJSON = {imageName : imageName};
+        function stopLab(imageName, labStartTime) {
+            var imageNameJSON = {imageName : imageName, labStartTime : labStartTime};
             return $http.post("/api/stopLab",imageNameJSON);
         }
 
