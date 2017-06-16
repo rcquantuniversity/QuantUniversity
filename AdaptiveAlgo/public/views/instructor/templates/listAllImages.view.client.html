@@ -50,7 +50,7 @@
                         <tbody>
                             <tr ng-repeat = "image in model.images.data">
                                 <td>{{$index+1}}</td>
-                                <td>{{image.imageName}}</td>
+                                <td>{{image.imageName}}<span><a class="btn btn-primary btn-rounded btn-bordred" ng-click="model.inspectDockerImage(image.imageName); model.openModal('imageModal');">View Image</a></span></td>
                                 <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</td>
                                 <td>
                                     <a class="btn btn-primary btn-rounded btn-bordred"
@@ -92,3 +92,20 @@
   <div ng-include="'footer.html'"></div>
 </div>  
 <script src="javascripts/dynamic-height.js"></script>
+
+<modal id="imageModal">
+    <div class="modal">
+        <div class="modal-body">
+            <div class="closeIcon">
+                <button ng-click="model.closeModal('imageModal');"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+            </div>
+            <div id="mydiv">
+                <h1>Docker File</h1>
+                <p>
+                    {{model.imageDetails}}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>

@@ -166,7 +166,7 @@ class StartInstanceTask(luigi.Task):
             return
 
         imgid = ''
-        filter = {'Name': 'name', 'Values' : ['whitelist']}
+        filter = {'Name': 'name', 'Values' : ['http']}
         for img in ec2.images.filter(Filters = [filter]):
             imgid = img.id
             print(imgid)
@@ -338,7 +338,7 @@ class StartHubTask(luigi.Task):
         	print ('Errors')
         	print (stderr.read())
         c.close()
-
+        time.sleep(20) 
         print('ip: '+ip)
 
 if __name__ == '__main__':
