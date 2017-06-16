@@ -41,7 +41,7 @@ if __name__ == '__main__':
     namespace = ''
     imageName = ''
     imageVersion=''
-    with open('../start_params','r') as f:
+    with open('../start_params.json','r') as f:
         data=json.loads(f)
         namespace=data['module']
         labName=namespace

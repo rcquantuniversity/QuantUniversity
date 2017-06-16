@@ -25,7 +25,7 @@ def kill_lab(labName, namespace):
 if __name__ == '__main__':
 	labName=''
 	namespace=''
-	with open('../start_params','r') as f:
+	with open('../start_params.json','r') as f:
         data=json.loads(f)
         namespace=data['module']
         labName=namespace

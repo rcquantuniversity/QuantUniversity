@@ -34,14 +34,14 @@ def wait_check(namespace):
             print('time error')
             return
     print(get_lab_ip(namespace))
+    print('Done')
     return
 
 # wait_check(namespace)
 if __name__ == '__main__':
     namespace=''
-    with open('../start_params','r') as f:
+    with open('../start_params.json','r') as f:
         data=json.loads(f)
         namespace=data['module']
 
     wait_check(namespace)
-    print('Done')
