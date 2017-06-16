@@ -3,9 +3,13 @@
         .module("AdaptiveAlgoApp")
         .controller("ListImagesController", ListImagesController);
 
-    function ListImagesController(UserService) {
+    function ListImagesController(CourseService, UserService, ModalService) {
         var vm = this;
         vm.uploadToDockerHub = uploadToDockerHub;
+
+        vm.openModal = openModal;
+        vm.closeModal = closeModal;
+        vm.inspectDockerImage = inspectDockerImage;
 
         function init() {
             UserService
@@ -22,6 +26,29 @@
 
         }
         init();
+
+        function inspectDockerImage(imageName) {
+            console.log(imageName);
+            CourseService
+                .inspectDockerImage(imageName)
+                .then(
+                    function (data) {
+                        vm.imageDetails = data;
+                        console.log(data);
+                    },
+                    function (err) {
+                        console.log("Error : "+ err)
+                    }
+                );
+        }
+
+        function openModal(id){
+            ModalService.Open(id);            
+        }
+
+        function closeModal(id){
+            ModalService.Close(id);
+        }
 
         function uploadToDockerHub(imageName) {
             console.log(imageName);

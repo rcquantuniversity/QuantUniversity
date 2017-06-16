@@ -268,7 +268,7 @@ input[type="checkbox"]:checked + label::after {
 }
 
 .logo a {
-  font-family: 'Rancho', cursive;
+  font-family: "Times New Roman", Serif;
   color: #fff;
   font-size: 32px;
   line-height: 32px;
@@ -536,4 +536,36 @@ body.modal-open {
 
 #hm_timer.red {
   color: red;
+}
+
+#timeModal .modal-body {
+  position: relative;
+  width: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background-color: #435966;
+  color: #fff;
+}
+
+#timeModal .modal {
+  background-color: #000;
+}
+
+#timeModal .modal-body h4 {
+  padding-top: 30px;
+  padding-bottom: 15px;
+}
+
+#timeModal .modal-body a {
+  width: 20%;
+  margin-right: 15px;
+}
+
+.projectsList span a.btn {
+  font-size: 14px;
+}
+.projectsList span {
+  display: block;
+  padding: 10px 0;
 }
