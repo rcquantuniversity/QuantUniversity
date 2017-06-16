@@ -39,7 +39,12 @@
                         <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</td>
                         <td>
                             <a class="btn btn-primary btn-rounded btn-bordred startLab" ng-click=" model.runLab(image.imageName); model.openModal('startModal');">
-                                Start Lab
+                                Start Lab With AMI
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-rounded btn-bordred startLab" ng-click=" model.runLab(image.imageName); model.openModal('startModal');">
+                                Start Lab With Kubernetes
                             </a>
                         </td>
                         <!-- <td>
@@ -82,13 +87,12 @@
                 <button ng-click="model.closeModal('timeModal');"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
             </div>
             <div id="mydiv">
-                Timer has stopped
-            </div>
-            <div class="closeBtn">                
-                <a id="stopLab" class="btn btn-primary btn-rounded btn-bordred" ng-click="model.stopLab(image.imageName)">
-                    Stop Lab
-                </a>
-                <span id="hm_timer" class="timer"></span>
+                Heya! You just have 5 more minutes before the session ends. Would you like to continue?
+                <div class="buttons">
+                    <a href="" class="btn btn-primary btn-rounded btn-bordred">Yes</a>
+                    <a href="" class="btn btn-primary btn-rounded btn-bordred">No</a>
+                </div>
+                <button id="pauseBtnhms">Pause</button>
             </div>
         </div>
     </div>
