@@ -338,7 +338,7 @@ class StartHubTask(luigi.Task):
         	print ('Errors')
         	print (stderr.read())
         c.close()
-
+        time.sleep(20) 
         print('ip: '+ip)
 
 if __name__ == '__main__':
