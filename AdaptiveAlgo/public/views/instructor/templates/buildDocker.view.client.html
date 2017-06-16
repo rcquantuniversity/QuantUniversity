@@ -39,17 +39,15 @@
                     <div class="col-md-6">
                         <div class="card-box panel-default">
                             <div class="header-title panel-heading">
-                                Package Selection File
+                                Project Description
                             </div>
                             <div class="panel-body">
-                                <p>Upload a JSON file to specify the packages to include in the Docker Image.</p>
-                                <!-- <input type="file" ng-model="file" class="btn btn-primary btn-rounded" /> -->
-                                <input id="uploadFile" class="form-control" placeholder="Choose File" disabled="disabled" />
-                                <div class="fileUpload btn btn-primary">
-                                    <span>Upload</span>
-                                    <input id="uploadBtn" type="file" name="userPhoto" class="upload" />
+                                <div class="form-grp">
+                                    <label>Image Description</label>
+                                    <div class="input-group fullWidth">
+                                        <textarea rows="3" class="form-control"></textarea>
+                                    </div>
                                 </div>
-                                <!-- <button ng-click = "uploadFile()">upload me</button> -->
                             </div>
                         </div>
                     </div>
@@ -277,6 +275,21 @@
                                 </div>
 
 
+                                <!-- <button ng-click = "uploadFile()">upload me</button> -->
+                            </div>
+                        </div>
+                        <div class="card-box panel-default">
+                            <div class="header-title panel-heading">
+                                Package Selection File
+                            </div>
+                            <div class="panel-body">
+                                <p>Upload a JSON file to specify the packages to include in the Docker Image.</p>
+                                <!-- <input type="file" ng-model="file" class="btn btn-primary btn-rounded" /> -->
+                                <input id="uploadFile" class="form-control" placeholder="Choose File" disabled="disabled" />
+                                <div class="fileUpload btn btn-primary">
+                                    <span>Upload</span>
+                                    <input id="uploadBtn" type="file" name="userPhoto" class="upload" />
+                                </div>
                                 <!-- <button ng-click = "uploadFile()">upload me</button> -->
                             </div>
                         </div>
