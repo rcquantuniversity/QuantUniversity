@@ -166,7 +166,7 @@ class StartInstanceTask(luigi.Task):
             return
 
         imgid = ''
-        filter = {'Name': 'name', 'Values' : ['whitelist']}
+        filter = {'Name': 'name', 'Values' : ['httpvm']}
         for img in ec2.images.filter(Filters = [filter]):
             imgid = img.id
             print(imgid)
