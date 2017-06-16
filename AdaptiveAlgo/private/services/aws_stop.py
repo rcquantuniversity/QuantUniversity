@@ -96,9 +96,9 @@ class DummyLoadBalancer(luigi.Task):
                     whitelist={}
                     whitelist['whitelist'] = vmdict[vm]
                     json.dump(whitelist, fp)
-                if(len(vmdict[vm]) == 0):
-                    vmdict.pop(vm)
-                    print('the vm is empty now, ready to turn off')
+#                 if(len(vmdict[vm]) == 0):
+#                     vmdict.pop(vm)
+#                     print('the vm is empty now, ready to turn off')
                 break
 
         if(isFound == False):
