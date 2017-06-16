@@ -31,8 +31,30 @@
 
         function openModal(id){
             ModalService.Open(id);
+
+            $('#hm_timer').countdowntimer({
+                hours : 0,
+                minutes :0,
+                seconds :10,
+                size : "lg",
+                timeUp : timeIsUp,
+                beforeExpiryTime : "00:00:00:03",
+                beforeExpiryTimeFunction :  beforeExpiryFunc                
+            });            
         }
- 
+
+        function timeIsUp() {
+            if($('#hm_timer').text() == "00:00:00") {
+                // vm.openModal('timeModal');
+            } else {
+                $(this).text("Stopped");
+            }
+        }
+
+        function beforeExpiryFunc() {
+            //Code to be executed before the timer expires (before 01:05).
+            $('#hm_timer').addClass('red');
+        }
         function closeModal(id){
             ModalService.Close(id);
         }

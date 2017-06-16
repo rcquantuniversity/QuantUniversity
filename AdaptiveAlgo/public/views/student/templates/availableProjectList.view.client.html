@@ -38,7 +38,7 @@
                         <td>{{image.imageName}}</td>
                         <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</td>
                         <td>
-                            <a class="btn btn-primary btn-rounded btn-bordred" ng-click=" model.runLab(image.imageName); model.openModal('startModal');">
+                            <a class="btn btn-primary btn-rounded btn-bordred startLab" ng-click=" model.runLab(image.imageName); model.openModal('startModal');">
                                 Start Lab
                             </a>
                         </td>
@@ -66,9 +66,29 @@
                 </iframe>
             </div>
             <div class="closeBtn">                
-                <a class="btn btn-primary btn-rounded btn-bordred" ng-click="model.stopLab(image.imageName)">
+                <a id="stopLab" class="btn btn-primary btn-rounded btn-bordred" ng-click="model.stopLab(image.imageName)">
                     Stop Lab
                 </a>
+                <span id="hm_timer"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>
+<modal id="timeModal">
+    <div class="modal">
+        <div class="modal-body">
+            <div class="closeIcon">
+                <button ng-click="model.closeModal('timeModal');"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+            </div>
+            <div id="mydiv">
+                Timer has stopped
+            </div>
+            <div class="closeBtn">                
+                <a id="stopLab" class="btn btn-primary btn-rounded btn-bordred" ng-click="model.stopLab(image.imageName)">
+                    Stop Lab
+                </a>
+                <span id="hm_timer" class="timer"></span>
             </div>
         </div>
     </div>
@@ -76,6 +96,6 @@
 </modal>
 <div ng-controller="footerCtrl as model"> 
   <div ng-include="'footer.html'"></div>
-</div> 
+</div>
 <!--<button id="button">Load</button>-->
 <!--<a ng-href="" ng-click="redirectToGoogle()">Hello</a>-->

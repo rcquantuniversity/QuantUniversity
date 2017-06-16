@@ -264,7 +264,7 @@ input[type="checkbox"]:checked + label::after {
 }
 
 .logo {
-  padding: 25px 0;
+  padding: 15px 0;
 }
 
 .logo a {
@@ -292,7 +292,7 @@ input[type="checkbox"]:checked + label::after {
 
 .logout {
   text-align: right;
-  padding: 30px 0;
+  padding: 20px 0;
 }
 
 .logout a {
@@ -312,7 +312,7 @@ footer {
 }
 
 .topFooter {
-  padding: 20px 25px;
+  padding: 10px 25px;
   background-color: #fff;
   text-align: center;
 }
@@ -329,7 +329,7 @@ footer {
 }
 
 .bottomFooter {
-  padding: 20px 25px;
+  padding: 10px 25px;
   background-color: #435966;
   text-align: center;
   color: #fff;
@@ -527,4 +527,13 @@ body.modal-open {
 .projectsList .btn {
   padding: 2px 6px;
   font-size: 20px;
+}
+
+#hm_timer {
+  font-size: 40px;
+  float: right;
+}
+
+#hm_timer.red {
+  color: red;
 }
