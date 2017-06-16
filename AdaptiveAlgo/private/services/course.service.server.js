@@ -5,6 +5,20 @@ module.exports = function (app, model) {
     app.post("/api/stopLab", stopLab);
     app.get("/api/publish", publish);
     app.get("/api/consume", consume);
+    app.get("/api/inspectDockerImage/:imageName", inspectDockerImage);
+
+
+    var dockerCLI = require('docker-cli-js');
+    var DockerOptions = dockerCLI.Options;
+    var Docker = dockerCLI.Docker;
+    var docker = new Docker();
+
+    function inspectDockerImage(req, res) {
+        var imageName = req.params.imageName;
+        docker.command('inspect --type=image' + ' ' + imageName, function(err, data){
+            res.json(data);
+        });
+    }
 
     function consume(req, res) {
         // var amqp = require('amqplib/callback_api');

@@ -12,6 +12,7 @@
         vm.openModal = openModal;
         vm.openTimeModal = openTimeModal;
         vm.closeModal = closeModal;
+        vm.inspectDockerImage = inspectDockerImage;
 
         function init() {
             vm.isNotebookLoaded = false;
@@ -29,6 +30,20 @@
                 );
         }
         init();
+
+        function inspectDockerImage(imageName) {
+            CourseService
+                .inspectDockerImage(imageName)
+                .then(
+                    function (data) {
+                        vm.imageDetails = data;
+                        console.log(data);
+                    },
+                    function (err) {
+                        console.log("Error : "+ err)
+                    }
+                );
+        }
 
         function openModal(id){
             ModalService.Open(id);
