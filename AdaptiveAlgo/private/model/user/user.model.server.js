@@ -12,9 +12,33 @@ module.exports = function () {
         findUserById: findUserById,
         findUserByUsername: findUserByUsername,
         createUser : createUser,
-        updateStartOfLab : updateStartOfLab
+        updateStartOfLab : updateStartOfLab,
+        updateLabTimeRemaining : updateLabTimeRemaining
     };
     return api;
+
+    function updateLabTimeRemaining(imageName, labStartTime, userid) {
+        console.log("******** inside updateLabTimeRemaining ***********");
+        var deferred = Q.defer();
+        UserModel
+            .findOne({_id : userid}, function (err, user) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    user.labs.forEach(function (lab, index) {
+                        // check for imageName
+                        console.log(lab);
+                        console.log(Date.now() / 1000);
+                        console.log(labStartTime);
+                        lab.timeRemaining -= Date.now() / 1000 - labStartTime;
+                        console.log(lab);
+                        deferred.resolve(lab.timeRemaining);
+                    });
+                    user.save();
+                }
+            });
+        return deferred.promise;
+    }
 
     function updateStartOfLab(userid, imagename) {
         var deferred = Q.defer();

@@ -34,12 +34,12 @@
             ModalService.Open(id);
 
             $('#hm_timer').countdowntimer({
-                hours : 0,
-                minutes :0,
-                seconds :10,
+                hours : vm.hours,
+                minutes : vm.minutes,
+                seconds : vm.seconds,
                 size : "lg",
                 timeUp : timeIsUp,
-                beforeExpiryTime : "00:00:00:05",
+                beforeExpiryTime : "00:01:55:00",
                 beforeExpiryTimeFunction :  beforeExpiryFunc,
                 pauseButton : "pauseBtnhms"          
             });            
@@ -72,7 +72,7 @@
 
         function stopLab(imageName) {
             CourseService
-                .stopLab(imageName)
+                .stopLab(imageName, vm.labStartTime)
                 .then(
                     function (status) {
                         console.log(status);
@@ -91,12 +91,18 @@
                         // vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/user/a/notebooks/Untitled.ipynb';
                         vm.notebookUrl = 'https://'+labURL.data.ip.replace('\\r\\n','').replace("\"",'').replace("\"",'');
                         vm.timeRemaining = labURL.data.timeRemaining;
+                        vm.hours = Math.floor(vm.timeRemaining / (60*60));
+                        vm.minutes = Math.floor(vm.timeRemaining / 60) - vm.hours * 60;
+                        vm.seconds = Math.floor(vm.timeRemaining) - vm.hours * 3600 - vm.minutes * 60;
+                        vm.openModal('startModal');
 
                         // vm.notebookUrl = 'https://www.google.com/';
                         //console.log(labURL);
                         //console.log(labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",''));
                         //vm.isNotebookLoaded = true;
                         console.log(vm.notebookUrl);
+                        console.log(vm.timeRemaining);
+                        vm.labStartTime = Date.now() / 1000;
                         // $window.open(vm.notebookUrl, '_blank');
                         // https://35.166.73.218/user/a/notebooks/Untitled.ipynb
                         $("#frame").attr("src", vm.notebookUrl);

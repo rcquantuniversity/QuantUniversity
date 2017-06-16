@@ -22,8 +22,8 @@
             return $http.get("/api/publish");
         }
 
-        function stopLab(imageName) {
-            var imageNameJSON = {imageName : imageName};
+        function stopLab(imageName, labStartTime) {
+            var imageNameJSON = {imageName : imageName, labStartTime : labStartTime};
             return $http.post("/api/stopLab",imageNameJSON);
         }
 

@@ -48,14 +48,29 @@ module.exports = function (app, model) {
     function stopLab(req, res) {
         req.setTimeout(600000);
         var imageName = req.body.imageName;
+        var labStartTime = req.body.labStartTime;
         var loggedinUser = req.user.id;
         var labInfo = {imageName : imageName, userid : loggedinUser};
+        console.log(labInfo);
         var jsonFile = require('jsonfile');
         var file = './private/services/temp/stopLabInfo.json';
         jsonFile.writeFile(file, labInfo , function(err) {
             if (err) {
                 console.log("Error writing to file : " + err);
             }
+
+            // update lab timeRemaining in userDB
+            model
+                .userModel
+                .updateLabTimeRemaining(imageName, labStartTime, loggedinUser)
+                .then(
+                    function (newTimeRemaining) {
+                        console.log("Lab remaining time updated as : ", newTimeRemaining);
+                    },
+                    function (err) {
+                        console.log("Could not update lab time remaining : ", err);
+                    }
+                );
 
             var PythonShell = require('python-shell');
 

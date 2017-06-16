@@ -12,6 +12,7 @@ module.exports = function() {
             enum: ['STUDENT', 'INSTRUCTOR'],
             default: 'INSTRUCTOR'
         },
+        noOfCredits : Number,
         dateCreated: {type: Date, default: Date.now},
         labs : [{
             imageName: String,
