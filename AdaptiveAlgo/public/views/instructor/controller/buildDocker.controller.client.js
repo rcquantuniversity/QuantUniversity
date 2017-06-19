@@ -1,7 +1,7 @@
 (function () {
     angular
     .module("AdaptiveAlgoApp")
-    .controller("BuildDockerController", function($scope, $http, UserService, $location, $window, Upload) {
+    .controller("BuildDockerController", function($scope, $http, UserService, $location, $window, Upload, $timeout) {
         // $http.get("masterPackageJSON.json").then(function(response) {
         //     $scope.myData = response.data.data;
         // });
@@ -52,14 +52,22 @@
                     function (status) {
                         if(status != "0") {
                             vm.messagePackageAdded = "Package added successfully !";
-                            $window.location.reload();
+                            $timeout(function () {
+                                $window.location.reload();
+                            }, 3000);
                         } else {
                             vm.error = "Package already exists";
+                            $timeout(function () {
+                                $window.location.reload();
+                            }, 3000);
                         }
 
                     },
                     function () {
-                        vm.errorPackageAdded = "Package could not be added. Please try again !";
+                        vm.errorPackageAdded = "Package already exists and could not be added.";
+                        $timeout(function () {
+                            $window.location.reload();
+                        }, 3000);
                     }
                 )
         }

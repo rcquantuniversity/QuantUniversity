@@ -87,10 +87,12 @@
                                                 <input type="text" class="form-control" ng-model="model.packageVersion1" id="packageVersion" placeholder="Package Version" >
                                             </div>
                                         </div>
-                                        <a class="btn btn-primary"
+                                        <a class="btn btn-primary btn-bordred addPackageBtn"
                                            ng-click="model.addPackage('python2.7',model.packageName1,model.packageCommand1,model.packageVersion1)">
-                                    Add Package
-                                </a>
+                                            Add Package
+                                        </a>
+                                        <p class="successMessage">{{model.messagePackageAdded}}</p>
+                                        <p class="errorMessage">{{model.errorPackageAdded}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -127,10 +129,12 @@
                                                 <input type="text" class="form-control" ng-model="model.packageVersion2" id="packageVersion" placeholder="Package Version" >
                                             </div>
                                         </div>
-                                        <a class="btn btn-primary btn-bordred"
+                                        <a class="btn btn-primary btn-bordred addPackageBtn"
                                            ng-click="model.addPackage('python3.5',model.packageName2,model.packageCommand2,model.packageVersion2)">
-                                    Add Package
-                                </a>
+                                            Add Package
+                                        </a>
+                                        <p class="successMessage">{{model.messagePackageAdded}}</p>
+                                        <p class="errorMessage">{{model.errorPackageAdded}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -167,10 +171,12 @@
                                                 <input type="text" class="form-control" ng-model="model.packageVersion3" id="packageVersion" placeholder="Package Version" >
                                             </div>
                                         </div>
-                                        <a class="btn btn-primary"
+                                        <a class="btn btn-primary btn-bordred addPackageBtn"
                                            ng-click="model.addPackage('R',model.packageName3,model.packageCommand3,model.packageVersion3)">
-                                    Add Package
-                                </a>
+                                            Add Package
+                                        </a>
+                                        <p class="successMessage">{{model.messagePackageAdded}}</p>
+                                        <p class="errorMessage">{{model.errorPackageAdded}}</p>
                                     </div>
                                 </div>
                             </div>
