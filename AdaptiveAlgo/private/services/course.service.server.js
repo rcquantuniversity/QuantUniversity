@@ -5,7 +5,7 @@ module.exports = function (app, model) {
     app.post("/api/stopLab", stopLab);
     app.get("/api/publish", publish);
     app.get("/api/consume", consume);
-    app.get("/api/inspectDockerImage/:imageName", inspectDockerImage);
+    app.get("/api/viewDockerFile/:imageName", viewDockerFile);
 
 
     var dockerCLI = require('docker-cli-js');
@@ -13,10 +13,12 @@ module.exports = function (app, model) {
     var Docker = dockerCLI.Docker;
     var docker = new Docker();
 
-    function inspectDockerImage(req, res) {
+    function viewDockerFile(req, res) {
         var imageName = req.params.imageName;
-        docker.command('inspect --type=image' + ' ' + imageName, function(err, data){
-            res.json(data);
+        var fs = require('fs');
+        fs.readFile('/etc/passwd', function(err, data) {
+            if (err) throw err;
+        console.log(data);
         });
     }
 
@@ -64,7 +66,7 @@ module.exports = function (app, model) {
         var imageName = req.body.imageName;
         var labStartTime = req.body.labStartTime;
         var loggedinUser = req.user.username;
-        var labInfo = {approach:"Exit", module : "abbc", username : loggedinUser};
+        var labInfo = {approach:"Exit", module : "asdf", username : loggedinUser};
         console.log(labInfo);
         var jsonFile = require('jsonfile');
         var file = './private/services/stop_params.json';
@@ -105,7 +107,7 @@ module.exports = function (app, model) {
     function startLab(req, res) {
         req.setTimeout(600000);
         var imageName = req.body.imageName;
-        var moduleName = "abbc";
+        var moduleName = "asdf";
         var imageInfo = {imageName : imageName, module : moduleName,
             username : req.user.username, maxUsers : "2", version : "latest"};
         var jsonFile = require('jsonfile');
@@ -117,12 +119,15 @@ module.exports = function (app, model) {
             // // Option 1
             var spawn = require('child_process').spawn,
                 py = spawn('python', ['./private/services/aws_start.py']),
-                data = [1,2,3,4,5,6,7,8,9,10],
-                dataString = '';
+            dataString = '';
 
             py.stdout.on('data', function(data){
-                console.log(data.toString());
-                if (data) {
+                console.log(data);
+                dataString += data.toString();
+            });
+
+            py.stdout.on('end', function(){
+                if (dataString) {
 
                     // add metering info into userDB
                     model
@@ -130,7 +135,7 @@ module.exports = function (app, model) {
                         .updateStartOfLab(req.user._id, imageName)
                         .then(
                             function (timeRemaining) {
-                                var labParameters = {"ip" : data.toString().split("ip: ")[1], timeRemaining : timeRemaining};
+                                var labParameters = {"ip" : dataString.split("ip: ")[1], timeRemaining : timeRemaining};
                                 res.json(labParameters);
                             },
                             function (err) {
@@ -141,18 +146,37 @@ module.exports = function (app, model) {
                 else {
                     return res.sendStatus(400);
                 }
-                // dataString += data.toString();
             });
-            py.stdin.write(JSON.stringify(data));
-            py.stdin.end();
+            // py.stdin.write(JSON.stringify(data));
+            // py.stdin.end();
 
 
             // // Option 2
             // var PythonShell = require('python-shell');
-
-            // PythonShell.run('C:\\Users\\QuantUniversity-6\\Rohan\\AdaptiveAlgo\\private\\services\\boto-test_modified.py', function (err) {
-            //     if (err) throw err;
-            //     console.log('finished');
+            // console.log("Here");
+            // PythonShell.run('./private/services/aws_start.py', function (err, data) {
+            //     // console.log(data.toString());
+            //     if (data) {
+            //
+            //         // add metering info into userDB
+            //         model
+            //             .userModel
+            //             .updateStartOfLab(req.user._id, imageName)
+            //             .then(
+            //                 function (timeRemaining) {
+            //                     var labParameters = {"ip" : data.toString().split("ip: ")[1], timeRemaining : timeRemaining};
+            //                     res.json(labParameters);
+            //                 },
+            //                 function (err) {
+            //                     console.log(err);
+            //                 }
+            //             );
+            //     }
+            //     else {
+            //         return res.sendStatus(400);
+            //     }
+            //     // if (err) throw err;
+            //     // console.log('finished');
             // });
 
         });

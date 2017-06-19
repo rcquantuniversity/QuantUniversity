@@ -11,12 +11,12 @@
             "stopLab" : stopLab,
             "publish" : publish,
             "consume" : consume,
-            "inspectDockerImage" : inspectDockerImage
+            "viewDockerFile" : viewDockerFile
         };
         return api;
 
-        function inspectDockerImage(imageName) {
-            return $http.get("/api/inspectDockerImage/"+imageName);
+        function viewDockerFile(imageName) {
+            return $http.get("/api/viewDockerFile/"+imageName);
         }
 
         function consume() {

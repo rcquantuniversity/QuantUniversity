@@ -21,7 +21,7 @@ module.exports = function () {
         console.log("******** inside updateLabTimeRemaining ***********");
         var deferred = Q.defer();
         UserModel
-            .findOne({_id : userid}, function (err, user) {
+            .findOne({"_id" : userid}, function (err, user) {
                 if (err) {
                     deferred.reject(err);
                 } else {

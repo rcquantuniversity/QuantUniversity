@@ -12,7 +12,7 @@
         vm.openModal = openModal;
         vm.openTimeModal = openTimeModal;
         vm.closeModal = closeModal;
-        vm.inspectDockerImage = inspectDockerImage;
+        vm.viewDockerFile = viewDockerFile;
 
         function init() {
             vm.isNotebookLoaded = false;
@@ -31,9 +31,9 @@
         }
         init();
 
-        function inspectDockerImage(imageName) {
+        function viewDockerFile(imageName) {
             CourseService
-                .inspectDockerImage(imageName)
+                .viewDockerFile(imageName)
                 .then(
                     function (data) {
                         vm.imageDetails = data;

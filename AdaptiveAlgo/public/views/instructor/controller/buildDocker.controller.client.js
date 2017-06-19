@@ -49,9 +49,14 @@
             UserService
                 .addPackage(base, package)
                 .then(
-                    function () {
-                        vm.messagePackageAdded = "Package added successfully !";
-                        $window.location.reload();
+                    function (status) {
+                        if(status != "0") {
+                            vm.messagePackageAdded = "Package added successfully !";
+                            $window.location.reload();
+                        } else {
+                            vm.error = "Package already exists";
+                        }
+
                     },
                     function () {
                         vm.errorPackageAdded = "Package could not be added. Please try again !";

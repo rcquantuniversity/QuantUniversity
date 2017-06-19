@@ -84,6 +84,8 @@ module.exports = function () {
                                         });
                                 }
                             });
+                    } else {
+                        deferred.reject("0");
                     }
                     deferred.resolve();
                 }
