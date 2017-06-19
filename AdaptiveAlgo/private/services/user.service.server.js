@@ -195,7 +195,7 @@ module.exports = function (app, model) {
             docker.command('inspect --type=image' + ' ' + imageName, function(err, data){
                 if (err) {
                     logger.log('Error','Could not generate docker image due to below error');
-                    logger.log(err);
+                    logger.log('Error',err);
                     return res.sendStatus(400);
                 } else {
                     //*****************************************************************

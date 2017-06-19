@@ -104,7 +104,7 @@
                 .then(
                     function (labURL) {
                         // vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/user/a/notebooks/Untitled.ipynb';
-                        vm.notebookUrl = 'https://'+labURL.data.ip.replace('\\r\\n','').replace("\"",'').replace("\"",'');
+                        vm.notebookUrl = 'http://'+labURL.data.ip.replace('\\r\\n','').replace("\"",'').replace("\"",'');
                         vm.timeRemaining = labURL.data.timeRemaining;
                         vm.hours = Math.floor(vm.timeRemaining / (60*60));
                         vm.minutes = Math.floor(vm.timeRemaining / 60) - vm.hours * 60;

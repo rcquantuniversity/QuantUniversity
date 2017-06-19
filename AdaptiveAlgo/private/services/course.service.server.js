@@ -63,17 +63,17 @@ module.exports = function (app, model) {
         req.setTimeout(600000);
         var imageName = req.body.imageName;
         var labStartTime = req.body.labStartTime;
-        var loggedinUser = req.user.id;
-        var labInfo = {imageName : imageName, userid : loggedinUser};
+        var loggedinUser = req.user.username;
+        var labInfo = {approach:"Exit", module : "abbc", username : loggedinUser};
         console.log(labInfo);
         var jsonFile = require('jsonfile');
-        var file = './private/services/temp/stopLabInfo.json';
+        var file = './private/services/stop_params.json';
         jsonFile.writeFile(file, labInfo , function(err) {
             if (err) {
                 console.log("Error writing to file : " + err);
             }
 
-            // update lab timeRemaining in userDB
+            // update lab timeRemaining in userDBrisk
             model
                 .userModel
                 .updateLabTimeRemaining(imageName, labStartTime, loggedinUser)
@@ -105,8 +105,9 @@ module.exports = function (app, model) {
     function startLab(req, res) {
         req.setTimeout(600000);
         var imageName = req.body.imageName;
-        var moduleName = "Risk Analysis4";
-        var imageInfo = {imageName : imageName, module : moduleName, username : req.user.username};
+        var moduleName = "abbc";
+        var imageInfo = {imageName : imageName, module : moduleName,
+            username : req.user.username, maxUsers : "2", version : "latest"};
         var jsonFile = require('jsonfile');
         var file = './private/services/start_params.json';
         jsonFile.writeFile(file, imageInfo , function(err) {
