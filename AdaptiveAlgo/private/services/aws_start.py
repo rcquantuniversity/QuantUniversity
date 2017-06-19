@@ -6,6 +6,7 @@ import json
 import os
 import yaml
 import sys
+import socket
 from luigi.mock import MockFile
 from scp import SCPClient
 
@@ -338,7 +339,14 @@ class StartHubTask(luigi.Task):
         	print ('Errors')
         	print (stderr.read())
         c.close()
-        time.sleep(20) 
+        
+        #check 80 port
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        result = sock.connect_ex((ip,80))
+        while result != 0:
+            print ("Port is not open")
+            result = sock.connect_ex((ip,80))
+            time.sleep(5)
         print('ip: '+ip)
 
 if __name__ == '__main__':
