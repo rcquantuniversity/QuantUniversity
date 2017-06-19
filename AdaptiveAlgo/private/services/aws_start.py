@@ -213,7 +213,12 @@ class StartInstanceTask(luigi.Task):
         _out.write(new_ip)
         _out.close()
         #sleep for VM initialization
-        time.sleep(100) 
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        result = sock.connect_ex((new_ip,22))
+        while result != 0:
+            print ("22 port is not open")
+            result = sock.connect_ex((new_ip,22))
+            time.sleep(5)
         #efs init
         k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
         c = paramiko.SSHClient()
@@ -346,7 +351,7 @@ class StartHubTask(luigi.Task):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         result = sock.connect_ex((ip,80))
         while result != 0:
-            print ("Port is not open")
+            print ("80 port is not open")
             result = sock.connect_ex((ip,80))
             time.sleep(5)
         print('ip: '+ip)
