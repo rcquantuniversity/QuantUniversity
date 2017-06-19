@@ -1,4 +1,4 @@
 (function () {
     angular
-        .module("AdaptiveAlgoApp", ["ngRoute", "thatisuday.dropzone", "ngFileUpload"]);
+        .module("AdaptiveAlgoApp", ["ngRoute", "thatisuday.dropzone", "ngFileUpload", "angularSpinners"]);
 })();

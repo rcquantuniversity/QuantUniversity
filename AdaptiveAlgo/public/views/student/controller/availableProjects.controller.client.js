@@ -3,7 +3,7 @@
         .module("AdaptiveAlgoApp")
         .controller("AvailableProjectsController", AvailableProjectsController);
 
-    function AvailableProjectsController($location, UserService, CourseService, $scope, $window, ModalService) {
+    function AvailableProjectsController($location, UserService, CourseService, $scope, $window, ModalService, spinnerService) {
         var vm = this;
         vm.logout = logout;
         vm.runLab = runLab;
@@ -99,10 +99,12 @@
         }
 
         function runLab(imageName) {
+            spinnerService.show('booksSpinner');
             CourseService
                 .startLab(imageName)
                 .then(
                     function (labURL) {
+                        spinnerService.hide('booksSpinner');
                         // vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/user/a/notebooks/Untitled.ipynb';
                         vm.notebookUrl = 'http://'+labURL.data.ip.replace('\\r\\n','').replace("\"",'').replace("\"",'');
                         vm.timeRemaining = labURL.data.timeRemaining;
@@ -122,7 +124,7 @@
                         // https://35.166.73.218/user/a/notebooks/Untitled.ipynb
                         $("#frame").attr("src", vm.notebookUrl);
                     },
-                    function (err) {
+                    function (err) {                        
                         console.log("Error : "+err);
                     }
                 );
