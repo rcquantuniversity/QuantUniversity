@@ -11,9 +11,16 @@
             "stopLab" : stopLab,
             "publish" : publish,
             "consume" : consume,
-            "viewDockerFile" : viewDockerFile
+            "viewDockerFile" : viewDockerFile,
+            "runScriptLab" : runScriptLab
         };
         return api;
+
+        function runScriptLab(imageName) {
+            var imageNameJSON = {imageName : imageName};
+            return $http.post("/api/startScriptLab", imageNameJSON);
+        }
+
 
         function viewDockerFile(imageName) {
             return $http.get("/api/viewDockerFile/"+imageName);

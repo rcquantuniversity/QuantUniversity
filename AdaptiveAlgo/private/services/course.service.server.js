@@ -6,6 +6,7 @@ module.exports = function (app, model) {
     app.get("/api/publish", publish);
     app.get("/api/consume", consume);
     app.get("/api/viewDockerFile/:imageName", viewDockerFile);
+    app.post("/api/startScriptLab", startScriptLab);
 
 
     var dockerCLI = require('docker-cli-js');
@@ -103,6 +104,48 @@ module.exports = function (app, model) {
 
     }
 
+    function startScriptLab(req, res) {
+        req.setTimeout(600000);
+        var imageName = req.body.imageName;
+        var moduleName = "asdfghj";
+        var imageInfo = {
+            "username": "ec2-user",
+            "key_file": "C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem",
+            "imageName": "ubuntu:16.04",
+            "commands": [
+                "touch jeff",
+                "ls"
+            ]
+        };
+        var jsonFile = require('jsonfile');
+        var file = './private/services/run_script.json';
+        jsonFile.writeFile(file, imageInfo , function(err) {
+            if (err) {
+                console.log("Error writing to file : "+err);
+            }
+
+            var spawn = require('child_process').spawn,
+                py = spawn('python', ['./private/services/runScriptAWS.py']),
+                dataString = '';
+
+            console.log("running script");
+
+            py.stdout.on('data', function(data){
+                console.log(data.toString());
+                dataString += data.toString();
+            });
+
+            py.stdout.on('end', function(){
+                if (dataString) {
+                    console.log("Output : "+dataString);
+                    return res.sendStatus(200);
+                }
+                else {
+                    return res.sendStatus(400);
+                }
+            });
+        });
+    }
 
     function startLab(req, res) {
         req.setTimeout(600000);

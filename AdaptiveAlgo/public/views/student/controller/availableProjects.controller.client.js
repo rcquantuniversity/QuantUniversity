@@ -8,6 +8,7 @@
         vm.logout = logout;
         vm.runLab = runLab;
         vm.stopLab = stopLab;
+        vm.runScriptLab = runScriptLab;
 
         vm.openModal = openModal;
         vm.openTimeModal = openTimeModal;
@@ -29,6 +30,19 @@
                 );
         }
         init();
+
+        function runScriptLab(imageName) {
+            CourseService
+                .runScriptLab(imageName)
+                .then(
+                    function () {
+                        vm.message = "Scripts ran successfully";
+                    },
+                    function (err) {
+                        console.log("Error : "+err);
+                    }
+            );
+        }
 
         function viewDockerFile(imageName) {
             CourseService

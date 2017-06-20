@@ -38,12 +38,14 @@
                         <td>{{image.imageName}}</td>
                         <td>{{image.description}}</td>
                         <td ng-if="image.imageType == 'Notebook' || image.imageType == 'Both'">
-                            <a class="btn btn-primary btn-rounded btn-bordred" ng-click="">
+                            <a class="btn btn-primary btn-rounded btn-bordred"
+                               ng-click="model.runLab(image.imageName)">
                                 Run Notebook
                             </a>
                         </td>
                         <td ng-if="image.imageType == 'Script' || image.imageType == 'Both'">
-                            <a class="btn btn-primary btn-rounded btn-bordred" ng-click="">
+                            <a class="btn btn-primary btn-rounded btn-bordred"
+                               ng-click="model.runScriptLab(image.imageName)">
                                 Run Script
                             </a>
                         </td>
