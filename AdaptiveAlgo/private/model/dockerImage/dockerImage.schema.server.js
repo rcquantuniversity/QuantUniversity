@@ -5,6 +5,7 @@ module.exports = function() {
         userid : {type: mongoose.Schema.Types.ObjectId, ref:'NewUserModel'},
         imageName: String,
         description : String,
+        moduleName: String,
         duration : Number,
         imageType : {
             type: String,
