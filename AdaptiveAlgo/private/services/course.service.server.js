@@ -66,7 +66,7 @@ module.exports = function (app, model) {
         var imageName = req.body.imageName;
         var labStartTime = req.body.labStartTime;
         var loggedinUser = req.user.username;
-        var labInfo = {approach:"Exit", module : "asdf", username : loggedinUser};
+        var labInfo = {approach:"Exit", module : "asdfghj", username : loggedinUser};
         console.log(labInfo);
         var jsonFile = require('jsonfile');
         var file = './private/services/stop_params.json';
@@ -78,7 +78,7 @@ module.exports = function (app, model) {
             // update lab timeRemaining in userDBrisk
             model
                 .userModel
-                .updateLabTimeRemaining(imageName, labStartTime, loggedinUser)
+                .updateLabTimeRemaining(imageName, labStartTime, req.user._id)
                 .then(
                     function (newTimeRemaining) {
                         console.log("Lab remaining time updated as : ", newTimeRemaining);
@@ -107,7 +107,7 @@ module.exports = function (app, model) {
     function startLab(req, res) {
         req.setTimeout(600000);
         var imageName = req.body.imageName;
-        var moduleName = "asdf";
+        var moduleName = "asdfghj";
         var imageInfo = {imageName : imageName, module : moduleName,
             username : req.user.username, maxUsers : "2", version : "latest"};
         var jsonFile = require('jsonfile');
@@ -122,13 +122,14 @@ module.exports = function (app, model) {
             dataString = '';
 
             py.stdout.on('data', function(data){
-                console.log(data);
+                console.log(data.toString());
                 dataString += data.toString();
             });
 
             py.stdout.on('end', function(){
                 if (dataString) {
 
+                    console.log("dataString : "+dataString);
                     // add metering info into userDB
                     model
                         .userModel
