@@ -1,0 +1,10 @@
+{
+  "hostname": "ec2-52-36-84-15.us-west-2.compute.amazonaws.com",
+  "username": "ec2-user",
+  "key_file": "adaptivealgo.pem",
+  "imageName": "ubuntu:16.04",
+  "commands": [
+    "touch jaja",
+    "ls"
+  ]
+}
