@@ -30,23 +30,6 @@ module.exports = function (app, model) {
             logger.log('Info',"Logged in to docker hub");
         });
 
-        function updateAmazonCredentials(req,res) {
-            console.log(req.body);
-            var userId  = req.user._id;
-            console.log("USER",userId);
-            var amazonCredentials = req.body;
-            model
-                .userModel
-                .updateAmazonCredentials(userId,amazonCredentials)
-                .then(
-                    function () {
-                        res.sendStatus(200);
-                    },
-                    function (err) {
-                        res.sendStatus(400).send(err);
-                    }
-                );
-        }
 
         // testing - push dockerfile to github
         // var simpleGit = require('simple-git')('./private/services');
@@ -60,6 +43,25 @@ module.exports = function (app, model) {
         // });
     }
     init();
+
+    function updateAmazonCredentials(req,res) {
+        console.log(req.body);
+        var userId  = req.user._id;
+        console.log("USER",userId);
+        var amazonCredentials = req.body;
+        model
+            .userModel
+            .updateAmazonCredentials(userId,amazonCredentials)
+            .then(
+                function () {
+                    res.sendStatus(200);
+                },
+                function (err) {
+                    res.sendStatus(400).send(err);
+                }
+            );
+    }
+
 
     function getUserPackageFile(req, res) {
         var logger = require('./logger.js');
