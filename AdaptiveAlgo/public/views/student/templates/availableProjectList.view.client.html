@@ -29,7 +29,7 @@
                         <th>Project ID</th>
                         <th>Project Name</th>
                         <th>Project Description</th>
-                        <th colspan="2">Action</th>
+                        <th colspan="3">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,16 +37,31 @@
                         <td>{{$index+1}}</td>
                         <td>{{image.imageName}}</td>
                         <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</td>
+                        <td ng-if="image.imageType == 'Notebook' || image.imageType == 'Both'">
+                            <a class="btn btn-primary btn-rounded btn-bordred" ng-click="">
+                                Run Notebook
+                            </a>
+                        </td>
+                        <td ng-if="image.imageType == 'Script' || image.imageType == 'Both'">
+                            <a class="btn btn-primary btn-rounded btn-bordred" ng-click="">
+                                Run Script
+                            </a>
+                        </td>
                         <td>
+                            <a class="btn btn-default btn-rounded btn-bordred" ng-click="" disabled>
+                                Schedule Script
+                            </a>
+                        </td>
+                        <!-- <td>
                             <a class="btn btn-primary btn-rounded btn-bordred startLab" ng-click=" model.runLab(image.imageName);">
                                 Start Lab With AMI
                             </a>
-                        </td>
-                        <td>
+                        </td> -->
+                        <!-- <td>
                             <a class="btn btn-primary btn-rounded btn-bordred startLab" ng-click=" model.runLab(image.imageName);">
                                 Start Lab With Kubernetes
                             </a>
-                        </td>
+                        </td> -->
                         <!-- <td>
                             <a class="btn btn-primary btn-rounded btn-bordred" ng-click="model.stopLab(image.imageName)">
                                 Stop Lab
