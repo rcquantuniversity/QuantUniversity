@@ -8,7 +8,7 @@ module.exports = function() {
         duration : Number,
         imageType : {
             type: String,
-            enum: ['Notebook', 'Script','both'],
+            enum: ['Notebook', 'Script','Both'],
             default: 'Notebook'
         },
         dateCreated: {type: Date, default: Date.now}

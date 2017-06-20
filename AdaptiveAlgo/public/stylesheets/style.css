@@ -619,7 +619,7 @@ body.modal-open {
   position: relative;
 }
 .radio-info input[type="radio"]:checked + label::before {
-  border-color: #35b8e0;
+  border-color: #337ab7;
 }
 .radio label::before {
   -o-transition: border 0.5s ease-in-out;
@@ -638,7 +638,7 @@ body.modal-open {
   width: 17px;
 }
 .radio-info input[type="radio"]:checked + label::after {
-  background-color: #35b8e0;
+  background-color: #337ab7;
 }
 .radio input[type="radio"]:checked + label::after {
   -ms-transform: scale(1, 1);
@@ -647,7 +647,7 @@ body.modal-open {
   transform: scale(1, 1);
 }
 .radio-info input[type="radio"] + label::after {
-  background-color: #35b8e0;
+  background-color: #337ab7;
 }
 .radio label::after {
   -moz-transition: -moz-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);

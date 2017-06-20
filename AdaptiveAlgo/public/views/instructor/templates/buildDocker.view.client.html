@@ -27,23 +27,19 @@
                                 Please select the type of Docker Image
                             </div>
                             <div class="panel-body">
-                                <div class="checkbox">
-                                    <input id="checkbox_Notebook" type="checkbox" value="Notebook">
-                                    <label for="checkbox_Notebook">
-                                        Notebook
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input id="checkbox_Scripts" type="checkbox" value="Scripts">
-                                    <label for="checkbox_Scripts">
-                                        Scripts
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input id="checkbox_Both" type="checkbox" value="Both">
-                                    <label for="checkbox_Both">
-                                        Notebook + Scripts
-                                    </label>
+                                <div class="form-group wbdv-left-right-margin">                  
+                                    <div class="radio radio-info radio-inline">
+                                        <input type="radio" id="inlineRadio1" value="Notebook" ng-model="model.imageType">
+                                        <label for="inlineRadio1"> Notebook </label>
+                                    </div>
+                                    <div class="radio radio-info radio-inline">
+                                        <input type="radio" id="inlineRadio2" value="Script" ng-model="model.imageType">
+                                        <label for="inlineRadio2"> Scripts </label>
+                                    </div>
+                                    <div class="radio radio-info radio-inline">
+                                        <input type="radio" id="inlineRadio3" value="Both" ng-model="model.imageType">
+                                        <label for="inlineRadio3"> Notebook & Scripts </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -350,7 +346,7 @@
                        > -->
                         </div>
                         <div class="col-md-4 alignCenter">
-                            <button type="submit" class="btn btn-primary btn-bordred" ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName,'Script');">Create Docker Image</button>
+                            <button type="submit" class="btn btn-primary btn-bordred" ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName, model.imageType);">Create Docker Image</button>
                         </div>
                         <div class="col-md-4">
                             <!-- <input type="submit" class="btn btn-primary btn-block" value="Upload Image" name="submit" ng-click="model.upload()" /> -->
