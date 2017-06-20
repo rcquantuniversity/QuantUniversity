@@ -291,17 +291,29 @@ input[type="checkbox"]:checked + label::after {
   padding-left: 5px;
 }
 
-.logout {
+.menu {
   text-align: right;
-  padding: 20px 0;
+  padding: 28px 50px 28px 0;
+  position: relative;
 }
 
-.logout a {
+.menu a {
+  color: #fff;
+  font-size: 18px;
+  line-height: 26px;
+  float: right;
+  padding-right: 15px;
+}
+
+.menu a.logout {
   font-size: 35px;
   line-height: 41px;
   color: #fff;
-  position: relative;
-  top: 2px;
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  right: 0px;
+  padding-right: 0;
 }
 
 footer {

@@ -1,14 +1,14 @@
-<header id="topnav">
+<header id="topnav" ng-switch="model.userType">
     <div class="container">
     <div class="row">
-        <div class="col-md-4" ng-switch="model.userType">
-            <div ng-switch-when = 'INSTRUCTOR'" class="logo">
+        <div class="col-md-4">
+            <div ng-switch-when = 'INSTRUCTOR' class="logo">
                 <a href="/#/instructor/listImages">
                     <img src="images/logo.png">
                     QU <span>Sandbox</span>
                 </a>
             </div>
-            <div ng-switch-when = 'STUDENT'" class="logo">
+            <div ng-switch-when = 'STUDENT' class="logo">
                 <a href="/#/student/availableProjects">
                     <img src="images/logo.png">
                     QU <span>Sandbox</span>
@@ -22,8 +22,17 @@
             </div>
         </div>
         <div class="col-md-8">
-            <div ng-if = 'model.userData'" class="logout">
-                <a ng-click="model.logout()" data-toggle="tooltip" title="Logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+            <div class="menu clearfix">
+                <a href="/#/student/profile" ng-switch-when = 'STUDENT'>
+                    Profile
+                </a>
+                <a href="/#/student/availableProjects" ng-switch-when = 'STUDENT'>
+                    Home
+                </a>
+                <a href="/#/instructor/listImages" ng-switch-when = 'INSTRUCTOR'>
+                    Home
+                </a>                
+                <a ng-if = 'model.userData' class="logout" ng-click="model.logout()" data-toggle="tooltip" title="Logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>                
             </div>
         </div>
     </div>

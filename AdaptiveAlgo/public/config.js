@@ -28,8 +28,8 @@
                 controllerAs: "model"
             })
 
-            .when("/profile", {
-                templateUrl: "views/user/templates/profile.view.client.html",
+            .when("/student/profile", {
+                templateUrl: "views/student/templates/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",
                 resolve : {
