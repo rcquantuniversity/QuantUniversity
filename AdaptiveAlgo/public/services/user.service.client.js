@@ -20,9 +20,19 @@
             "listAllImages" : listAllImages,
             "listAllImagesForStudent" : listAllImagesForStudent,
             "addPackage" : addPackage,
-            "getPackageFromJSON" : getPackageFromJSON
+            "getPackageFromJSON" : getPackageFromJSON,
+            "updateAmazonCredentials" : updateAmazonCredentials
         };
         return api;
+
+        function updateAmazonCredentials(accessKeyID,secretAccessKey) {
+
+            var amazonCredentials = {
+                accessKeyID: accessKeyID,
+                secretAccessKey : secretAccessKey
+            };
+            return $http.put("/api/setAmazonCredentials", amazonCredentials);
+        }
 
         function getPackageFromJSON() {
             return $http.get("/api/getUserPackageFile");

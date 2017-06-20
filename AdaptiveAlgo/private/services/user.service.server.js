@@ -14,6 +14,7 @@ module.exports = function (app, model) {
     app.get("/api/listAllImagesForStudent", listAllImagesForStudent);
     app.post("/api/addPackage", addPackage);
     app.get("/api/getUserPackageFile", getUserPackageFile);
+    app.put("/api/setAmazonCredentials",updateAmazonCredentials);
 
     var request = require('request');
     var dockerCLI = require('docker-cli-js');
@@ -28,6 +29,24 @@ module.exports = function (app, model) {
             logger.log('Info',data);
             logger.log('Info',"Logged in to docker hub");
         });
+
+        function updateAmazonCredentials(req,res) {
+            console.log(req.body);
+            var userId  = req.user._id;
+            console.log("USER",userId);
+            var amazonCredentials = req.body;
+            model
+                .userModel
+                .updateAmazonCredentials(userId,amazonCredentials)
+                .then(
+                    function () {
+                        res.sendStatus(200);
+                    },
+                    function (err) {
+                        res.sendStatus(400).send(err);
+                    }
+                );
+        }
 
         // testing - push dockerfile to github
         // var simpleGit = require('simple-git')('./private/services');

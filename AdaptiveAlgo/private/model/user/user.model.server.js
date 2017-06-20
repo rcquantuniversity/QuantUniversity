@@ -13,7 +13,8 @@ module.exports = function () {
         findUserByUsername: findUserByUsername,
         createUser : createUser,
         updateStartOfLab : updateStartOfLab,
-        updateLabTimeRemaining : updateLabTimeRemaining
+        updateLabTimeRemaining : updateLabTimeRemaining,
+        updateAmazonCredentials : updateAmazonCredentials
     };
     return api;
 
@@ -124,6 +125,26 @@ module.exports = function () {
                     deferred.resolve(user);
                 }
             });
+        return deferred.promise;
+    }
+
+
+    //Update Amazon Credentials
+    function updateAmazonCredentials(userId,amazonCredentials) {
+        var deferred = Q.defer();
+        UserModel
+            .update({_id : userId},
+                    {$set : {amazonCredentials : {
+                                accessKeyID: amazonCredentials.accessKeyID,
+                                secretAccessKey : amazonCredentials.secretAccessKey
+                    }}}, function (err, data) {
+                                if (err) {
+                                    deferred.reject(err);
+                                } else {
+                                    deferred.resolve(data);
+                                }
+                    });
+
         return deferred.promise;
     }
 

@@ -27,6 +27,16 @@
                 controller: "RegisterController",
                 controllerAs: "model"
             })
+
+            .when("/profile", {
+                templateUrl: "views/user/templates/profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve : {
+                    checkLogin : checkLogin
+                }
+            })
+
             .when("/reset", {
                 templateUrl: "views/user/templates/reset.view.client.html",
                 // controller: "ResetController",

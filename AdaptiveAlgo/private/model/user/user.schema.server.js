@@ -12,6 +12,10 @@ module.exports = function() {
             enum: ['STUDENT', 'INSTRUCTOR'],
             default: 'INSTRUCTOR'
         },
+        amazonCredentials: {
+            accessKeyID: String,
+            secretAccessKey : String
+        },
         noOfCredits : Number,
         dateCreated: {type: Date, default: Date.now},
         labs : [{

@@ -1,0 +1,28 @@
+<form name = "profile">
+    <div class="form-group">
+        <label>Access Key ID</label>
+        <input ng-model="model.accessKeyID"
+               type="text"
+               class="form-control"
+
+               placeholder="Access Key ID"
+               autofocus
+               required>
+    </div>
+    <div class="form-group">
+        <label>Secret Access Key</label>
+        <input ng-model="model.sceretAccessKey"
+               type="text"
+               class="form-control"
+               placeholder="Secret Access Key"
+               required>
+    </div>
+
+    <div>
+        <input class="btn btn-block btn-primary btn-bordered"
+               type="submit"
+               ng-click="model.updateKeys(model.accessKeyID,model.sceretAccessKey)"
+               value="Submit">
+    </div>
+
+</form>
