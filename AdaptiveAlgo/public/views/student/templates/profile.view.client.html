@@ -1,7 +1,7 @@
 <div ng-controller="headerCtrl as model"> 
   <div ng-include="'header.html'"></div>
 </div> 
-<div id="backgroundImage">
+<div id="backgroundImage" class="marginBottom30">
   <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -14,35 +14,98 @@
             </div>
         </div>
     </div>
-<form name = "profile">
-    <div class="form-group">
-        <label>Access Key ID</label>
-        <input ng-model="model.accessKeyID"
-               type="text"
-               class="form-control"
-
-               placeholder="Access Key ID"
-               autofocus
-               required>
+    <div class="row">
+      <div class="col-md-6">
+        <form name="profile" method="post">
+          <div class="form-group">
+            <label>First Name</label>
+            <div class="input-group fullWidth">
+              <input ng-model="model.userData.firstName"
+                     type="text"
+                     class="form-control"
+                     placeholder="First Name"
+                     autofocus
+                     required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <div class="input-group fullWidth">
+              <input ng-model="model.userData.lastName"
+                     type="text"
+                     class="form-control"
+                     placeholder="Last Name"
+                     required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Username</label>
+            <div class="input-group fullWidth">
+              <input ng-model="model.userData.username"
+                     type="text"
+                     class="form-control"
+                     placeholder="Username"
+                     required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <div class="input-group fullWidth">
+              <input ng-model="model.userData.email"
+                     type="text"
+                     class="form-control"
+                     placeholder="Email Address"
+                     required>
+            </div>
+          </div>
+          <h4><strong>Amazon Credentials</strong></h4>
+          <div class="form-group">
+            <label>Access Key ID</label>
+            <div class="input-group fullWidth">
+              <input ng-model="model.userData.amazonCredentials.accessKeyID"
+                     type="text"
+                     class="form-control"
+                     placeholder="Access Key ID"
+                     required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Secret Access Key</label>
+            <input ng-model="model.userData.amazonCredentials.secretAccessKey"
+                   type="text"
+                   class="form-control"
+                   placeholder="Secret Access Key"
+                   required>
+          </div>          
+          <h4><strong><button type="button" data-target="#changePwd" data-toggle="collapse" class="collapsed btn btn-primary btn-bordered">Change Password</a></strong></h4>
+          <div id="changePwd" class="collapse">
+            <div class="form-group">
+              <label>Password</label>
+              <input ng-model="model.user.password"
+                     type="password"
+                     class="form-control"
+                     placeholder="Password"
+                     required>
+            </div>
+            <div class="form-group">
+              <label>Verify Password</label>
+              <input ng-model="model.user.verify.password"
+                     type="password"
+                     class="form-control"
+                     placeholder="Verify Password"
+                     required>
+            </div>
+          </div>
+          <div>
+            <input class="btn btn-block btn-primary btn-bordered"
+                   type="submit"
+                   ng-click="model.updateKeys(model.userData.amazonCredentials.accessKeyID,model.userData.amazonCredentials.secretAccessKey)"
+                   value="Submit">
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="form-group">
-        <label>Secret Access Key</label>
-        <input ng-model="model.sceretAccessKey"
-               type="text"
-               class="form-control"
-               placeholder="Secret Access Key"
-               required>
-    </div>
-
-    <div>
-        <input class="btn btn-block btn-primary btn-bordered"
-               type="submit"
-               ng-click="model.updateKeys(model.accessKeyID,model.sceretAccessKey)"
-               value="Submit">
-    </div>
-
-</form>
-</div>
+  </div>
 </div>
 <div ng-controller="footerCtrl as model"> 
   <div ng-include="'footer.html'"></div>

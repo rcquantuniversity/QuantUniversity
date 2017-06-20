@@ -16,7 +16,6 @@
 
         function init() {
             vm.isNotebookLoaded = false;
-            vm.bodyText = 'This text can be updated in modal 1';
             UserService
                 .listAllImagesForStudent()
                 .then(

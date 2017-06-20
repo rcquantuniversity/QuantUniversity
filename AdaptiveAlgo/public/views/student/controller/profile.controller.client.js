@@ -7,8 +7,19 @@
         var vm = this;
 
         vm.updateKeys = updateKeys;
-        function init() {
 
+        function init() {
+            UserService
+                .findCurrentUser()
+                .then(
+                    function(user) {
+                        vm.userData = user.data;
+                        console.log(vm.userData);
+                    },
+                    function(err) {
+                        vm.err = "No User Found";
+                    }
+                );
         }
 
         init();
