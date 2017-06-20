@@ -15,7 +15,7 @@
         vm.addPackage = addPackage;
 
         function init() {
-            vm.imgType = "Notebook";
+            vm.imageType = "Notebook";
             UserService
                 .getAllPackages()
                 .then(
