@@ -55,10 +55,10 @@ module.exports = function () {
         return deferred.promise;
     }
     
-    function saveDockerImageFile(userid, imagename, imageDescription) {
+    function saveDockerImageFile(userid, imagename, imageDescription, imageType) {
         var deferred = Q.defer();
         var file = './private/services/dockerImages/'+imagename +'.txt';
-        var record = {userid : userid, imageName : imagename, descriptionFile : file};
+        var record = {userid : userid, imageName : imagename, descriptionFile : file, imageType : imageType};
         DockerImageModel
             .create(record, function (err, status) {
                 if (err) {

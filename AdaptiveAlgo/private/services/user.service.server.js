@@ -189,6 +189,7 @@ module.exports = function (app, model) {
         var logger = require('./logger.js');
         var imageName = req.body.imageName;
         var packageList = req.body.packageList;
+        var imageType = req.body.imageType;
         var PythonShell = require('python-shell');
 
         PythonShell.run('./private/services/dockerimage_generator.py', function (err) {
@@ -198,12 +199,9 @@ module.exports = function (app, model) {
                     logger.log('Error',err);
                     return res.sendStatus(400);
                 } else {
-                    //*****************************************************************
-                    // put image details in Image database
-                    // check if image is created or not then do this
                     model
                         .dockerImageModel
-                        .saveDockerImageFile(req.user, imageName, packageList)
+                        .saveDockerImageFile(req.user, imageName, packageList, imageType)
                         .then(
                             function () {
                                 logger.log("Info","DockerImage details saved in database");

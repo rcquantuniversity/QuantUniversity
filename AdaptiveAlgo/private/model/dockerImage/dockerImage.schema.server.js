@@ -6,6 +6,11 @@ module.exports = function() {
         imageName: String,
         descriptionFile : String,
         duration : Number,
+        imageType : {
+            type: String,
+            enum: ['Notebook', 'Script','both'],
+            default: 'Notebook'
+        },
         dateCreated: {type: Date, default: Date.now}
     }, {collection: "DockerImageDB"});
 
