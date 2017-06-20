@@ -188,6 +188,7 @@ module.exports = function (app, model) {
     function createDockerImage(req, res) {
         var logger = require('./logger.js');
         var imageName = req.body.imageName;
+        var description = req.body.description;
         var packageList = req.body.packageList;
         var imageType = req.body.imageType;
         var PythonShell = require('python-shell');
@@ -201,7 +202,7 @@ module.exports = function (app, model) {
                 } else {
                     model
                         .dockerImageModel
-                        .saveDockerImageFile(req.user, imageName, packageList, imageType)
+                        .saveDockerImageFile(req.user, imageName, packageList, description, imageType)
                         .then(
                             function () {
                                 logger.log("Info","DockerImage details saved in database");
