@@ -19,7 +19,36 @@
                     </h4>
                 </div>
             </div>
-            <form action="/upload" method="post" id="buildDockerForm" enctype="multipart/form-data">
+            <form action="/upload" method="post" id="buildDockerForm" enctype="multipart/form-data">            
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card-box panel-default">
+                            <div class="header-title panel-heading">
+                                Please select the type of Docker Image
+                            </div>
+                            <div class="panel-body">
+                                <div class="checkbox">
+                                    <input id="checkbox_Notebook" type="checkbox" value="Notebook">
+                                    <label for="checkbox_Notebook">
+                                        Notebook
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <input id="checkbox_Scripts" type="checkbox" value="Scripts">
+                                    <label for="checkbox_Scripts">
+                                        Scripts
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <input id="checkbox_Both" type="checkbox" value="Both">
+                                    <label for="checkbox_Both">
+                                        Notebook + Scripts
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card-box panel-default">
@@ -31,6 +60,12 @@
                                     <label>Image Name</label>
                                     <div class="input-group fullWidth">
                                         <input type="text" class="form-control" ng-model="model.imageName" id="imageName" placeholder="Image Name" >
+                                    </div>
+                                </div>
+                                <div class="form-grp">
+                                    <label>Module Name</label>
+                                    <div class="input-group fullWidth">
+                                        <input type="text" class="form-control" ng-model="model.moduleName" id="moduleName" placeholder="Module Name" >
                                     </div>
                                 </div>
                             </div>
@@ -45,7 +80,7 @@
                                 <div class="form-grp">
                                     <label>Image Description</label>
                                     <div class="input-group fullWidth">
-                                        <textarea rows="3" class="form-control"></textarea>
+                                        <textarea rows="4" class="form-control" ng-model="model.description" id="description"></textarea>
                                     </div>
                                 </div>
                             </div>
