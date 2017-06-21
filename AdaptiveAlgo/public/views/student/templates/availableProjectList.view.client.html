@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-responsive m-0">
+            <table class="studentListTable table table-responsive m-0">
                 <thead>
                     <tr>
                         <th>Project ID</th>
@@ -39,14 +39,16 @@
                         <td>{{image.description}}</td>
                         <td ng-if="image.imageType == 'Notebook' || image.imageType == 'Both'">
                             <a class="btn btn-primary btn-rounded btn-bordred"
-                               ng-click="model.runLab(image.imageName)">
+                               ng-click="model.runLab(image.imageName, $event)">
                                 Run Notebook
+                                <!-- <spinner name="booksSpinner" img-src="images/spinner.gif" class="spinnerImg"></spinner> -->
                             </a>
                         </td>
                         <td ng-if="image.imageType == 'Script' || image.imageType == 'Both'">
                             <a class="btn btn-primary btn-rounded btn-bordred"
                                ng-click="model.runScriptLab(image.imageName)">
                                 Run Script
+                                <!-- <spinner name="booksSpinner" img-src="images/spinner.gif" class="spinnerImg"></spinner> -->
                             </a>
                         </td>
                         <td>
@@ -119,6 +121,5 @@
 <div ng-controller="footerCtrl as model"> 
   <div ng-include="'footer.html'"></div>
 </div>
-<spinner name="booksSpinner" img-src="images/spinner.gif" class="spinnerImg"></spinner>
 <!--<button id="button">Load</button>-->
 <!--<a ng-href="" ng-click="redirectToGoogle()">Hello</a>-->

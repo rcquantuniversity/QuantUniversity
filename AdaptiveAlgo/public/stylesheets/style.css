@@ -583,20 +583,24 @@ body.modal-open {
   padding: 10px 0;
 }
 
-.spinnerImg {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.8);
-  z-index: 4;
-}
-.spinnerImg img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+// .spinnerImg {
+//   position: fixed;
+//   left: 0;
+//   top: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: rgba(0,0,0,0.8);
+//   z-index: 4;
+// }
+// .spinnerImg img {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
+
+.studentListTable a {
+  width: 75%;
 }
 
 /* Radio */
