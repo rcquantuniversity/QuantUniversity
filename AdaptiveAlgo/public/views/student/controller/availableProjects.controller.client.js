@@ -112,10 +112,10 @@
                 );
         }
 
-        function runLab(imageName, e) {
+        function runLab(imageName, indexNo) {
             // spinnerService.show('booksSpinner');
-            $('#ntb_'+imageName).text('Starting...');
-            $('#ntb_'+imageName).attr('disabled', 'true');
+            $('#ntb_'+indexNo).text('Starting...');
+            $('#ntb_'+indexNo).attr('disabled', 'true');
             // e.currentTarget.text = "Starting...";
             // vm.disabled = true;
             // vm.openModal('startModal');
@@ -124,9 +124,9 @@
                 .startLab(imageName)
                 .then(
                     function (labURL) {
-                        $('#ntb_'+imageName).attr('disabled', 'false');
-                        $('#ntb_'+imageName).hide();
-                        $('#ntb_'+imageName).after("<a id='ntb_{{image.imageName}}' class='btn btn-primary btn-rounded btn-bordred' ng-click='model.runLab(image.imageName)'>Run Notebook</a>");
+                        $('#ntb_'+indexNo).attr('disabled', 'false');
+                        $('#ntb_'+indexNo).hide();
+                        $('#ntb_'+indexNo).after("<a id='ntb_{{$index+1}}' class='btn btn-primary btn-rounded btn-bordred' ng-click='model.runLab(image.imageName)'>Run Notebook</a>");
                         // e.currentTarget.text = "Started";
                         // vm.disabled = false;
                         // spinnerService.hide('booksSpinner');
