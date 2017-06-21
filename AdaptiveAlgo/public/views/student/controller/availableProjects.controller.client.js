@@ -111,13 +111,15 @@
                 );
         }
 
-        function runLab(imageName) {
-            spinnerService.show('booksSpinner');
+        function runLab(imageName, e) {
+            // spinnerService.show('booksSpinner');
+            e.currentTarget.text = "Starting...";
             CourseService
                 .startLab(imageName)
                 .then(
                     function (labURL) {
-                        spinnerService.hide('booksSpinner');
+                        e.currentTarget.text = "Started";
+                        // spinnerService.hide('booksSpinner');
                         // vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/user/a/notebooks/Untitled.ipynb';
                         vm.notebookUrl = 'http://'+labURL.data.ip.replace('\\r\\n','').replace("\"",'').replace("\"",'');
                         vm.timeRemaining = labURL.data.timeRemaining;
