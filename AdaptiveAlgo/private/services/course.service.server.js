@@ -67,7 +67,7 @@ module.exports = function (app, model) {
         var imageName = req.body.imageName;
         var labStartTime = req.body.labStartTime;
         var loggedinUser = req.user.username;
-        var labInfo = {approach:"Exit", module : "asdfghj", username : loggedinUser};
+        var labInfo = {approach:"Exit", module : "module1234", username : loggedinUser};
         console.log(labInfo);
         var jsonFile = require('jsonfile');
         var file = './private/services/stop_params.json';
@@ -149,7 +149,7 @@ module.exports = function (app, model) {
     function startLab(req, res) {
         req.setTimeout(600000);
         var imageName = req.body.imageName;
-        var moduleName = "asdfghj";
+        var moduleName = "module1234";
         var imageInfo = {imageName : imageName, module : moduleName,
             username : req.user.username, maxUsers : "2", version : "latest"};
         var jsonFile = require('jsonfile');
