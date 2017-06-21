@@ -38,8 +38,8 @@
                         <td>{{image.imageName}}</td>
                         <td>{{image.description}}</td>
                         <td ng-if="image.imageType == 'Notebook' || image.imageType == 'Both'">
-                            <a class="btn btn-primary btn-rounded btn-bordred"
-                               ng-click="model.runLab(image.imageName, $event)">
+                            <a id="ntb_{{image.imageName}}" class="btn btn-primary btn-rounded btn-bordred"
+                               ng-click="model.runLab(image.imageName)">
                                 Run Notebook
                                 <!-- <spinner name="booksSpinner" img-src="images/spinner.gif" class="spinnerImg"></spinner> -->
                             </a>

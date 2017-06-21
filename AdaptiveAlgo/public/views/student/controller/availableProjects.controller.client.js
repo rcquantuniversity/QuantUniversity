@@ -114,14 +114,21 @@
 
         function runLab(imageName, e) {
             // spinnerService.show('booksSpinner');
-            e.currentTarget.text = "Starting...";
-            vm.openModal('startModal');
-            $("#frame").attr("src", "http://localhost:8787");
+            $('#ntb_'+imageName).text('Starting...');
+            $('#ntb_'+imageName).attr('disabled', 'true');
+            // e.currentTarget.text = "Starting...";
+            // vm.disabled = true;
+            // vm.openModal('startModal');
+            // $("#frame").attr("src", "http://localhost:8787");
             CourseService
                 .startLab(imageName)
                 .then(
                     function (labURL) {
-                        e.currentTarget.text = "Started";
+                        $('#ntb_'+imageName).attr('disabled', 'false');
+                        $('#ntb_'+imageName).hide();
+                        $('#ntb_'+imageName).after("<a id='ntb_{{image.imageName}}' class='btn btn-primary btn-rounded btn-bordred' ng-click='model.runLab(image.imageName)'>Run Notebook</a>");
+                        // e.currentTarget.text = "Started";
+                        // vm.disabled = false;
                         // spinnerService.hide('booksSpinner');
                         // vm.notebookUrl = 'https://'+labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",'')+'/user/a/notebooks/Untitled.ipynb';
                         vm.notebookUrl = 'http://'+labURL.data.ip.replace('\\r\\n','').replace("\"",'').replace("\"",'');
