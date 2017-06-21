@@ -5,6 +5,7 @@ import json
 from random import randint
 import boto3
 import time
+import socket
 
 def createEC2Instance():
     ec2 = boto3.resource('ec2')
@@ -12,7 +13,7 @@ def createEC2Instance():
     filter = {'Name': 'name', 'Values' : ['execution']}
     for img in ec2.images.filter(Filters = [filter]):
         imgid = img.id
-        print imgid
+        # print imgid
     instance = ec2.create_instances(
             ImageId=imgid,
             MinCount=1,
@@ -36,7 +37,7 @@ def createEC2Instance():
             ]
         )
     time.sleep(10)
-    print instance
+    # print instance
     new_id = instance[0].id
     new_ip = ''
     ec2 = boto3.resource('ec2')
@@ -46,7 +47,13 @@ def createEC2Instance():
             print(ins.public_ip_address)
             new_ip = ins.public_ip_address
     print new_ip
-    time.sleep(100)
+    time.sleep(20)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    result = sock.connect_ex((new_ip,22))
+    while result != 0:
+        print ("22 port is not open")
+        result = sock.connect_ex((new_ip,22))
+        time.sleep(5)
     return new_id, new_ip
     
 def terminateEC2Instance(instance_id):
@@ -69,7 +76,7 @@ def runScriptAWS(hostname, username, key_file, imageName, commands):
     print cmd
     stdin , stdout, stderr = c.exec_command(cmd)
     print stdout.read()
-    print stderr.read()
+    #print stderr.read()
     c.close()
 
 def main():
@@ -78,17 +85,18 @@ def main():
     key_file=''
     imageName=''
     command=''
-    with open('run_script.json') as f:
+    with open('./private/services/run_script.json') as f:
         data = json.load(f)
-        username=data['username']
         key_file=data['key_file']
         imageName=data['imageName']
         commands=data['commands']
     id, ip = createEC2Instance()
-    runScriptAWS(hostname, username, key_file, imageName, commands)
+    hostname=ip
+    runScriptAWS(hostname, 'ec2-user', key_file, imageName, commands)
     time.sleep(20)
     print 'terminating new instance ', id
     terminateEC2Instance(id)
+    print 'ec2 instance terminated'
 
 if __name__ == '__main__':
     main()

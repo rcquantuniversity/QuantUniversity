@@ -1,1 +1,1 @@
-{"username":"ec2-user","key_file":"C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem","imageName":"ubuntu:16.04","commands":["touch jeff","ls"]}
+{"username":"ec2-user","key_file":"./private/services/adaptivealgo.pem","imageName":"jhub/test","commands":["cd /home/jovyan/base/Source","python main.py"]}

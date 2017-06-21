@@ -11,6 +11,9 @@ app.use(session({
     saveUninitialized : true
 }));
 
+var cors = require('cors');
+app.use(cors());
+
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());

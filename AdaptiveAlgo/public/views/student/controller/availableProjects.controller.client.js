@@ -35,7 +35,8 @@
             CourseService
                 .runScriptLab(imageName)
                 .then(
-                    function () {
+                    function (data) {
+                        vm.scriptOutput = data;
                         vm.message = "Scripts ran successfully";
                     },
                     function (err) {
@@ -114,6 +115,8 @@
         function runLab(imageName, e) {
             // spinnerService.show('booksSpinner');
             e.currentTarget.text = "Starting...";
+            vm.openModal('startModal');
+            $("#frame").attr("src", "http://localhost:8787");
             CourseService
                 .startLab(imageName)
                 .then(

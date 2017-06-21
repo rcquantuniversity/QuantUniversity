@@ -11,6 +11,7 @@
     "body-parser": "~1.16.0",
     "child_process": "^1.0.2",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.3",
     "debug": "~2.6.0",
     "docker-cli-js": "^2.1.1",
     "express": "~4.14.1",

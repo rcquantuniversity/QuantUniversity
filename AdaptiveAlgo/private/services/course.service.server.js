@@ -110,11 +110,11 @@ module.exports = function (app, model) {
         var moduleName = "asdfghj";
         var imageInfo = {
             "username": "ec2-user",
-            "key_file": "C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem",
-            "imageName": "ubuntu:16.04",
+            "key_file": "./private/services/adaptivealgo.pem",
+            "imageName": "jhub/test",
             "commands": [
-                "touch jeff",
-                "ls"
+                "cd /home/jovyan/base/Source",
+                "python main.py"
             ]
         };
         var jsonFile = require('jsonfile');
@@ -124,11 +124,10 @@ module.exports = function (app, model) {
                 console.log("Error writing to file : "+err);
             }
 
+            console.log("Starting script execution");
             var spawn = require('child_process').spawn,
                 py = spawn('python', ['./private/services/runScriptAWS.py']),
                 dataString = '';
-
-            console.log("running script");
 
             py.stdout.on('data', function(data){
                 console.log(data.toString());
@@ -138,7 +137,7 @@ module.exports = function (app, model) {
             py.stdout.on('end', function(){
                 if (dataString) {
                     console.log("Output : "+dataString);
-                    return res.sendStatus(200);
+                    return res.json(dataString);
                 }
                 else {
                     return res.sendStatus(400);
