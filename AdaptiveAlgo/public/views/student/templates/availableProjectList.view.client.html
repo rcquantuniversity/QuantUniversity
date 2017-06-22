@@ -121,7 +121,7 @@
                                         <select id="select_{{$index+1}}" class="form-control" ng-model="model.likeType[$index]" required>
                                             <option value="Run Notebook" ng-if="image.imageType == 'Notebook' || image.imageType == 'Both'">Run Notebook</option>
                                             <option value="Run Script" ng-if="image.imageType == 'Script' || image.imageType == 'Both'">Run Script</option>
-                                            <option value="Schedule Script">Schedule Script</option>
+                                            <option value="Schedule Script" ng-if="image.imageType == 'Script' || image.imageType == 'Both'">Schedule Script</option>
                                             <option value="Deploy">Deploy</option>
                                         </select>
                                     </div>
