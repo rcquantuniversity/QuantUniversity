@@ -18,12 +18,12 @@
                 element.appendTo('body');
  
                 // close modal on background click
-                element.on('click', function (e) {
-                    var target = $(e.target);
-                    if (!target.closest('.modal-body').length) {
-                        scope.$evalAsync(Close);
-                    }
-                });
+                // element.on('click', function (e) {
+                //     var target = $(e.target);
+                //     if (!target.closest('.modal-body').length) {
+                //         scope.$evalAsync(Close);
+                //     }
+                // });
  
                 // add self (this modal instance) to the modal service so it's accessible from controllers
                 var modal = {
