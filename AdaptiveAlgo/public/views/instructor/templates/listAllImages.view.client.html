@@ -1,7 +1,7 @@
 <div ng-controller="headerCtrl as model"> 
   <div ng-include="'header.html'"></div>
 </div> 
-<div class="container">
+<div class="container availablePrjList">
     <div class="row">
         <div class="col-md-12 buildDockerPage">
             <div class="row">
@@ -11,7 +11,7 @@
                     </h4>
                 </div>
                 <div class="col-md-4">
-                    <table class="table table-responsive m-0 palette">
+                    <!-- <table class="table table-responsive m-0 palette">
                         <thead>
                             <th>Docker Hub</th>
                             <th>Amazon S3</th>
@@ -24,7 +24,7 @@
                             <td><i class="fa fa-github" aria-hidden="true"></i></td>
                             <td><i class="fa fa-download" aria-hidden="true"></i></td>
                         </tbody>
-                    </table>
+                    </table> -->
                 </div>
                 <div class="col-md-4">
                     <h4 class="page-title alignRight">
@@ -38,7 +38,8 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-responsive m-0 projectsList">
+                    <!-- Table View -->
+                    <!-- <table class="table table-responsive m-0 projectsList">
                         <thead>
                             <tr>
                                 <th>Project ID</th>
@@ -56,33 +57,70 @@
                                     <a class="btn btn-primary btn-rounded btn-bordred"
                                        ng-click="model.uploadToDockerHub(image.imageName)">
                                         <i class="fa fa-docker"></i>
-                                        <!-- <span>Publish to DockerHub</span> -->
                                     </a>
                                 </td>
                                 <td>
                                     <a class="btn btn-primary btn-rounded btn-bordred"
                                        ng-click="">
                                         <i class="fa fa-amazon" aria-hidden="true"></i>
-                                        <!-- <span>Publish to S3</span> -->
                                     </a>
                                 </td>
                                 <td>
                                     <a class="btn btn-primary btn-rounded btn-bordred"
                                        ng-click="">
                                         <i class="fa fa-github" aria-hidden="true"></i>
-                                        <!-- <span>Publish to GitHub</span> -->
                                     </a>
                                 </td>
                                 <td>
                                     <a class="btn btn-primary btn-rounded btn-bordred"
                                        ng-click="">
                                         <i class="fa fa-download" aria-hidden="true"></i>
-                                        <!-- <span>Download</span> -->
                                     </a>
                                 </td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table> -->
+
+                    <!-- List View -->
+                    <div class="projectsListView" ng-repeat="image in model.images.data">
+                        <div class="col-md-4 noPadLeft">
+                            <img src="images/dockerImg.jpg">
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="cleafix projectTitle">
+                                <em>{{$index+1}}</em>
+                                {{image.imageName}}
+                                <span class="shiftRight"><a class="btn btn-danger btn-rounded btn-bordred" ng-click="model.viewDockerImage(image.imageName); model.openModal('imageModal');">View Image</a></span>
+                            </h3>
+                            <p>
+                                {{image.description}}
+                            </p>
+                            <p>
+                                <span><i class="fa fa-clock-o" aria-hidden="true"></i> Duration: 2 Hours </span>
+                                <span><i class="fa fa-star" aria-hidden="true"></i> Credits: 2 </span>
+                                <span><i class="fa fa-play" aria-hidden="true"></i> Videos: 7 Videos </span>
+                                <span><i class="fa fa-file" aria-hidden="true"></i> Files: 5 Files </span>
+                            </p>
+                            <p>
+                                <a class="btn btn-primary btn-rounded btn-bordred"
+                                   ng-click="model.uploadToDockerHub(image.imageName)">
+                                    <span><i class="fa fa-docker"></i> Publish to Docker</span>
+                                </a>
+                                <a class="btn btn-primary btn-rounded btn-bordred"
+                                   ng-click="">
+                                    <span><i class="fa fa-amazon" aria-hidden="true"></i> Publish to S3</span>
+                                </a>
+                                <a class="btn btn-primary btn-rounded btn-bordred"
+                                   ng-click="">
+                                    <span><i class="fa fa-github" aria-hidden="true"></i> Publish to GitHub</span>
+                                </a>
+                                <a class="btn btn-primary btn-rounded btn-bordred"
+                                   ng-click="">
+                                    <span><i class="fa fa-download" aria-hidden="true"></i> Download / Export </span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

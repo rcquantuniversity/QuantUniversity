@@ -741,6 +741,12 @@ body.modal-open {
   position: relative;
 }
 
+.projectsListView a span {
+  font-size: 15px;
+  padding: 0 10px 0 25px;
+  position: relative;
+}
+
 .projectsListView i {
   font-size: 15px;
   position: absolute;
@@ -767,4 +773,26 @@ body.modal-open {
   background: rgb(67, 89, 102);
   color: rgb(255, 255, 255);
   padding: 15px 25px;
+}
+
+.shiftRight a {
+  float: right;
+}
+
+.projectTitle {
+  margin-bottom: 25px;
+}
+
+.btn-danger {
+  background-color: #ff5b5b !important;
+  border: 1px solid #ff5b5b !important;
+}
+
+.btn-bordred.btn-danger {
+  border-bottom: 2px solid #ff2828 !important;
+}
+
+.btn-danger:hover {
+  background-color: #ff4242 !important;
+  border: 1px solid #ff4242 !important;
 }
