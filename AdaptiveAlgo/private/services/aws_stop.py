@@ -9,6 +9,9 @@ import yaml
 from luigi.mock import MockFile
 from scp import SCPClient
 
+pemkeyPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem'
+whitelistPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\whitelist.json'
+
 class ParseParameters(luigi.Task):
     task_namespace = 'aws'
 
@@ -96,9 +99,9 @@ class DummyLoadBalancer(luigi.Task):
                     whitelist={}
                     whitelist['whitelist'] = vmdict[vm]
                     json.dump(whitelist, fp)
-#                 if(len(vmdict[vm]) == 0):
-#                     vmdict.pop(vm)
-#                     print('the vm is empty now, ready to turn off')
+                if(len(vmdict[vm]) == 0):
+                    vmdict.pop(vm)
+                    print('the vm is empty now, ready to turn off')
                 break
 
         if(isFound == False):
@@ -170,7 +173,7 @@ class StopTask(luigi.Task):
         ip = ips[0]
         print(ip)
         #make ssh connection
-        k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file(pemkeyPath)
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -184,7 +187,7 @@ class StopTask(luigi.Task):
             USER_DIR_NAME = 'jhub-'+USERNAME
             #1. update white list and backup directory
             with SCPClient(c.get_transport()) as scp:
-                scp.put('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\whitelist.json', '/home/ec2-user/jupyterhub-deploy-docker')
+                scp.put(whitelistPath, '/home/ec2-user/jupyterhub-deploy-docker')
             commands = ['sudo mv /home/ec2-user/nbdata/'+USER_DIR_NAME+' /home/ec2-user/nbdata/'+USER_DIR_NAME+'bak',
                         'sudo cp /home/ec2-user/jupyterhub-deploy-docker/whitelist.json /var/lib/docker/volumes/jupyterhub-data/_data']
             for command in commands:
