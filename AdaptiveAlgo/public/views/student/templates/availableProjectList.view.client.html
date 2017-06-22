@@ -125,10 +125,10 @@
                                         </select>
                                     </div>
                                     <div ng-if="model.platformType[$index] == 'Amazon Machine Image' && model.likeType[$index] == 'Run Notebook'">
-                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runLab(image.imageName, $index+1, image.moduleName)">Submit</button>
+                                        <button type="submit" id="ntb_{{$index+1}}" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runLab(image.imageName, $index+1, image.moduleName)">Submit</button>
                                     </div>
                                     <div ng-if="model.platformType[$index] == 'Amazon Machine Image' && model.likeType[$index] == 'Run Script'">
-                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runScriptLab(image.imageName, $index+1, image.moduleName)">Submit</button>
+                                        <button type="submit" id="scr_{{$index+1}}" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runScriptLab(image.imageName, $index+1, image.moduleName)">Submit</button>
                                     </div>
                                     <div ng-if="model.platformType[$index] == 'Amazon Machine Image' && model.likeType[$index] == 'Schedule Script'">
                                         <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid">Submit</button>
@@ -137,10 +137,10 @@
                                         <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid">Submit</button>
                                     </div>
                                     <div ng-if="model.platformType[$index] == 'Google Cloud Platform' && model.likeType[$index] == 'Run Notebook'">
-                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runLab(image.imageName, $index+1, image.moduleName)">Submit</button>
+                                        <button type="submit" id="ntb_{{$index+1}}" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runLab(image.imageName, $index+1, image.moduleName)">Submit</button>
                                     </div>
                                     <div ng-if="model.platformType[$index] == 'Google Cloud Platform' && model.likeType[$index] == 'Run Script'">
-                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runScriptLab(image.imageName, $index+1, image.moduleName)">Submit</button>
+                                        <button type="submit" id="scr_{{$index+1}}" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runScriptLab(image.imageName, $index+1, image.moduleName)">Submit</button>
                                     </div>
                                     <div ng-if="model.platformType[$index] == 'Google Cloud Platform' && model.likeType[$index] == 'Schedule Script'">
                                         <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid">Submit</button>
