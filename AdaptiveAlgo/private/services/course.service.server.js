@@ -17,7 +17,7 @@ module.exports = function (app, model) {
 
     function runRStudio(req, res) {
         var logger = require('./logger');
-        logger.log('Info','Starting R stidio');
+        logger.log('Info','Starting R studio');
 
 
         // // Option 1

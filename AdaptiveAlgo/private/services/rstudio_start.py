@@ -9,7 +9,7 @@ import sys
 import socket
 from luigi.mock import MockFile
 
-pemkeyPath = '/home/parallels/.ssh/qu.pem'
+pemkeyPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\qu.pem'
 efsDns = 'fs-8430e32d.efs.us-west-2.amazonaws.com'
 
 class ParseParameters(luigi.Task):
@@ -20,7 +20,7 @@ class ParseParameters(luigi.Task):
 
     def run(self):
         service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
-        with open(service_dir+'/r_start_params.json') as data_file:    
+        with open(service_dir+'r_start_params.json') as data_file:    
             data = json.load(data_file)
         params = dict()
         params['Image'] = data['imageName']
