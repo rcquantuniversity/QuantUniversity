@@ -89,8 +89,7 @@
                         {{image.imageName}}
                     </h3>
                     <p>
-                        <!-- {{image.description}} -->
-                        Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu. Vel an hinc putant fierent, saperet legimus offendit sed ei doctus volumus explicari qui ex, appareat similique an usu. . Dolor euripidis cum eu, ea per lucilius periculis corrumpit, ut euismod omittam ancillae his.
+                        {{image.description}}
                     </p>
                     <p>
                         <span><i class="fa fa-clock-o" aria-hidden="true"></i> Duration: 2 Hours </span>
@@ -119,10 +118,10 @@
                                     <p>What would you like to do?</p>
                                     <div class="form-group wbdv-left-right-margin">                  
                                         <select id="select_{{$index+1}}" class="form-control" ng-model="model.likeType[$index]" required>
+                                            <option value="Deploy">Deploy</option>
                                             <option value="Run Notebook" ng-if="image.imageType == 'Notebook' || image.imageType == 'Both'">Run Notebook</option>
                                             <option value="Run Script" ng-if="image.imageType == 'Script' || image.imageType == 'Both'">Run Script</option>
                                             <option value="Schedule Script" ng-if="image.imageType == 'Script' || image.imageType == 'Both'">Schedule Script</option>
-                                            <option value="Deploy">Deploy</option>
                                         </select>
                                     </div>
                                     <div ng-if="model.platformType[$index] == 'Amazon Machine Image' && model.likeType[$index] == 'Run Notebook'">
