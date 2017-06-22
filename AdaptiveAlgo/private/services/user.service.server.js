@@ -213,8 +213,10 @@ module.exports = function (app, model) {
         var moduleName = req.body.moduleName;
         var packageList = req.body.packageList;
         var imageType = req.body.imageType;
+        var extractLocation = req.body.extractLocation;
         var PythonShell = require('python-shell');
 
+        logger.log('Info','Creating Docker Image');
         PythonShell.run('./private/services/dockerimage_generator.py', function (err) {
             docker.command('inspect --type=image' + ' ' + imageName, function(err, data){
                 if (err) {
@@ -224,7 +226,8 @@ module.exports = function (app, model) {
                 } else {
                     model
                         .dockerImageModel
-                        .saveDockerImageFile(req.user, imageName, packageList, description, moduleName, imageType)
+                        .saveDockerImageFile(req.user, imageName, packageList,
+                            description, moduleName, imageType, extractLocation)
                         .then(
                             function () {
                                 logger.log("Info","DockerImage details saved in database");
@@ -252,10 +255,10 @@ module.exports = function (app, model) {
             if (err) {
                 logger.log("Error","DockerImage details could not be saved in JSON file due to error below");
                 logger.log("Error",err);
-                return res.sendStatus(400).send(err);
+                res.sendStatus(400).send(err);
             } else {
                 logger.log("Info","DockerImage details saved in JSON file successfully");
-                return res.json(imageName);
+                res.json(imageName);
             }
         });
     }

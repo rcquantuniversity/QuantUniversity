@@ -3,12 +3,13 @@
         .module("AdaptiveAlgoApp")
         .controller("AvailableProjectsController", AvailableProjectsController);
 
-    function AvailableProjectsController($location, UserService, CourseService, $scope, $window, ModalService, spinnerService) {
+    function AvailableProjectsController($location, UserService, CourseService, $scope, $window, ModalService, spinnerService, $compile) {
         var vm = this;
         vm.logout = logout;
         vm.runLab = runLab;
         vm.stopLab = stopLab;
         vm.runScriptLab = runScriptLab;
+        vm.runLabNow = runLabNow;
 
         vm.openModal = openModal;
         vm.openTimeModal = openTimeModal;
@@ -30,6 +31,19 @@
                 );
         }
         init();
+
+        function runLabNow() {
+            // vm.openModal('startModal');
+            // $("#frame").attr("src", "http://localhost:8787");
+
+            console.log(vm.notebookUrl);
+            console.log(vm.timeRemaining);
+            vm.labStartTime = Date.now() / 1000;
+            vm.openModal('startModal', "module7");
+            // $window.open(vm.notebookUrl, '_blank');
+            // https://35.166.73.218/user/a/notebooks/Untitled.ipynb
+            $("#frame").attr("src", vm.notebookUrl);
+        }
 
         function runScriptLab(imageName) {
             CourseService
@@ -59,7 +73,8 @@
                 );
         }
 
-        function openModal(id){
+        function openModal(id, moduleName){
+            vm.moduleName = moduleName;
             ModalService.Open(id);
 
             $('#hm_timer').countdowntimer({
@@ -95,13 +110,22 @@
             $('#hm_timer').addClass('red');
             $('#pauseBtnhms').trigger('click');
         }
+
         function closeModal(id){
             ModalService.Close(id);
+            stopLab(vm.moduleName);
         }
 
-        function stopLab(imageName) {
+        function stopLab(moduleName) {
+            // $('#ntb_'+indexNo).replaceWith($('#ntb_'+indexNo));
+            // $('#ntb_'+indexNo).text('Run Notebook');
+            // // change ng-click
+            // $('#ntb_'+indexNo).attr('ng-click','model.runLab(image.imageName, $index+1)');
+            // // compile the element
+            // $compile($('#ntb_'+indexNo))($scope);
+
             CourseService
-                .stopLab(imageName, vm.labStartTime)
+                .stopLab(moduleName, vm.labStartTime)
                 .then(
                     function (status) {
                         console.log(status);
@@ -116,6 +140,14 @@
             // spinnerService.show('booksSpinner');
             $('#ntb_'+indexNo).text('Starting...');
             $('#ntb_'+indexNo).attr('disabled', 'true');
+
+
+            // $('#ntb_'+indexNo).removeAttr('disabled');
+
+            // $('#ntb_'+indexNo).hide();
+            // var tempBtn = '<a class="btn btn-primary btn-rounded btn-bordred" ng-click="model.runLabNow()">Run Now</a>';
+
+
             // e.currentTarget.text = "Starting...";
             // vm.disabled = true;
             // vm.openModal('startModal');
@@ -124,9 +156,12 @@
                 .startLab(imageName)
                 .then(
                     function (labURL) {
-                        $('#ntb_'+indexNo).attr('disabled', 'false');
-                        $('#ntb_'+indexNo).hide();
-                        $('#ntb_'+indexNo).after("<a id='ntb_{{$index+1}}' class='btn btn-primary btn-rounded btn-bordred' ng-click='model.runLab(image.imageName)'>Run Notebook</a>");
+
+                        $('#ntb_'+indexNo).removeAttr('disabled');
+                        // $('#ntb_'+indexNo).hide();
+                        // $('#ntb_'+indexNo).after('<a class="btn btn-primary btn-rounded btn-bordred" ng-click="model.runLabNow()">Run Now</a>');
+                        // $('#ntb_'+indexNo).text('Run Now');
+
                         // e.currentTarget.text = "Started";
                         // vm.disabled = false;
                         // spinnerService.hide('booksSpinner');
@@ -136,20 +171,26 @@
                         vm.hours = Math.floor(vm.timeRemaining / (60*60));
                         vm.minutes = Math.floor(vm.timeRemaining / 60) - vm.hours * 60;
                         vm.seconds = Math.floor(vm.timeRemaining) - vm.hours * 3600 - vm.minutes * 60;
-                        vm.openModal('startModal');
+                        $('#ntb_'+indexNo).replaceWith($('#ntb_'+indexNo));
+                        // change ng-click
+                        $('#ntb_'+indexNo).attr('ng-click','model.runLabNow()');
+                        // compile the element
+                        $compile($('#ntb_'+indexNo))($scope);
+
+                        // vm.openModal('startModal', "module1");
 
                         // vm.notebookUrl = 'https://www.google.com/';
                         //console.log(labURL);
                         //console.log(labURL.data.replace('\\r\\n','').replace("\"",'').replace("\"",''));
                         //vm.isNotebookLoaded = true;
-                        console.log(vm.notebookUrl);
-                        console.log(vm.timeRemaining);
-                        vm.labStartTime = Date.now() / 1000;
-                        // $window.open(vm.notebookUrl, '_blank');
-                        // https://35.166.73.218/user/a/notebooks/Untitled.ipynb
-                        $("#frame").attr("src", vm.notebookUrl);
+                        // console.log(vm.notebookUrl);
+                        // console.log(vm.timeRemaining);
+                        // vm.labStartTime = Date.now() / 1000;
+                        // // $window.open(vm.notebookUrl, '_blank');
+                        // // https://35.166.73.218/user/a/notebooks/Untitled.ipynb
+                        // $("#frame").attr("src", vm.notebookUrl);
                     },
-                    function (err) {                        
+                    function (err) {
                         console.log("Error : "+err);
                     }
                 );

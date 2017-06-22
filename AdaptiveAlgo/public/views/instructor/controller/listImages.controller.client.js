@@ -9,14 +9,13 @@
 
         vm.openModal = openModal;
         vm.closeModal = closeModal;
-        vm.inspectDockerImage = inspectDockerImage;
+        vm.viewDockerImage = viewDockerImage;
 
         function init() {
             UserService
                 .listAllImages()
                 .then(
                     function (images) {
-                        console.log(images);
                         vm.images = images;
                     },
                     function (err) {
@@ -27,17 +26,25 @@
         }
         init();
 
-        function inspectDockerImage(imageName) {
-            console.log(imageName);
+        function bin2String(array) {
+            var result = "";
+            for (var i = 0; i < array.length; i++) {
+                result += String.fromCharCode(parseInt(array[i], 2));
+            }
+            return result;
+        }
+
+        function viewDockerImage(imageName) {
             CourseService
-                .inspectDockerImage(imageName)
+                .viewDockerImage(imageName)
                 .then(
                     function (data) {
-                        vm.imageDetails = data;
                         console.log(data);
+                        vm.imageDetails = data.data;
+                        console.log(vm.imageDetails);
                     },
                     function (err) {
-                        console.log("Error : "+ err)
+                        console.log("Error : "+ err);
                     }
                 );
         }
@@ -51,7 +58,6 @@
         }
 
         function uploadToDockerHub(imageName) {
-            console.log(imageName);
             UserService
                 .uploadToDockerHub(imageName)
                 .then(

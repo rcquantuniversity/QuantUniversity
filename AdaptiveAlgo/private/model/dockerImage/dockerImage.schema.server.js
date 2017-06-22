@@ -7,6 +7,7 @@ module.exports = function() {
         description : String,
         moduleName: String,
         duration : Number,
+        extractLocation : String,
         imageType : {
             type: String,
             enum: ['Notebook', 'Script','Both'],

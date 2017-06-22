@@ -5,7 +5,7 @@ module.exports = function (app, model) {
     app.post("/api/stopLab", stopLab);
     app.get("/api/publish", publish);
     app.get("/api/consume", consume);
-    app.get("/api/viewDockerFile/:imageName", viewDockerFile);
+    app.get("/api/viewDockerImage/:imageName", viewDockerImage);
     app.post("/api/startScriptLab", startScriptLab);
 
 
@@ -14,12 +14,17 @@ module.exports = function (app, model) {
     var Docker = dockerCLI.Docker;
     var docker = new Docker();
 
-    function viewDockerFile(req, res) {
+    function viewDockerImage(req, res) {
         var imageName = req.params.imageName;
         var fs = require('fs');
-        fs.readFile('/etc/passwd', function(err, data) {
-            if (err) throw err;
-        console.log(data);
+        var fileName = imageName + 'Dockerfile.txt';
+        fileName = 'i1Dockerfile.txt';
+        fs.readFile('./private/services/temp/' + fileName, function(err, data) {
+            if (err) {
+                res.sendStatus(400).send(err);
+            }
+            var fileData = data.toString();
+            res.json(fileData);
         });
     }
 
@@ -64,10 +69,10 @@ module.exports = function (app, model) {
 
     function stopLab(req, res) {
         req.setTimeout(600000);
-        var imageName = req.body.imageName;
+        // var imageName = req.body.imageName;
         var labStartTime = req.body.labStartTime;
         var loggedinUser = req.user.username;
-        var labInfo = {approach:"Exit", module : "module1234", username : loggedinUser};
+        var labInfo = {approach:"Exit", module : req.body.moduleName, username : loggedinUser};
         console.log(labInfo);
         var jsonFile = require('jsonfile');
         var file = './private/services/stop_params.json';
@@ -79,7 +84,7 @@ module.exports = function (app, model) {
             // update lab timeRemaining in userDBrisk
             model
                 .userModel
-                .updateLabTimeRemaining(imageName, labStartTime, req.user._id)
+                .updateLabTimeRemaining(req.body.moduleName, labStartTime, req.user._id)
                 .then(
                     function (newTimeRemaining) {
                         console.log("Lab remaining time updated as : ", newTimeRemaining);
@@ -105,7 +110,7 @@ module.exports = function (app, model) {
     }
 
     function startScriptLab(req, res) {
-        req.setTimeout(600000);
+        req.setTimeout(1000000);
         var imageName = req.body.imageName;
         var moduleName = "asdfghj";
         var imageInfo = {
@@ -149,7 +154,7 @@ module.exports = function (app, model) {
     function startLab(req, res) {
         req.setTimeout(600000);
         var imageName = req.body.imageName;
-        var moduleName = "module1234";
+        var moduleName = "module7";
         var imageInfo = {imageName : imageName, module : moduleName,
             username : req.user.username, maxUsers : "2", version : "latest"};
         var jsonFile = require('jsonfile');

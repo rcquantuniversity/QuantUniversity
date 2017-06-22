@@ -18,7 +18,7 @@ module.exports = function () {
     };
     return api;
 
-    function updateLabTimeRemaining(imageName, labStartTime, userid) {
+    function updateLabTimeRemaining(moduleName, labStartTime, userid) {
         console.log("******** inside updateLabTimeRemaining ***********");
         var deferred = Q.defer();
         UserModel
@@ -27,7 +27,7 @@ module.exports = function () {
                     deferred.reject(err);
                 } else {
                     user.labs.forEach(function (lab, index) {
-                        // check for imageName
+                        // check for imageName/modulename
                         console.log(lab);
                         console.log(Date.now() / 1000);
                         console.log(labStartTime);

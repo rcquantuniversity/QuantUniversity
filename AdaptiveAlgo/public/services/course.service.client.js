@@ -11,7 +11,7 @@
             "stopLab" : stopLab,
             "publish" : publish,
             "consume" : consume,
-            "viewDockerFile" : viewDockerFile,
+            "viewDockerImage" : viewDockerImage,
             "runScriptLab" : runScriptLab
         };
         return api;
@@ -22,8 +22,8 @@
         }
 
 
-        function viewDockerFile(imageName) {
-            return $http.get("/api/viewDockerFile/"+imageName);
+        function viewDockerImage(imageName) {
+            return $http.get("/api/viewDockerImage/"+imageName);
         }
 
         function consume() {
@@ -34,8 +34,8 @@
             return $http.get("/api/publish");
         }
 
-        function stopLab(imageName, labStartTime) {
-            var imageNameJSON = {imageName : imageName, labStartTime : labStartTime};
+        function stopLab(moduleName, labStartTime) {
+            var imageNameJSON = {moduleName : moduleName, labStartTime : labStartTime};
             return $http.post("/api/stopLab",imageNameJSON);
         }
 

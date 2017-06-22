@@ -73,7 +73,8 @@
                 )
         }
 
-        function createDockerImage(folder1, folder2, folder3, imageName, description, moduleName, imageType) {
+        function createDockerImage(folder1, folder2, folder3, imageName,
+                                   description, moduleName, imageType, extractLocation) {
             // packageList = {"name" : "python123456", "package" : "rohan"};
             // packageList = {"data":[{"_id":"592de4fc87aa4829f0fcca1b","__v":0,"packages":[{"name":"matplotlib","command":"pip install matplotlib","_id":"592de4fc87aa4829f0fcca1d","version":"latest"},{"name":"numpy","command":"pip install numpy","_id":"592de4fc87aa4829f0fcca1c","version":"latest"}],"base":"python2.7"},{"_id":"592de4fc87aa4829f0fcca1e","__v":0,"packages":[{"name":"matplotlib","command":"pip install matplotlib","_id":"592de4fc87aa4829f0fcca20","version":"latest"},{"name":"numpy","command":"pip install numpy","_id":"592de4fc87aa4829f0fcca1f","version":"latest"},{"_id":"592de54287aa4829f0fcca24","command":"pip install SciPy","name":"SciPy","version":"1.9"}],"base":"python3.5"},{"_id":"592de4fc87aa4829f0fcca21","__v":0,"packages":[{"name":"matplotlib","command":"pip install matplotlib","_id":"592de4fc87aa4829f0fcca23","version":"latest"},{"name":"numpy","command":"pip install numpy","_id":"592de4fc87aa4829f0fcca22","version":"latest"}],"base":"R"}]};
 
@@ -145,16 +146,13 @@
                 .getPackageFromJSON()
                 .then(
                     function (obj) {
-                        console.log(obj);
                         var temp = [];
                         for (var i in obj.data.data) {
                             var package = obj.data.data[i];
-                            console.log(package);
                             var packageDetails = [];
                             packageDetails = allPackageArray.filter(function (item) {
                                 return item.base === package.base;
                             });
-                            console.log(packageDetails);
                             for (var j in package.packages) {
                                 if(packageExists(packageDetails[0].packages, package.packages[j]))
                                     continue;
@@ -163,13 +161,11 @@
                             var pjson = {"packages": packageDetails[0].packages,"base":package.base};
                             temp.push(pjson);
                         }
-                        console.log(temp);
-                        // console.log(allPackageArray);
-                        buildDocker(allPackageArray, imageName, description, moduleName, imageType);
+                        buildDocker(allPackageArray, imageName, description, moduleName, imageType, extractLocation);
                     },
                     function (err) {
                         console.log(err);
-                        buildDocker(allPackageArray, imageName, description, moduleName, imageType);
+                        buildDocker(allPackageArray, imageName, description, moduleName, imageType, extractLocation);
                     }
                 );
         }
@@ -185,16 +181,18 @@
         }
 
 
-        function buildDocker(allPackageArray, imageName, description, moduleName, imageType) {
+        function buildDocker(allPackageArray, imageName, description, moduleName, imageType, extractLocation) {
             UserService
                 .createOutputJSON(allPackageArray, imageName)
                 .then(
                     function (imageName) {
                         vm.uniqueImageName = imageName.data;
                         console.log("vm.uniqueImageName "+imageName.data.replace('"','').replace('"',''));
+                        console.log("Creating Docker image");
                         vm.message = "JSON created successfully! Creating Docker Image";
                         UserService
-                            .createDockerImage(imageName.data.replace('"','').replace('"',''), allPackageArray, description, moduleName, imageType)
+                            .createDockerImage(imageName.data.replace('"','').replace('"',''),
+                                allPackageArray, description, moduleName, imageType, extractLocation)
                             .then(
                                 function (status) {
                                     vm.message = "Docker Image created successfully!";
@@ -205,7 +203,8 @@
                                 }
                             );
                     },
-                    function () {
+                    function (err) {
+                        console.log("Could not create JSON. Try again."  + JSON.stringify(err));
                         vm.error = "Could not create JSON. Try again.";
                     }
                 );

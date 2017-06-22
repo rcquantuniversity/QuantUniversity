@@ -55,10 +55,13 @@ module.exports = function () {
         return deferred.promise;
     }
     
-    function saveDockerImageFile(userid, imagename, imageDescription, description, modulename, imageType) {
+    function saveDockerImageFile(userid, imagename, imageDescription,
+                                 description, modulename, imageType, extractLocation) {
         var deferred = Q.defer();
-        var file = './private/services/dockerImages/'+imagename +'.txt';
-        var record = {userid : userid, imageName : imagename, description : description, moduleName : modulename, imageType : imageType};
+        // var file = './private/services/dockerImages/'+imagename +'.txt';
+        var record = {userid : userid, imageName : imagename,
+            description : description, moduleName : modulename,
+            imageType : imageType, extractLocation : extractLocation};
         DockerImageModel
             .create(record, function (err, status) {
                 if (err) {
@@ -75,12 +78,12 @@ module.exports = function () {
                             }
                         }
                     }
-                    var str = "Packages in this image are : "+packages;
-                    fs.writeFile(file, str, function(err) {
-                        if (err) {
-                            console.log(err);
-                        }
-                    });
+                    // var str = "Packages in this image are : "+packages;
+                    // fs.writeFile(file, str, function(err) {
+                    //     if (err) {
+                    //         console.log(err);
+                    //     }
+                    // });
                 }
             });
         return deferred.promise;
