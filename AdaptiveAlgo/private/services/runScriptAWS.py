@@ -10,7 +10,7 @@ import socket
 def createEC2Instance():
     ec2 = boto3.resource('ec2')
     imgid = ''
-    filter = {'Name': 'name', 'Values' : ['execution']}
+    filter = {'Name': 'name', 'Values' : ['dragon']}
     for img in ec2.images.filter(Filters = [filter]):
         imgid = img.id
         # print imgid
@@ -18,7 +18,7 @@ def createEC2Instance():
             ImageId=imgid,
             MinCount=1,
             MaxCount=1,
-            KeyName='adaptivealgo',
+            KeyName='qu',
             SecurityGroupIds=[
                 'jupyterhub',
             ],
@@ -85,7 +85,7 @@ def main():
     key_file=''
     imageName=''
     command=''
-    with open('run_script.json') as f:
+    with open('./private/services/run_script.json') as f:
         data = json.load(f)
         key_file=data['key_file']
         imageName=data['imageName']

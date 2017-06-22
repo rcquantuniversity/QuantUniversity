@@ -7,12 +7,55 @@ module.exports = function (app, model) {
     app.get("/api/consume", consume);
     app.get("/api/viewDockerImage/:imageName", viewDockerImage);
     app.post("/api/startScriptLab", startScriptLab);
+    app.post("/api/runRStudio", runRStudio);
 
 
     var dockerCLI = require('docker-cli-js');
     var DockerOptions = dockerCLI.Options;
     var Docker = dockerCLI.Docker;
     var docker = new Docker();
+
+    function runRStudio(req, res) {
+        var logger = require('./logger');
+        logger.log('Info','Starting R stidio');
+
+
+        // // Option 1
+        var spawn = require('child_process').spawn,
+            py = spawn('python', ['./private/services/rstudio_start.py']),
+            dataString = '';
+
+        py.stdout.on('data', function(data){
+            console.log(data.toString());
+            dataString += data.toString();
+        });
+
+        py.stdout.on('end', function(){
+            if (dataString) {
+
+                console.log("dataString : "+dataString);
+                // add metering info into userDB
+                // model
+                //     .userModel
+                //     .updateStartOfLab(req.user._id, imageName)
+                //     .then(
+                //         function (timeRemaining) {
+                //             var labParameters = {"ip" : dataString.split("ip: ")[1], timeRemaining : timeRemaining};
+                //             res.json(labParameters);
+                //         },
+                //         function (err) {
+                //             console.log(err);
+                //         }
+                //     );
+                // var labParameters = {"ip" : dataString.split("ip: ")[1], timeRemaining : timeRemaining};
+                var labParameters = {"ip" : dataString.split("ip: ")[1]};
+                res.json(labParameters);
+            }
+            else {
+                return res.sendStatus(400);
+            }
+        });
+    }
 
     function viewDockerImage(req, res) {
         var imageName = req.params.imageName;
@@ -116,13 +159,13 @@ module.exports = function (app, model) {
         console.log(moduleName);
         var imageInfo = {
             "username": "ec2-user",
-            "key_file": "./private/services/adaptivealgo.pem",
+            "key_file": "./private/services/qu.pem",
             "imageName": imageName,
             "commands": [
-                "touch qwerty",
-                "ls"
-                // "cd /home/jovyan/base/Source",
-                // "python main.py"
+                // "touch qwerty",
+                // "ls"
+                "cd /home/jovyan/base/Source",
+                "python main.py"
             ]
         };
         var jsonFile = require('jsonfile');

@@ -10,6 +10,7 @@
         vm.stopLab = stopLab;
         vm.runScriptLab = runScriptLab;
         vm.runLabNow = runLabNow;
+        vm.runRStudio = runRStudio;
 
         vm.openModal = openModal;
         vm.openTimeModal = openTimeModal;
@@ -31,6 +32,22 @@
                 );
         }
         init();
+
+        function runRStudio() {
+            CourseService
+                .runRStudio()
+                .then(
+                    function (data) {
+                        console.log(data);
+                        vm.openModal('startModal');
+                        $("#frame").attr("src", 'http://'+data.data.ip.replace('\\r\\n','').replace("\"",'').replace("\"",''));
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+        }
+
 
         function runLabNow() {
             // vm.openModal('startModal');
