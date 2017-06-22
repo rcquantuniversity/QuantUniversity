@@ -44,6 +44,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6" ng-if="model.imageType == 'Notebook' || model.imageType == 'Both'">
+                        <div class="card-box panel-default">
+                            <div class="header-title panel-heading">
+                                Please enter the duration
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-grp">
+                                    <label>Duration</label>
+                                    <div class="input-group fullWidth">
+                                        <input type="text" class="form-control" ng-model="model.duration" id="duration" placeholder="Duration" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
