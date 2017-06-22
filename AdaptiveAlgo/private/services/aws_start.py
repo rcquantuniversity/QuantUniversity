@@ -167,7 +167,7 @@ class StartInstanceTask(luigi.Task):
             return
 
         imgid = ''
-        filter = {'Name': 'name', 'Values' : ['execution']}
+        filter = {'Name': 'name', 'Values' : ['dragon']}
         for img in ec2.images.filter(Filters = [filter]):
             imgid = img.id
             print(imgid)
@@ -213,6 +213,7 @@ class StartInstanceTask(luigi.Task):
         _out.write(new_ip)
         _out.close()
         #sleep for VM initialization
+        #time.sleep(100) 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         result = sock.connect_ex((new_ip,22))
         while result != 0:
@@ -220,6 +221,8 @@ class StartInstanceTask(luigi.Task):
             result = sock.connect_ex((new_ip,22))
             time.sleep(5)
         #efs init
+
+        #1. establish ssh connection
         k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -227,6 +230,17 @@ class StartInstanceTask(luigi.Task):
         c.connect( hostname = new_ip, username = 'ec2-user', pkey = k)
         print ('connected')
 
+        #2. check docker service status
+        commands = ['sudo service docker status']
+        stdin , stdout, stderr = c.exec_command(commands[0])
+        returnVal = stdout.read()
+        while not 'running...' in returnVal.decode("utf-8"):
+            stdin , stdout, stderr = c.exec_command(commands[0])
+            returnVal = stdout.read()
+            print('docker service is not up')
+            time.sleep(5)
+        
+        #3. stop the service and mount
         commands = ['sudo service docker stop',
                     'sleep 5',
                     'sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-8430e32d.efs.us-west-2.amazonaws.com:/ nbdata',
@@ -261,6 +275,7 @@ class StartHubTask(luigi.Task):
         USER_NAME = params['Username']
         USER_DIR_NAME = 'jhub-'+USER_NAME
         #update env file
+        # with open('.env', 'a') as envfile:
         with open('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', 'r') as f:
             content = f.readlines()
         
@@ -282,6 +297,7 @@ class StartHubTask(luigi.Task):
 
         ip = ips[0]
         print(ip)
+ 
         k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -346,7 +362,7 @@ class StartHubTask(luigi.Task):
         	print ('Errors')
         	print (stderr.read())
         c.close()
-        
+
         #check 80 port
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         result = sock.connect_ex((ip,80))
