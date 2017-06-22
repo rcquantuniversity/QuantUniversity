@@ -108,17 +108,17 @@
                                     <p>Please select the platform to run the Docker Image</p>
                                     <div class="form-group wbdv-left-right-margin">                  
                                         <div class="radio radio-info radio-inline">
-                                            <input type="radio" id="inlineRadio1" value="Amazon Machine Image" ng-model="model.platformType">
-                                            <label for="inlineRadio1"> Amazon Machine Image </label>
+                                            <input type="radio" id="inlineRadio1_{{$index+1}}" value="Amazon Machine Image">
+                                            <label for="inlineRadio1_{{$index+1}}"> Amazon Machine Image </label>
                                         </div>
                                         <div class="radio radio-info radio-inline">
-                                            <input type="radio" id="inlineRadio2" value="Google Cloud Platform" ng-model="model.platformType">
-                                            <label for="inlineRadio2"> Google Cloud Platform </label>
+                                            <input type="radio" id="inlineRadio2_{{$index+1}}" value="Google Cloud Platform">
+                                            <label for="inlineRadio2_{{$index+1}}"> Google Cloud Platform </label>
                                         </div>
                                     </div>
                                     <p>What would you like to do?</p>
                                     <div class="form-group wbdv-left-right-margin">                  
-                                        <select class="form-control">
+                                        <select id="select_{{$index+1}}" class="form-control">
                                             <option>Please Select</option>
                                             <option value="Run Notebook" ng-if="image.imageType == 'Notebook' || image.imageType == 'Both'">Run Notebook</option>
                                             <option value="Run Script" ng-if="image.imageType == 'Script' || image.imageType == 'Both'">Run Script</option>
