@@ -16,8 +16,8 @@
         };
         return api;
 
-        function runScriptLab(imageName) {
-            var imageNameJSON = {imageName : imageName};
+        function runScriptLab(imageName, moduleName) {
+            var imageNameJSON = {imageName : imageName, moduleName : moduleName};
             return $http.post("/api/startScriptLab", imageNameJSON);
         }
 
@@ -39,8 +39,8 @@
             return $http.post("/api/stopLab",imageNameJSON);
         }
 
-        function startLab(imageName) {
-            var imageNameJSON = {imageName : imageName};
+        function startLab(imageName, moduleName) {
+            var imageNameJSON = {imageName : imageName, moduleName : moduleName};
             return $http.post("/api/startLab", imageNameJSON);
         }
 

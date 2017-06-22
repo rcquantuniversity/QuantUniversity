@@ -85,7 +85,7 @@ def main():
     key_file=''
     imageName=''
     command=''
-    with open('./private/services/run_script.json') as f:
+    with open('run_script.json') as f:
         data = json.load(f)
         key_file=data['key_file']
         imageName=data['imageName']

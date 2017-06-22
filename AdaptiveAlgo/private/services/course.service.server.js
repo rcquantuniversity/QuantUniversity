@@ -112,14 +112,17 @@ module.exports = function (app, model) {
     function startScriptLab(req, res) {
         req.setTimeout(1000000);
         var imageName = req.body.imageName;
-        var moduleName = "asdfghj";
+        var moduleName = req.body.moduleName;
+        console.log(moduleName);
         var imageInfo = {
             "username": "ec2-user",
             "key_file": "./private/services/adaptivealgo.pem",
-            "imageName": "jhub/test",
+            "imageName": imageName,
             "commands": [
-                "cd /home/jovyan/base/Source",
-                "python main.py"
+                "touch qwerty",
+                "ls"
+                // "cd /home/jovyan/base/Source",
+                // "python main.py"
             ]
         };
         var jsonFile = require('jsonfile');
@@ -154,7 +157,7 @@ module.exports = function (app, model) {
     function startLab(req, res) {
         req.setTimeout(600000);
         var imageName = req.body.imageName;
-        var moduleName = "module7";
+        var moduleName = req.body.moduleName;
         var imageInfo = {imageName : imageName, module : moduleName,
             username : req.user.username, maxUsers : "2", version : "latest"};
         var jsonFile = require('jsonfile');

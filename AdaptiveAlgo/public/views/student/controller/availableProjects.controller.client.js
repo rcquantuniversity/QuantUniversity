@@ -39,15 +39,15 @@
             console.log(vm.notebookUrl);
             console.log(vm.timeRemaining);
             vm.labStartTime = Date.now() / 1000;
-            vm.openModal('startModal', "module7");
+            vm.openModal('startModal');
             // $window.open(vm.notebookUrl, '_blank');
             // https://35.166.73.218/user/a/notebooks/Untitled.ipynb
             $("#frame").attr("src", vm.notebookUrl);
         }
 
-        function runScriptLab(imageName) {
+        function runScriptLab(imageName, indexNo, moduleName) {
             CourseService
-                .runScriptLab(imageName)
+                .runScriptLab(imageName, moduleName)
                 .then(
                     function (data) {
                         vm.scriptOutput = data;
@@ -73,8 +73,7 @@
                 );
         }
 
-        function openModal(id, moduleName){
-            vm.moduleName = moduleName;
+        function openModal(id){
             ModalService.Open(id);
 
             $('#hm_timer').countdowntimer({
@@ -113,10 +112,16 @@
 
         function closeModal(id){
             ModalService.Close(id);
-            stopLab(vm.moduleName);
+            if (!vm.isLabStopped) {
+                stopLab(vm.moduleName);
+            }
         }
 
         function stopLab(moduleName) {
+
+            // what if multiple labs are started
+            vm.isLabStopped = true;
+
             // $('#ntb_'+indexNo).replaceWith($('#ntb_'+indexNo));
             // $('#ntb_'+indexNo).text('Run Notebook');
             // // change ng-click
@@ -136,7 +141,10 @@
                 );
         }
 
-        function runLab(imageName, indexNo) {
+        function runLab(imageName, indexNo, moduleName) {
+
+            // what if user clicks multiplt start labs
+            vm.moduleName = moduleName;
             // spinnerService.show('booksSpinner');
             $('#ntb_'+indexNo).text('Starting...');
             $('#ntb_'+indexNo).attr('disabled', 'true');
@@ -153,11 +161,12 @@
             // vm.openModal('startModal');
             // $("#frame").attr("src", "http://localhost:8787");
             CourseService
-                .startLab(imageName)
+                .startLab(imageName, moduleName)
                 .then(
                     function (labURL) {
 
                         $('#ntb_'+indexNo).removeAttr('disabled');
+                        $('#ntb_'+indexNo).text('Run Now');
                         // $('#ntb_'+indexNo).hide();
                         // $('#ntb_'+indexNo).after('<a class="btn btn-primary btn-rounded btn-bordred" ng-click="model.runLabNow()">Run Now</a>');
                         // $('#ntb_'+indexNo).text('Run Now');

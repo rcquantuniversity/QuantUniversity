@@ -39,14 +39,14 @@
                         <td>{{image.description}}</td>
                         <td ng-if="image.imageType == 'Notebook' || image.imageType == 'Both'">
                             <a id="ntb_{{$index+1}}" class="btn btn-primary btn-rounded btn-bordred"
-                               ng-click="model.runLab(image.imageName, $index+1)">
+                               ng-click="model.runLab(image.imageName, $index+1, image.moduleName)">
                                 Run Notebook
                                 <!-- <spinner name="booksSpinner" img-src="images/spinner.gif" class="spinnerImg"></spinner> -->
                             </a>
                         </td>
                         <td ng-if="image.imageType == 'Script' || image.imageType == 'Both'">
                             <a id="scr_{{$index+1}}" class="btn btn-primary btn-rounded btn-bordred"
-                               ng-click="model.runScriptLab(image.imageName, $index+1)">
+                               ng-click="model.runScriptLab(image.imageName, $index+1, image.moduleName)">
                                 Run Script
                                 <!-- <spinner name="booksSpinner" img-src="images/spinner.gif" class="spinnerImg"></spinner> -->
                             </a>
