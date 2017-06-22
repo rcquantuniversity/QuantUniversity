@@ -9,7 +9,7 @@
 <div ng-controller="headerCtrl as model"> 
   <div ng-include="'header.html'"></div>
 </div> 
-<div class="container">
+<div class="container availablePrjList">
     <div class="row">
         <div class="col-md-12">
             <div class="row">
@@ -23,6 +23,8 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <!-- Table View -->
+            <!--
             <table class="studentListTable table table-responsive m-0">
                 <thead>
                     <tr>
@@ -40,22 +42,22 @@
                         <td ng-if="image.imageType == 'Notebook' || image.imageType == 'Both'">
                             <a id="ntb_{{$index+1}}" class="btn btn-primary btn-rounded btn-bordred"
                                ng-click="model.runLab(image.imageName, $index+1, image.moduleName)">
-                                Run Notebook
+                                Run Notebook -->
                                 <!-- <spinner name="booksSpinner" img-src="images/spinner.gif" class="spinnerImg"></spinner> -->
-                            </a>
+                            <!-- </a>
                         </td>
                         <td ng-if="image.imageType == 'Script' || image.imageType == 'Both'">
                             <a id="scr_{{$index+1}}" class="btn btn-primary btn-rounded btn-bordred"
                                ng-click="model.runScriptLab(image.imageName, $index+1, image.moduleName)">
-                                Run Script
+                                Run Script -->
                                 <!-- <spinner name="booksSpinner" img-src="images/spinner.gif" class="spinnerImg"></spinner> -->
-                            </a>
+                            <!-- </a>
                         </td>
                         <td>
                             <a class="btn btn-default btn-rounded btn-bordred" ng-click="" disabled>
                                 Schedule Script
                             </a>
-                        </td>
+                        </td> -->
                         <!-- <td>
                             <a class="btn btn-primary btn-rounded btn-bordred startLab" ng-click=" model.runLab(image.imageName);">
                                 Start Lab With AMI
@@ -71,9 +73,88 @@
                                 Stop Lab
                             </a>
                         </td> -->                        
-                    </tr>
+                    <!-- </tr>
                 </tbody>
             </table>
+            -->
+
+            <!-- List View -->
+            <div class="projectsListView" ng-repeat="image in model.images.data">
+                <div class="col-md-4 noPadLeft">
+                    <img src="images/dockerImg.jpg">
+                </div>
+                <div class="col-md-8">
+                    <h3>
+                        <em>{{$index+1}}</em>
+                        {{image.imageName}}
+                    </h3>
+                    <p>
+                        <!-- {{image.description}} -->
+                        Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu. Vel an hinc putant fierent, saperet legimus offendit sed ei doctus volumus explicari qui ex, appareat similique an usu. . Dolor euripidis cum eu, ea per lucilius periculis corrumpit, ut euismod omittam ancillae his.
+                    </p>
+                    <p>
+                        <span><i class="fa fa-clock-o" aria-hidden="true"></i> Duration: 2 Hours </span>
+                        <span><i class="fa fa-star" aria-hidden="true"></i> Credits: 2 Hours </span>
+                        <span><i class="fa fa-play" aria-hidden="true"></i> Videos: 2 Hours </span>
+                        <span><i class="fa fa-file" aria-hidden="true"></i> Files: 2 Hours </span>
+                    </p>
+                    <p>
+                        <button data-toggle="collapse" data-target="#box_{{$index+1}}" class="btn btn-info btn-rounded btn-bordred collapsed">Add to Sandbox</button>
+                    </p>
+                    <div id="box_{{$index+1}}" class="box collapse">
+                        <form method="post" name="runDockerImage">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Please select the platform to run the Docker Image</p>
+                                    <div class="form-group wbdv-left-right-margin">                  
+                                        <div class="radio radio-info radio-inline">
+                                            <input type="radio" id="inlineRadio1_{{$index+1}}" value="Amazon Machine Image" name="pType{{$index+1}}" ng-model="model.platformType[$index]" required>
+                                            <label for="inlineRadio1_{{$index+1}}"> Amazon Machine Image </label>
+                                        </div>
+                                        <div class="radio radio-info radio-inline">
+                                            <input type="radio" id="inlineRadio2_{{$index+1}}" value="Google Cloud Platform" name="pType{{$index+1}}" ng-model="model.platformType[$index]" required>
+                                            <label for="inlineRadio2_{{$index+1}}"> Google Cloud Platform </label>
+                                        </div>
+                                    </div>
+                                    <p>What would you like to do?</p>
+                                    <div class="form-group wbdv-left-right-margin">                  
+                                        <select id="select_{{$index+1}}" class="form-control" ng-model="model.likeType[$index]" required>
+                                            <option value="Run Notebook" ng-if="image.imageType == 'Notebook' || image.imageType == 'Both'">Run Notebook</option>
+                                            <option value="Run Script" ng-if="image.imageType == 'Script' || image.imageType == 'Both'">Run Script</option>
+                                            <option value="Schedule Script">Schedule Script</option>
+                                            <option value="Deploy">Deploy</option>
+                                        </select>
+                                    </div>
+                                    <div ng-if="model.platformType[$index] == 'Amazon Machine Image' && model.likeType[$index] == 'Run Notebook'">
+                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runLab(image.imageName, $index+1, image.moduleName)">Submit</button>
+                                    </div>
+                                    <div ng-if="model.platformType[$index] == 'Amazon Machine Image' && model.likeType[$index] == 'Run Script'">
+                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runScriptLab(image.imageName, $index+1, image.moduleName)">Submit</button>
+                                    </div>
+                                    <div ng-if="model.platformType[$index] == 'Amazon Machine Image' && model.likeType[$index] == 'Schedule Script'">
+                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid">Submit</button>
+                                    </div>
+                                    <div ng-if="model.platformType[$index] == 'Amazon Machine Image' && model.likeType[$index] == 'Deploy'">
+                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid">Submit</button>
+                                    </div>
+                                    <div ng-if="model.platformType[$index] == 'Google Cloud Platform' && model.likeType[$index] == 'Run Notebook'">
+                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runLab(image.imageName, $index+1, image.moduleName)">Submit</button>
+                                    </div>
+                                    <div ng-if="model.platformType[$index] == 'Google Cloud Platform' && model.likeType[$index] == 'Run Script'">
+                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runScriptLab(image.imageName, $index+1, image.moduleName)">Submit</button>
+                                    </div>
+                                    <div ng-if="model.platformType[$index] == 'Google Cloud Platform' && model.likeType[$index] == 'Schedule Script'">
+                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid">Submit</button>
+                                    </div>
+                                    <div ng-if="model.platformType[$index] == 'Google Cloud Platform' && model.likeType[$index] == 'Deploy'">
+                                        <button type="submit" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid">Submit</button>
+                                    </div>        
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
