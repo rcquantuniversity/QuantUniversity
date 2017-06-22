@@ -8,7 +8,9 @@ import yaml
 import sys
 import socket
 from luigi.mock import MockFile
-from scp import SCPClient
+
+pemkeyPath = '/home/parallels/.ssh/qu.pem'
+efsDns = 'fs-8430e32d.efs.us-west-2.amazonaws.com'
 
 class ParseParameters(luigi.Task):
     task_namespace = 'aws'
@@ -18,12 +20,12 @@ class ParseParameters(luigi.Task):
 
     def run(self):
         service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
-        with open(service_dir+'/start_params.json') as data_file:    
+        with open(service_dir+'/r_params.json') as data_file:    
             data = json.load(data_file)
         params = dict()
-        params['Image'] = 'rstudio/test'
-        params['Module'] = 'rstudio-rohan'
-        params['Username'] = 'rohan'
+        params['Image'] = data['imageName']
+        params['Module'] = data['module']
+        params['Username'] = data['username']
         print(params)
         _out = self.output().open('w')
         json.dump(params,_out)
@@ -69,7 +71,7 @@ class StartInstanceTask(luigi.Task):
             ImageId=imgid,
             MinCount=1,
             MaxCount=1,
-            KeyName='adaptivealgo',
+            KeyName='qu',
             SecurityGroupIds=[
                 'jupyterhub',
             ],
@@ -112,16 +114,31 @@ class StartInstanceTask(luigi.Task):
             print ("22 port is not open")
             result = sock.connect_ex((new_ip,22))
             time.sleep(5)
-        k = paramiko.RSAKey.from_private_key_file('/home/parallels/.ssh/adaptivealgo.pem')
+
+        #efs init
+
+        #1. establish ssh connection
+        k = paramiko.RSAKey.from_private_key_file(pemkeyPath)
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
         c.connect( hostname = new_ip, username = 'ec2-user', pkey = k)
         print ('connected')
 
+        #2. check docker service status
+        commands = ['sudo service docker status']
+        stdin , stdout, stderr = c.exec_command(commands[0])
+        returnVal = stdout.read()
+        while not 'running...' in returnVal.decode("utf-8"):
+            stdin , stdout, stderr = c.exec_command(commands[0])
+            returnVal = stdout.read()
+            print('docker service is not up')
+            time.sleep(5)
+        
+        #3. stop the service and mount
         commands = ['sudo service docker stop',
                     'sleep 5',
-                    'sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-8430e32d.efs.us-west-2.amazonaws.com:/ rstudio_data',
+                    'sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 '+efsDns+':/ rstudio_data',
                     'sleep 5',
                     'sudo mount -a',
                     'sleep 5',
@@ -160,7 +177,7 @@ class StartRstudio(luigi.Task):
         ip = ips[0]
         print(ip)
  
-        k = paramiko.RSAKey.from_private_key_file('/home/parallels/.ssh/adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file(pemkeyPath)
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -168,7 +185,7 @@ class StartRstudio(luigi.Task):
         print ('connected')
 
         commands = ['mkdir /home/ec2-user/rstudio_data/rstudio_'+USER_NAME,
-                    'docker run -d -p 80:8787 -e USER='+USER_NAME+' -e PASSWORD='+USER_NAME+' --name rocker_rstudio -v /home/ec2-user/rstudio_data/rstudio_'+USER_NAME+'/:/home/'+USER_NAME+' rstudio/test']
+                    'docker run -d -p 80:8787 -e USER='+USER_NAME+' -e PASSWORD='+USER_NAME+' --name '+USER_NAME+' -v /home/ec2-user/rstudio_data/rstudio_'+USER_NAME+'/:/home/'+USER_NAME+' '+DOCKER_NOTEBOOK_IMAGE]
 
         for command in commands:
         	print ('Executing {}'.format( command ))
