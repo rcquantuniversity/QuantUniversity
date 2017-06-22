@@ -1,1 +1,1 @@
-{"username":"ec2-user","key_file":"./private/services/adaptivealgo.pem","imageName":"jhub/test","commands":["touch qwerty","ls"]}
+{"username":"ec2-user","key_file":"./private/services/qu.pem","imageName":"jhub/test","commands":["cd /home/jovyan/base/Source","python main.py"]}

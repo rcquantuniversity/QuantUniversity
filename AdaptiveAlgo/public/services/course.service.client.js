@@ -12,9 +12,14 @@
             "publish" : publish,
             "consume" : consume,
             "viewDockerImage" : viewDockerImage,
-            "runScriptLab" : runScriptLab
+            "runScriptLab" : runScriptLab,
+            "runRStudio" : runRStudio
         };
         return api;
+
+        function runRStudio() {
+            return $http.post("/api/runRStudio");
+        }
 
         function runScriptLab(imageName, moduleName) {
             var imageNameJSON = {imageName : imageName, moduleName : moduleName};
