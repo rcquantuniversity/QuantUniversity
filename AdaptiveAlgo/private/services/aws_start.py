@@ -10,6 +10,11 @@ import socket
 from luigi.mock import MockFile
 from scp import SCPClient
 
+pemkeyPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem'
+envFilePath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env'
+whitelistPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\whitelist.json'
+efsDns = 'fs-8430e32d.efs.us-west-2.amazonaws.com'
+
 class ParseParameters(luigi.Task):
     task_namespace = 'aws'
 
@@ -176,7 +181,7 @@ class StartInstanceTask(luigi.Task):
             ImageId=imgid,
             MinCount=1,
             MaxCount=1,
-            KeyName='adaptivealgo',
+            KeyName='qu',
             SecurityGroupIds=[
                 'jupyterhub',
             ],
@@ -223,7 +228,7 @@ class StartInstanceTask(luigi.Task):
         #efs init
 
         #1. establish ssh connection
-        k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file(pemkeyPath)
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -243,7 +248,7 @@ class StartInstanceTask(luigi.Task):
         #3. stop the service and mount
         commands = ['sudo service docker stop',
                     'sleep 5',
-                    'sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-8430e32d.efs.us-west-2.amazonaws.com:/ nbdata',
+                    'sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 '+efsDns+':/ nbdata',
                     'sleep 5',
                     'sudo mount -a',
                     'sleep 5',
@@ -275,8 +280,7 @@ class StartHubTask(luigi.Task):
         USER_NAME = params['Username']
         USER_DIR_NAME = 'jhub-'+USER_NAME
         #update env file
-        # with open('.env', 'a') as envfile:
-        with open('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', 'r') as f:
+        with open(envFilePath, 'r') as f:
             content = f.readlines()
         
         newcontent=[]
@@ -286,7 +290,7 @@ class StartHubTask(luigi.Task):
         newcontent.append('DOCKER_NOTEBOOK_IMAGE=' + DOCKER_NOTEBOOK_IMAGE)
 
         print(newcontent)
-        with open('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', 'w') as f:
+        with open(envFilePath, 'w') as f:
             for line in newcontent:
                 f.write("%s" % line)
 
@@ -298,7 +302,7 @@ class StartHubTask(luigi.Task):
         ip = ips[0]
         print(ip)
  
-        k = paramiko.RSAKey.from_private_key_file('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file(pemkeyPath)
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -306,8 +310,8 @@ class StartHubTask(luigi.Task):
         print ('connected')
 
         with SCPClient(c.get_transport()) as scp:
-            scp.put('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env', '/home/ec2-user/jupyterhub-deploy-docker')
-            scp.put('C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\whitelist.json', '/home/ec2-user/jupyterhub-deploy-docker')
+            scp.put(envFilePath, '/home/ec2-user/jupyterhub-deploy-docker')
+            scp.put(whitelistPath, '/home/ec2-user/jupyterhub-deploy-docker')
         #is the image on local machine?
         commands = ['docker images -q '+DOCKER_NOTEBOOK_IMAGE]
         for command in commands:
