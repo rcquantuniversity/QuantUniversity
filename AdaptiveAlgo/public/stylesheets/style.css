@@ -702,3 +702,69 @@ body.modal-open {
 .btn-default, .btn-default[disabled]:hover {
   background-color: rgba(218, 230, 236, 0.3);
 }
+
+.availablePrjList {
+  padding-bottom: 30px;
+}
+
+.projectsListView img {
+  width: 100%;
+}
+
+.projectsListView {
+  padding: 30px 0;
+  border-bottom: 1px dashed #000;
+}
+
+.noPadLeft {
+  padding-left: 0;
+}
+
+.projectsListView h3 em {
+  font-size: 21px;
+  font-weight: 400;
+  text-transform: none;
+  font-style: normal;
+  color: #fff;
+  background-color: #71b6f9;
+  border-radius: 50%;
+  padding: 3px 10px;
+}
+
+.projectsListView h3 {
+  margin-top: 0;
+}
+
+.projectsListView span {
+  font-size: 15px;
+  padding: 0 10px 0 18px;
+  position: relative;
+}
+
+.projectsListView i {
+  font-size: 15px;
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+.btn-info {
+  background-color: #35b8e0 !important;
+  border: 1px solid #35b8e0 !important;
+}
+.btn-info:hover {
+  background-color: #21afda !important;
+  border: 1px solid #21afda !important;
+}
+.btn-bordred.btn-info {
+  border-bottom: 2px solid #20a8d1 !important;
+}
+
+.box {
+  margin: 15px 0 0;
+}
+
+.box form {
+  background: rgb(67, 89, 102);
+  color: rgb(255, 255, 255);
+  padding: 15px 25px;
+}
