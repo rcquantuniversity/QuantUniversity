@@ -11,7 +11,7 @@ from luigi.mock import MockFile
 
 pemkeyPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\qu.pem'
 efsDns = 'fs-8430e32d.efs.us-west-2.amazonaws.com'
-AMIName = 'rstudio'
+AMIName = 'rstudio_tidyverse_image'
 
 class ParseParameters(luigi.Task):
     task_namespace = 'aws'
