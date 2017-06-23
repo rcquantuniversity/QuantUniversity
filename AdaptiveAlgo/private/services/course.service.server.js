@@ -64,6 +64,8 @@ module.exports = function (app, model) {
         logger.log('Info','Starting Terminal');
         var imageName = req.body.imageName;
         var moduleName = req.body.moduleName;
+
+        res.sendStatus(200);
     }
 
     function viewDockerImage(req, res) {
