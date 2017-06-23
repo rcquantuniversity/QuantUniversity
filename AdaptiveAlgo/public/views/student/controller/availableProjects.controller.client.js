@@ -11,6 +11,7 @@
         vm.runScriptLab = runScriptLab;
         vm.runLabNow = runLabNow;
         vm.runRStudio = runRStudio;
+        vm.openTerminal = openTerminal;
 
         vm.openModal = openModal;
         vm.openTimeModal = openTimeModal;
@@ -32,6 +33,20 @@
                 );
         }
         init();
+
+        function openTerminal(imageName, indexNo, moduleName) {
+            CourseService
+                .openTerminal(imageName, moduleName)
+                .then(
+                    function (ip) {
+
+                        openModal('openTerminal');
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+        }
 
         function runRStudio() {
             CourseService

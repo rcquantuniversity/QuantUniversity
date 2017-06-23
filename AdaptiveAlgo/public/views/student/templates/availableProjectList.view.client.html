@@ -99,7 +99,7 @@
                     </p>
                     <p>
                         <button data-toggle="collapse" data-target="#box_{{$index+1}}" class="btn btn-info btn-rounded btn-bordred collapsed">Add to Sandbox</button>
-                        <button class="btn btn-info btn-rounded btn-bordred" ng-click="model.openModal('openTerminal')">Open Terminal</button>
+                        <button class="btn btn-info btn-rounded btn-bordred" ng-click="model.openTerminal(image.imageName, $index+1, image.moduleName)">Open Terminal</button>
                     </p>
                     <div id="box_{{$index+1}}" class="box collapse">
                         <form method="post" name="runDockerImage">

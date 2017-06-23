@@ -13,7 +13,8 @@
             "consume" : consume,
             "viewDockerImage" : viewDockerImage,
             "runScriptLab" : runScriptLab,
-            "runRStudio" : runRStudio
+            "runRStudio" : runRStudio,
+            "openTerminal" : openTerminal
         };
         return api;
 
@@ -24,6 +25,11 @@
         function runScriptLab(imageName, moduleName) {
             var imageNameJSON = {imageName : imageName, moduleName : moduleName};
             return $http.post("/api/startScriptLab", imageNameJSON);
+        }
+
+        function openTerminal(imageName, moduleName) {
+            var imageNameJSON = {imageName : imageName, moduleName : moduleName};
+            return $http.post("/api/openTerminal", imageNameJSON);
         }
 
 

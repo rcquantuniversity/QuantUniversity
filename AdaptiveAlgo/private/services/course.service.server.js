@@ -8,6 +8,7 @@ module.exports = function (app, model) {
     app.get("/api/viewDockerImage/:imageName", viewDockerImage);
     app.post("/api/startScriptLab", startScriptLab);
     app.post("/api/runRStudio", runRStudio);
+    app.post("/api/openTerminal", openTerminal);
 
 
     var dockerCLI = require('docker-cli-js');
@@ -55,6 +56,14 @@ module.exports = function (app, model) {
                 return res.sendStatus(400);
             }
         });
+    }
+
+    function openTerminal(req, res) {
+        req.setTimeout(600000);
+        var logger = require('./logger');
+        logger.log('Info','Starting Terminal');
+        var imageName = req.body.imageName;
+        var moduleName = req.body.moduleName;
     }
 
     function viewDockerImage(req, res) {
@@ -156,7 +165,6 @@ module.exports = function (app, model) {
         req.setTimeout(1000000);
         var imageName = req.body.imageName;
         var moduleName = req.body.moduleName;
-        console.log(moduleName);
         var imageInfo = {
             "username": "ec2-user",
             "key_file": "./private/services/qu.pem",
