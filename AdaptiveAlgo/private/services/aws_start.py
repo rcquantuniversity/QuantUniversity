@@ -14,6 +14,7 @@ pemkeyPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo
 envFilePath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env'
 whitelistPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\whitelist.json'
 efsDns = 'fs-8430e32d.efs.us-west-2.amazonaws.com'
+AMIName = 'dragon'
 
 class ParseParameters(luigi.Task):
     task_namespace = 'aws'
@@ -172,7 +173,7 @@ class StartInstanceTask(luigi.Task):
             return
 
         imgid = ''
-        filter = {'Name': 'name', 'Values' : ['dragon']}
+        filter = {'Name': 'name', 'Values' : [AMIName]}
         for img in ec2.images.filter(Filters = [filter]):
             imgid = img.id
             print(imgid)
