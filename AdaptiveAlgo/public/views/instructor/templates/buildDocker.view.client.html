@@ -47,7 +47,7 @@
                     <div class="col-md-6" ng-if="model.imageType == 'Notebook' || model.imageType == 'Both'">
                         <div class="card-box panel-default">
                             <div class="header-title panel-heading">
-                                Please enter the duration
+                                Please enter the duration in hours
                             </div>
                             <div class="panel-body">
                                 <div class="form-grp">
@@ -358,7 +358,7 @@
                        > -->
                         </div>
                         <div class="col-md-4 alignCenter">
-                            <button type="submit" class="btn btn-primary btn-bordred" ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName, model.description, model.moduleName, model.imageType, model.location);">Create Docker Image</button>
+                            <button type="submit" class="btn btn-primary btn-bordred" ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName, model.description, model.moduleName, model.duration, model.imageType, model.location);">Create Docker Image</button>
                         </div>
                         <div class="col-md-4">
                             <!-- <input type="submit" class="btn btn-primary btn-block" value="Upload Image" name="submit" ng-click="model.upload()" /> -->

@@ -211,6 +211,7 @@ module.exports = function (app, model) {
         var imageName = req.body.imageName;
         var description = req.body.description;
         var moduleName = req.body.moduleName;
+        var duration = req.body.duration;
         var packageList = req.body.packageList;
         var imageType = req.body.imageType;
         var extractLocation = req.body.extractLocation;
@@ -227,7 +228,7 @@ module.exports = function (app, model) {
                     model
                         .dockerImageModel
                         .saveDockerImageFile(req.user, imageName, packageList,
-                            description, moduleName, imageType, extractLocation)
+                            description, moduleName, duration, imageType, extractLocation)
                         .then(
                             function () {
                                 logger.log("Info","DockerImage details saved in database");
