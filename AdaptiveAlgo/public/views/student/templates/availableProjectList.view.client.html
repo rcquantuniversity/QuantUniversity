@@ -99,6 +99,7 @@
                     </p>
                     <p>
                         <button data-toggle="collapse" data-target="#box_{{$index+1}}" class="btn btn-info btn-rounded btn-bordred collapsed">Add to Sandbox</button>
+                        <button class="btn btn-info btn-rounded btn-bordred" ng-click="model.openModal('openTerminal')">Open Terminal</button>
                     </p>
                     <div id="box_{{$index+1}}" class="box collapse">
                         <form method="post" name="runDockerImage">
@@ -180,6 +181,21 @@
                 <span id="hm_timer"></span>
                 <button id="pauseBtnhms" class="hide">Pause</button>
 
+            </div>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>
+<modal id="openTerminal">
+    <div class="modal">
+        <div class="modal-body">
+            <div class="closeIcon">
+                <button ng-click="model.closeModal('openTerminal');"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+            </div>
+            <div id="mydiv">
+                <!--<input id="url" type="text" value="https://en.wikipedia.org"/>-->
+                <iframe id="frame" src="http://34.211.179.108:7010/" width="100%" height="500" style="border: none">
+                </iframe>
             </div>
         </div>
     </div>
