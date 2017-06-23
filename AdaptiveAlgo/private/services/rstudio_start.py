@@ -11,6 +11,7 @@ from luigi.mock import MockFile
 
 pemkeyPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\qu.pem'
 efsDns = 'fs-8430e32d.efs.us-west-2.amazonaws.com'
+AMIName = 'rstudio'
 
 class ParseParameters(luigi.Task):
     task_namespace = 'aws'
@@ -20,7 +21,7 @@ class ParseParameters(luigi.Task):
 
     def run(self):
         service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
-        with open(service_dir+'r_start_params.json') as data_file:    
+        with open(service_dir+'/r_start_params.json') as data_file:    
             data = json.load(data_file)
         params = dict()
         params['Image'] = data['imageName']
@@ -48,13 +49,12 @@ class StartInstanceTask(luigi.Task):
         
         ec2 = boto3.resource('ec2')
         
-        filters = [{'Name':'tag:Name', 'Values':[params['Module']]}]
+        filters = [{'Name':'tag:Name', 'Values':[params['Module']+'-'+params['Username']]}]
         counter = 0
         instances = ec2.instances.filter(Filters=filters)
         for instance in instances:
             counter = counter + 1
         if counter>0:
-
             print('Module already started. Restart the service ' + instance.public_ip_address)
             _out = self.output().open('w')
             _out.write(instance.public_ip_address)
@@ -62,7 +62,7 @@ class StartInstanceTask(luigi.Task):
             return
 
         imgid = ''
-        filter = {'Name': 'name', 'Values' : ['rs_image']}
+        filter = {'Name': 'name', 'Values' : [AMIName]}
         for img in ec2.images.filter(Filters = [filter]):
             imgid = img.id
             print(imgid)
@@ -83,7 +83,7 @@ class StartInstanceTask(luigi.Task):
                     'Tags': [
                         {
                             'Key': 'Name',
-                            'Value': params['Module']
+                            'Value': params['Module']+'-'+params['Username']
                         },
                     ]
                 },
