@@ -7,7 +7,8 @@ import os
 import sys
 import yaml
 from luigi.mock import MockFile
-from scp import SCPClient
+
+pemkeyPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\qu.pem'
 
 class ParseParameters(luigi.Task):
     task_namespace = 'aws'
@@ -21,8 +22,8 @@ class ParseParameters(luigi.Task):
             data = json.load(data_file)
         params = dict()
         params['Approach'] = 'Terminate'
-        params['Module'] = 'rstudio-rohan'
-        params['Username'] = 'rohan'
+        params['Module'] = data['module']
+        params['Username'] = data['username']
         print(params)
         _out = self.output().open('w')
         json.dump(params,_out)
@@ -47,7 +48,7 @@ class GetInstanceIP(luigi.Task):
             params = json.load(infile)
         
         ec2 = boto3.resource('ec2')
-        filters = [{'Name':'tag:Name', 'Values':[params['Module']]}]
+        filters = [{'Name':'tag:Name', 'Values':[params['Module']+'-'+params['Username']]}]
         instances = ec2.instances.filter(Filters=filters)
         counter = 0
         for instance in instances:
@@ -73,56 +74,26 @@ class StopTask(luigi.Task):
         with self.input()[0].open('r') as infile:
             print(infile)
             params = json.load(infile)
+        USERNAME = params['Username']
 
         #read IP address from the out put
         with self.input()[1].open('r') as infile:
             ips = infile.read().splitlines()
         ip = ips[0]
         print(ip)
+
         #make ssh connection
-        k = paramiko.RSAKey.from_private_key_file('/home/parallels/.ssh/adaptivealgo.pem')
+        k = paramiko.RSAKey.from_private_key_file(pemkeyPath)
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
         c.connect( hostname = ip, username = 'ec2-user', pkey = k)
         print ('connected')
         
-        #stop a single container
-        if (params['Approach']) == 'Exit':
-            #get container id
-            USERNAME = params['Username']
-            USER_DIR_NAME = 'jhub-'+USERNAME
-            
-            #2. check the container status
-            commands = ['docker ps -aqf \"name=' + 'jupyter-' + USERNAME +'\"']
-            for command in commands:
-                print ('Executing {}'.format( command ))
-                stdin , stdout, stderr = c.exec_command(command)
-                returnVal = stdout.read()
-                print (returnVal)
-                if(returnVal.decode("utf-8") == ''):
-                    print('no such container named ' + USERNAME)
-                    c.close()
-                    return
-                print('container found')
-                CONTAINER_ID = returnVal.decode("utf-8")
-                print ('Errors')
-                print (stderr.read())
-            #3. if the container is there, rm the container
-            commands = ['docker rm -f ' + CONTAINER_ID, 
-                        'sudo mv /home/ec2-user/nbdata/'+USER_DIR_NAME+' /home/ec2-user/nbdata/'+USER_DIR_NAME+'bak',
-                        'sudo cp /home/ec2-user/jupyterhub-deploy-docker/whitelist.json /var/lib/docker/volumes/jupyterhub-data/_data']
-            for command in commands:
-                print ('Executing {}'.format( command ))
-                stdin , stdout, stderr = c.exec_command(command)
-                print (stdout.read())
-                print ('Errors')
-                print (stderr.read())
-        
         #terminate the AWS instance
         if (params['Approach']) == 'Terminate':
             #1. check the container status
-            commands = ['docker ps -aqf \"name=rocker_rstudio' + '\"']
+            commands = ['docker ps -aqf \"name='+USERNAME + '\"']
             for command in commands:
                 print ('Executing {}'.format( command ))
                 stdin , stdout, stderr = c.exec_command(command)
@@ -146,7 +117,7 @@ class StopTask(luigi.Task):
                 print (stderr.read())
             #3. terminate instance
             ec2 = boto3.resource('ec2')
-            filters = [{'Name':'tag:Name', 'Values':[params['Module']]}]
+            filters = [{'Name':'tag:Name', 'Values':[params['Module']+'-'+params['Username']]}]
             instances = ec2.instances.filter(Filters=filters)
             for instance in instances:
                 target_ins=instance
