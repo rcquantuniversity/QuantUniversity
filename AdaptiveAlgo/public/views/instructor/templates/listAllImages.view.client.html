@@ -25,6 +25,8 @@
                             <td><i class="fa fa-download" aria-hidden="true"></i></td>
                         </tbody>
                     </table> -->
+                    <!-- Search -->
+                    <!-- <input type="search" name="search" placeholder="Search..." ng-model="model.searchValue"> -->
                 </div>
                 <div class="col-md-4">
                     <h4 class="page-title alignRight">
@@ -82,13 +84,14 @@
                     </table> -->
 
                     <!-- List View -->
-                    <div class="projectsListView" ng-repeat="image in model.images.data">
+                    <!-- <div class="projectsListView" ng-repeat="image in model.images.data|filter: model.searchValue"> -->
+                    <div class="projectsListView" dir-paginate="image in model.images.data | itemsPerPage:10">
                         <div class="col-md-4 noPadLeft">
                             <img src="images/dockerImg.jpg">
                         </div>
                         <div class="col-md-8">
                             <h3 class="cleafix projectTitle">
-                                <em>{{$index+1}}</em>
+                                <!-- <em>{{$index+1}}</em> -->
                                 {{image.imageName}}
                                 <span class="shiftRight"><a class="btn btn-danger btn-rounded btn-bordred" ng-click="model.viewDockerImage(image.imageName); model.openModal('imageModal');">View Image</a></span>
                             </h3>
@@ -121,6 +124,7 @@
                             </p>
                         </div>
                     </div>
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
                 </div>
             </div>
         </div>
