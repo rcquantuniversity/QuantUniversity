@@ -1,0 +1,8 @@
+{
+  "whitelistPath": "C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\whitelist.json",
+  "envFilePath": "C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env",
+  "instanceUser": "ec2-user",
+  "maxNotebookServerUsers": "2",
+  "efsDns": "fs-8430e32d.efs.us-west-2.amazonaws.com",
+  "pemkeyPath" : "C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\qu.pem"
+}

@@ -15,6 +15,14 @@ module.exports = function (app, model) {
     var DockerOptions = dockerCLI.Options;
     var Docker = dockerCLI.Docker;
     var docker = new Docker();
+    var Set;
+    var s;
+
+    function init() {
+        Set = require('simple-hashset');
+        s = new Set();
+    }
+    init();
 
     function runRStudio(req, res) {
         var logger = require('./logger');
@@ -58,14 +66,69 @@ module.exports = function (app, model) {
         });
     }
 
+    function get_port() {
+        var min = Math.ceil(7000);
+        var max = Math.floor(7050);
+        var port = Math.floor(Math.random()*(max-min)) + min;
+        while (s.contains(port)) {
+            port = Math.floor(Math.random()*(max-min)) + min;
+        }
+        console.log(""+port);
+        return port;
+    }
+
     function openTerminal(req, res) {
         req.setTimeout(600000);
+        var node_ssh = require('node-ssh');
+        var ssh = new node_ssh();
         var logger = require('./logger');
         logger.log('Info','Starting Terminal');
         var imageName = req.body.imageName;
         var moduleName = req.body.moduleName;
+        var port = get_port();
 
-        res.sendStatus(200);
+        // create instance for 1st user.
+        // allow max 10 users by maintaining database
+        // next 9 users will use same instance but different containers
+
+        //read parameters from json
+        ssh.connect({
+            host: '34.211.179.108',
+            username: 'ec2-user',
+            privateKey: "./private/services/qu.pem"
+        }).then(function() {
+            // Local, Remote
+            ssh.execCommand('docker run -td --name='+req.user.username+' '+ imageName)
+                .then(
+                    function(result) {
+                        ssh.execCommand('screen -dm -S '+req.user.username+' ./gotty -w -p '+ port +
+                        ' docker exec -it '+'test'+' /bin/bash').then(function(result) {
+                        console.log('STDOUT: ' + result.stdout);
+                        console.log('end');
+                        s.add(port);
+                        ssh.dispose().then(
+                            function (status) {
+                                logger.log('Info','ssh dispose() called');
+                                logger.log('Info',status);
+                            },
+                            function (err) {
+                                logger.log('Error','ssh dispose() failed due to error below');
+                                logger.log('Error',err);
+                            }
+                        );
+                        return res.json({"ip" : '34.211.179.108', "port" : port});
+                });
+            },
+                function (err) {
+                    logger.log('Error',err);
+                    return res.sendStatus(400);
+                });
+        },
+        function (err) {
+            logger.log('Error','ssh execCommand() failed due to below reason');
+            logger.log('Error',err);
+            return res.sendStatus(400);
+        });
     }
 
     function viewDockerImage(req, res) {

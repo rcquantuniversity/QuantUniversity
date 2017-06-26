@@ -1,21 +1,22 @@
 node_ssh = require('node-ssh')
+var Set = require('simple-hashset');
 ssh = new node_ssh()
-
-function kill_terminal(uid, hostname, imageName, key_file){
+var s = new Set();
+function kill_terminal(uid, hostname, port, key_file, set){
     ssh.connect({
-    host: '34.211.179.108',
+    host: hostname,
     username: 'ec2-user',
-    privateKey: '/home/computer/qu.pem'
+    privateKey: key_file
     }).then(function() {
         // Local, Remote 
-        port=7010
         ssh.execCommand('docker rm ' + uid + ' -f').then(function(result) {
             ssh.execCommand('screen -X -S '+ uid + ' quit').then(function(result) {
                 console.log('STDOUT: ' + result.stdout) 
-                console.log('end')
+                console.log('end');
+                set.remove(port);
                 ssh.dispose();
             });
         });
     });
 }
-kill_terminal('test', '34.211.179.108','ubuntu:16.04', '/home/computer/qu.pem')
+kill_terminal('test', '34.211.179.108', 7019, '/home/computer/qu.pem', s);

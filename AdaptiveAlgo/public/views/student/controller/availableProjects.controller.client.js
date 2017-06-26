@@ -38,9 +38,11 @@
             CourseService
                 .openTerminal(imageName, moduleName)
                 .then(
-                    function (ip) {
-
-                        openModal('openTerminal');
+                    function (url) {
+                        console.log(url);
+                        console.log("http://"+url.data.ip+":"+url.data.port);
+                        vm.openModal('openTerminal');
+                        $("#frameTerminal").attr("src", "http://"+url.data.ip+":"+url.data.port);
                     },
                     function (err) {
                         console.log(err);

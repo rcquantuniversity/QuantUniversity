@@ -343,6 +343,8 @@ module.exports = function (app, model) {
                         return done(null, false);
                     } else if (user && password === user.password) {
                         return done(null, user);
+                    } else {
+                        return done(null,false);
                     }
                 },
                 function(err) {

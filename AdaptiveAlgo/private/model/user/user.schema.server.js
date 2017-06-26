@@ -14,7 +14,9 @@ module.exports = function() {
         },
         amazonCredentials: {
             accessKeyID: String,
-            secretAccessKey : String
+            secretAccessKey : String,
+            region : String,
+            pemName : String
         },
         noOfCredits : Number,
         dateCreated: {type: Date, default: Date.now},
