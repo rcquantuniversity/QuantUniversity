@@ -101,6 +101,11 @@ p.page-title input {
   color: #FFF;
 }
 
+p.page-title input:focus {
+  box-shadow: none !important;
+  border-color: rgba(0,0,0,0.4) !important;
+}
+
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #FFF;
 }
