@@ -39,7 +39,7 @@
                         }
                     },
                     function (err) {
-                        vm.error = "User not found !! Please check your credentials.";
+                        vm.userNotFoundError = "User not found! Please check your credentials.";
                     }
                 );
         }

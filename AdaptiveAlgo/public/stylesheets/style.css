@@ -729,6 +729,12 @@ body.modal-open {
   color: red;
   margin-bottom: 0;
 }
+.loginerrorMessage {
+  color: red !important;
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 22px;
+}
 .btn-default, .btn-default[disabled]:hover {
   background-color: rgba(218, 230, 236, 0.3);
 }

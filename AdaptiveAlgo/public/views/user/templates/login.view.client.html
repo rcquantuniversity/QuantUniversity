@@ -33,10 +33,13 @@
                            ng-click="loginpage.$valid && model.login(model.user)"
                            value="Login">
                 </div><br>
-                <div class="additionalLinks">
+                <div class="additionalLinks clearfix">
                   <a class="wbdv-left-right-margin pull-left wbdv-font-color-white" href="#/reset">Forgot Password?</a>
                   <a class="wbdv-left-right-margin pull-right wbdv-font-color-white" href="#/register">Don't have an account?</a>
                 </div>
+
+                <p class="errorMessage loginerrorMessage">{{model.error}}</p>
+                <p class="errorMessage loginerrorMessage">{{model.userNotFoundError}}</p>
             </form>
         </div>
         <div class="col-md-4"></div>
