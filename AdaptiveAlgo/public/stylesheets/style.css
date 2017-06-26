@@ -89,6 +89,31 @@ a:hover {
   line-height: 70px;  
 }
 
+p.page-title input {
+  height: 35px;
+  font-size: 14px;
+  line-height: 20px;
+  width: 100%;
+  padding: 6px 12px;
+  border: 1px solid rgba(0,0,0,0.4);
+  border-radius: 6px;
+  background-color: #435966;
+  color: #FFF;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #FFF;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #FFF;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #FFF;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #FFF;
+}
+
 .section-title {
   font-size: 18px;
   font-weight: 500;
