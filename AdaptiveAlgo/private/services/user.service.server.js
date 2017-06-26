@@ -354,8 +354,12 @@ module.exports = function (app, model) {
     }
 
     function login(req, res) {
-        var user = req.user;
-        res.json(user);
+        if(req.user) {
+            var user = req.user;
+            res.json(user);
+        } else {
+            res.send(null);
+        }
     }
 
     function logout(req, res) {
