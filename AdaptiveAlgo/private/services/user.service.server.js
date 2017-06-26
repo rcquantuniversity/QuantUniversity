@@ -45,9 +45,7 @@ module.exports = function (app, model) {
     init();
 
     function updateAmazonCredentials(req,res) {
-        console.log(req.body);
         var userId  = req.user._id;
-        console.log("USER",userId);
         var amazonCredentials = req.body;
         model
             .userModel

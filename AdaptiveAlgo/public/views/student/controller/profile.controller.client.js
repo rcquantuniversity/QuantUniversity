@@ -24,10 +24,10 @@
 
         init();
 
-        function updateKeys(accessKeyID, secretAccessKey) {
+        function updateKeys(amazonCredentials) {
 
             UserService
-                .updateAmazonCredentials(accessKeyID, secretAccessKey)
+                .updateAmazonCredentials(amazonCredentials)
                 .then(
                     function (data) {
                         console.log("Updated Successfully");

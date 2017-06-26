@@ -25,12 +25,12 @@
         };
         return api;
 
-        function updateAmazonCredentials(accessKeyID,secretAccessKey) {
+        function updateAmazonCredentials(amazonCredentials) {
 
-            var amazonCredentials = {
-                accessKeyID: accessKeyID,
-                secretAccessKey : secretAccessKey
-            };
+            // var amazonCredentials = {
+            //     accessKeyID: accessKeyID,
+            //     secretAccessKey : secretAccessKey
+            // };
             return $http.put("/api/setAmazonCredentials", amazonCredentials);
         }
 

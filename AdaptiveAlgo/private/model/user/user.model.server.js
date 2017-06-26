@@ -134,10 +134,8 @@ module.exports = function () {
         var deferred = Q.defer();
         UserModel
             .update({_id : userId},
-                    {$set : {amazonCredentials : {
-                                accessKeyID: amazonCredentials.accessKeyID,
-                                secretAccessKey : amazonCredentials.secretAccessKey
-                    }}}, function (err, data) {
+                    {$set : {amazonCredentials : amazonCredentials
+                    }}, function (err, data) {
                                 if (err) {
                                     deferred.reject(err);
                                 } else {
