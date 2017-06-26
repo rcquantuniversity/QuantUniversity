@@ -13,11 +13,17 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <h4 class="page-title">
                         List of Projects
                     </h4>
                 </div>
+                <div class="col-md-4">
+                    <p class="page-title">
+                        <input type="search" name="search" placeholder="Search Project" ng-model="model.searchValue">
+                    </p>
+                </div>
+                <div class="col-md-4"></div>
             </div>
         </div>
     </div>
@@ -79,13 +85,13 @@
             -->
 
             <!-- List View -->
-            <div class="projectsListView" ng-repeat="image in model.images.data">
+            <div class="projectsListView" dir-paginate="image in model.images.data | filter: model.searchValue | itemsPerPage:10">
                 <div class="col-md-4 noPadLeft">
                     <img src="images/dockerImg.jpg">
                 </div>
                 <div class="col-md-8">
                     <h3>
-                        <em>{{$index+1}}</em>
+                        <!-- <em>{{$index+1}}</em> -->
                         {{image.imageName}}
                     </h3>
                     <p>
@@ -159,6 +165,7 @@
                     </div>
                 </div>
             </div>
+            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
         </div>
     </div>
 </div>
