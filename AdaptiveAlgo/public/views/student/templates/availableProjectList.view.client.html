@@ -121,6 +121,12 @@
                                             <input type="radio" id="inlineRadio2_{{$index+1}}" value="Google Cloud Platform" name="pType{{$index+1}}" ng-model="model.platformType[$index]" required>
                                             <label for="inlineRadio2_{{$index+1}}"> Google Cloud Platform </label>
                                         </div>
+                                        <div class="checkbox" ng-if="model.user.data.amazonCredentials.accessKeyID && model.user.data.amazonCredentials.secretAccessKey && model.user.data.amazonCredentials.region && model.user.data.amazonCredentials.pemName">
+                                            <input id="checkbox_{{$index+1}}" type="checkbox" ng-model="model.useAC[$index]">
+                                            <label for="checkbox_{{$index+1}}">
+                                                Check if you want to use your Amazon Credentials
+                                            </label>
+                                        </div>
                                     </div>
                                     <p>What would you like to do?</p>
                                     <div class="form-group wbdv-left-right-margin">                  
@@ -133,7 +139,7 @@
                                         </select>
                                     </div>
                                     <div ng-if="model.platformType[$index] == 'Amazon Machine Image' && model.likeType[$index] == 'Run Notebook'">
-                                        <button type="submit" id="ntb_{{$index+1}}" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runLab(image.imageName, $index+1, image.moduleName)">Submit</button>
+                                        <button type="submit" id="ntb_{{$index+1}}" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runLab(image.imageName, $index+1, image.moduleName, model.useAC[$index])">Submit</button>
                                     </div>
                                     <div ng-if="model.platformType[$index] == 'Amazon Machine Image' && model.likeType[$index] == 'Run Script'">
                                         <button type="submit" id="scr_{{$index+1}}" class="btn btn-info btn-bordred" ng-click="runDockerImage.$valid && model.runScriptLab(image.imageName, $index+1, image.moduleName)">Submit</button>
@@ -201,8 +207,8 @@
             </div>
             <div id="mydiv">
                 <!--<input id="url" type="text" value="https://en.wikipedia.org"/>-->
-                <iframe id="frame" src="http://34.211.179.108:7010/" width="100%" height="500" style="border: none">
-                </iframe>
+                <!-- <iframe id="frame" src="http://34.211.179.108:7010/" width="100%" height="500" style="border: none">
+                </iframe> -->
             </div>
         </div>
     </div>

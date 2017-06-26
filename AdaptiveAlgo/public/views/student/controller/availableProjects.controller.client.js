@@ -21,18 +21,32 @@
         function init() {
             vm.isNotebookLoaded = false;
             UserService
-                .listAllImagesForStudent()
+                .findCurrentUser()
                 .then(
-                    function (images) {
-                        vm.images = images;
-                        console.log(images);
+                    function(user) {
+                        if (user) {
+                            vm.user = user;
+                            UserService
+                                .listAllImagesForStudent()
+                                .then(
+                                    function(images) {
+                                        vm.images = images;
+                                        console.log(images);
+                                    },
+                                    function(err) {
+                                        vm.error = "Could not load images " + err;
+                                    }
+                                );
+                        }
                     },
-                    function (err) {
-                        vm.error = "Could not load images "+ err;
+                    function(err) {
+                        console.log(err);
                     }
                 );
+
         }
         init();
+
 
         function openTerminal(imageName, indexNo, moduleName) {
             CourseService
@@ -175,9 +189,10 @@
                 );
         }
 
-        function runLab(imageName, indexNo, moduleName) {
+        function runLab(imageName, indexNo, moduleName, useAC) {
 
             // what if user clicks multiplt start labs
+            vm.useAC = useAC;
             vm.moduleName = moduleName;
             // spinnerService.show('booksSpinner');
             $('#ntb_'+indexNo).text('Starting...');
