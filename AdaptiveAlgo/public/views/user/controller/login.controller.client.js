@@ -28,14 +28,14 @@
                 .login(user)
                 .then(
                     function (user) {
-                        if(user) {
+                        if(user.data != '"Invalid Credentials"') {
                             if (user.data.userType === "STUDENT") {
                                 $location.url("/student/availableProjects");
                             } else if (user.data.userType === "INSTRUCTOR") {
                                 $location.url('/instructor/listImages');
                             }
                         } else {
-                            vm.error = "User not found !! Please check your credentials.";
+                            vm.error = "Invalid Credentials";
                         }
                     },
                     function (err) {

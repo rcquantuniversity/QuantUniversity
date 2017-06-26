@@ -344,7 +344,7 @@ module.exports = function (app, model) {
                     } else if (user && password === user.password) {
                         return done(null, user);
                     } else {
-                        return done(null,false);
+                        return done(null,"Invalid Credentials");
                     }
                 },
                 function(err) {
@@ -358,7 +358,7 @@ module.exports = function (app, model) {
             var user = req.user;
             res.json(user);
         } else {
-            res.send(null);
+            res.sendStatus(400);
         }
     }
 
