@@ -45,6 +45,7 @@
                      type="text"
                      class="form-control"
                      placeholder="Username"
+                     readonly 
                      required>
             </div>
           </div>
@@ -55,6 +56,7 @@
                      type="text"
                      class="form-control"
                      placeholder="Email Address"
+                     readonly
                      required>
             </div>
           </div>
@@ -75,6 +77,24 @@
                    type="text"
                    class="form-control"
                    placeholder="Secret Access Key"
+                   required>
+          </div>  
+          <div class="form-group">
+            <label>Region</label>
+            <div class="input-group fullWidth">
+              <input ng-model="model.userData.amazonCredentials.region"
+                     type="text"
+                     class="form-control"
+                     placeholder="Region"
+                     required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>PEM Name</label>
+            <input ng-model="model.userData.amazonCredentials.pemName"
+                   type="text"
+                   class="form-control"
+                   placeholder="PEM Name"
                    required>
           </div>          
           <h4><strong><button type="button" data-target="#changePwd" data-toggle="collapse" class="collapsed btn btn-primary btn-bordered">Change Password</a></strong></h4>
@@ -110,4 +130,3 @@
 <div ng-controller="footerCtrl as model"> 
   <div ng-include="'footer.html'"></div>
 </div>
-<script src="javascripts/dynamic-height.js"></script>
