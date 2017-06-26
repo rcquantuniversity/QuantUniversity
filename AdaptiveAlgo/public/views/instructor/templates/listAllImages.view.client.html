@@ -26,7 +26,7 @@
                         </tbody>
                     </table> -->
                     <!-- Search -->
-                    <!-- <input type="search" name="search" placeholder="Search..." ng-model="model.searchValue"> -->
+                    <input type="search" name="search" placeholder="Search..." ng-model="model.searchValue">
                 </div>
                 <div class="col-md-4">
                     <h4 class="page-title alignRight">
@@ -84,8 +84,8 @@
                     </table> -->
 
                     <!-- List View -->
-                    <!-- <div class="projectsListView" ng-repeat="image in model.images.data|filter: model.searchValue"> -->
-                    <div class="projectsListView" dir-paginate="image in model.images.data | itemsPerPage:10">
+                    <div class="projectsListView" dir-paginate="image in model.images.data | filter: model.searchValue | itemsPerPage:10">
+                    <!-- <div class="projectsListView" dir-paginate="image in model.images.data | itemsPerPage:10"> -->
                         <div class="col-md-4 noPadLeft">
                             <img src="images/dockerImg.jpg">
                         </div>
