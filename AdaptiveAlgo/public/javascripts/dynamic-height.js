@@ -4,9 +4,5 @@ $(document).ready(function() {
     var footerheight = $('footer').height();
 
     var minheight = windowHeight - headerHeight - footerheight - 1;
-    console.log(headerHeight);
-    console.log(windowHeight);
-    console.log(footerheight);
-    console.log(minheight);
     $('#backgroundImage').css('min-height', minheight);
 });
