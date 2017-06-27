@@ -1,7 +1,7 @@
 <div ng-controller="headerCtrl as model"> 
   <div ng-include="'header.html'"></div>
 </div> 
-<div class="container availableUserList">
+<div id="backgroundImage" class="container availableUserList">
     <div class="row">
         <div class="col-md-12 buildDockerPage">
             <div class="row">
@@ -14,57 +14,37 @@
             <div class="row">
                 <div class="col-md-12">
                     <!-- Table View -->
-                    <!-- <table class="table table-responsive m-0 projectsList">
+                    <table class="table table-responsive m-0">
                         <thead>
                             <tr>
-                                <th>Project ID</th>
-                                <th>Project Name</th>
-                                <th>Project Description</th>
-                                <th colspan="4">Actions</th>
+                                <th>Sr No</th>
+                                <th>Name</th>
+                                <th>Credits</th>
+                                <th>Expiry Date</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat = "image in model.images.data">
+                            <tr ng-repeat = "user in model.users.data">
                                 <td>{{$index+1}}</td>
-                                <td>{{image.imageName}}<span><a class="btn btn-primary btn-rounded btn-bordred" ng-click="model.viewDockerImage(image.imageName); model.openModal('imageModal');">View Image</a></span></td>
-                                <td>{{image.description}}</td>
+                                <td>{{user.firstName}} {{user.lastName}}</td>
+                                <td>{{user.noOfCredits}}</td>
+                                <td>{{user.expiryDate | date:'MMMM d, y'}}</td>
                                 <td>
-                                    <a class="btn btn-primary btn-rounded btn-bordred"
-                                       ng-click="model.uploadToDockerHub(image.imageName)">
-                                        <i class="fa fa-docker"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-primary btn-rounded btn-bordred"
-                                       ng-click="">
-                                        <i class="fa fa-amazon" aria-hidden="true"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-primary btn-rounded btn-bordred"
-                                       ng-click="">
-                                        <i class="fa fa-github" aria-hidden="true"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-primary btn-rounded btn-bordred"
-                                       ng-click="">
-                                        <i class="fa fa-download" aria-hidden="true"></i>
-                                    </a>
+                                    <span ng-if="user.userType == 'STUDENT'"><a class="btn btn-primary btn-rounded" ng-click="model.openModal('userModal', user.noOfCredits, user.expiryDate, user._id);">Edit User</a></span>
                                 </td>
                             </tr>
                         </tbody>
-                    </table> -->
+                    </table>
 
                     <!-- List View -->
-                    <div class="listUsersView" ng-repeat="user in model.users.data">
+                    <!-- <div class="listUsersView" ng-repeat="user in model.users.data"> -->
                     <!-- <div class="projectsListView" dir-paginate="image in model.images.data | itemsPerPage:10"> -->
-                        <div class="col-md-4 noPadLeft">
+                        <!-- <div class="col-md-4 noPadLeft">
                             <img src="images/dockerImg.jpg">
                         </div>
                         <div class="col-md-8">
                             <h3 class="cleafix projectTitle">
-                                <!-- <em>{{$index+1}}</em> -->
                                 {{user.firstName}} {{user.lastName}} 
                                 <span class="shiftRight" ng-if="user.userType == 'STUDENT'"><a class="btn btn-danger btn-rounded btn-bordred" ng-click="">Edit User</a></span>
                             </h3>
@@ -76,7 +56,7 @@
                             </p>
                         </div>
                     </div>
-                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls> -->
                 </div>
             </div>
         </div>
@@ -85,3 +65,45 @@
 <div ng-controller="footerCtrl as model"> 
   <div ng-include="'footer.html'"></div>
 </div>
+<modal id="userModal">
+    <div class="modal">
+        <div class="modal-body">
+            <div class="closeIcon">
+                <button ng-click="model.closeModal('userModal');"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+            </div>
+            <div id="mydiv">
+            	<h1>Update User Details</h1>
+            	<form name="userUpdate" method="post">
+            		<div class="form-grp">
+                        <label>Credits</label>
+                        <div class="input-group fullWidth">
+                            <input type="number" class="form-control" ng-model="model.credits" placeholder="Credits">
+                        </div>
+                    </div>
+                    <!-- {{model.credits}}<br/> -->
+                    <div class="form-grp">
+                        <label>Expiry Date</label>
+                        <div class="input-group fullWidth">
+                            <input type="date" class="form-control" ng-model="model.newDate" placeholder="Expiry Date">
+                        </div>
+                    </div>
+                    <input type="hidden" ng-model="model.userId" value="{{model.userId}}">
+                    <div class="form-grp">
+			            <input class="btn btn-block btn-primary btn-bordered"
+			                   type="submit"
+			                   ng-click="model.updateUserDetails(model.credits, model.newDate, model.userId)"
+			                   value="Submit">
+			        </div>
+			        <div>
+			        	<p class="successMessage">{{model.success}}</p>
+			        </div>
+            	</form>
+                <!-- {{model.expiryDate}}<br/>
+                {{model.formatDate}}<br/> -->
+                <!-- {{model.newDate}}<br/> -->
+                <!-- {{model.expiryDate | date:'MMMM d, y'}} -->
+            </div>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>

@@ -20,7 +20,7 @@ module.exports = function() {
         },
         noOfCredits: {
             type: Number,
-            default: '2'
+            default: 2
         },
         dateCreated: {type: Date, default: Date.now},
         expiryDate: {type: Date, default: Date.now() + 30*24*60*60*1000},

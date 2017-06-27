@@ -22,7 +22,8 @@
             "listAllImagesForStudent" : listAllImagesForStudent,
             "addPackage" : addPackage,
             "getPackageFromJSON" : getPackageFromJSON,
-            "updateAmazonCredentials" : updateAmazonCredentials
+            "updateAmazonCredentials" : updateAmazonCredentials,
+            "updateUserDetails" : updateUserDetails
         };
         return api;
 
@@ -33,6 +34,15 @@
             //     secretAccessKey : secretAccessKey
             // };
             return $http.put("/api/setAmazonCredentials", amazonCredentials);
+        }
+
+        function updateUserDetails(credits, expiryDate, userId) {
+            var userDetails = {
+                noOfCredits: credits,
+                expiryDate : expiryDate,
+                _id : userId
+            };
+            return $http.put("/api/setUserDetails", userDetails);
         }
 
 

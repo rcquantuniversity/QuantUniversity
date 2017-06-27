@@ -16,6 +16,7 @@ module.exports = function () {
         updateLabTimeRemaining : updateLabTimeRemaining,
         getListOfUsers : getListOfUsers,
         updateAmazonCredentials : updateAmazonCredentials,
+        updateUserDetails : updateUserDetails,
         getAmazonCredentials : getAmazonCredentials
     };
     return api;
@@ -169,6 +170,26 @@ module.exports = function () {
                                 } else {
                                     deferred.resolve(data);
                                 }
+                    });
+
+        return deferred.promise;
+    }
+
+    function updateUserDetails(userId, userDetails) {
+        // userDetails.credits = parseInt(userDetails.credits);
+        // console.log(userDetails);
+        // console.log("Check Value"+userId+ userDetails);
+        var deferred = Q.defer();
+        UserModel
+            .update({_id : userId},
+                    {$set : {noOfCredits : userDetails.noOfCredits,
+                            expiryDate : userDetails.expiryDate
+                        }}, function (err, data) {
+                            if (err) {
+                                deferred.reject(err);
+                            } else {
+                                deferred.resolve(data);
+                            }
                     });
 
         return deferred.promise;

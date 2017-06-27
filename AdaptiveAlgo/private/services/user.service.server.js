@@ -16,6 +16,7 @@ module.exports = function (app, model) {
     app.post("/api/addPackage", addPackage);
     app.get("/api/getUserPackageFile", getUserPackageFile);
     app.put("/api/setAmazonCredentials",updateAmazonCredentials);
+    app.put("/api/setUserDetails",updateUserDetails);
 
     var request = require('request');
     var dockerCLI = require('docker-cli-js');
@@ -51,6 +52,23 @@ module.exports = function (app, model) {
         model
             .userModel
             .updateAmazonCredentials(userId,amazonCredentials)
+            .then(
+                function () {
+                    res.sendStatus(200);
+                },
+                function (err) {
+                    res.sendStatus(400).send(err);
+                }
+            );
+    }
+
+    function updateUserDetails(req,res) {
+        var userDetails = req.body;
+        var userId  = userDetails._id;
+        console.log(userId);
+        model
+            .userModel
+            .updateUserDetails(userId,userDetails)
             .then(
                 function () {
                     res.sendStatus(200);
