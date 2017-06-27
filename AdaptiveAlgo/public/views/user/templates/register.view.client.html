@@ -9,14 +9,18 @@
             <br>
             <form name = "registerPage">
                 <p>Signup As: </p>
-                <div class="form-group wbdv-left-right-margin">                  
+                <div class="form-group wbdv-left-right-margin">    
                     <div class="radio radio-info radio-inline">
-                        <input type="radio" id="inlineRadio1" value="Student" name="radioInline">
-                        <label for="inlineRadio1"> Student </label>
+                        <input type="radio" id="inlineRadio3" value="ADMIN" name="radioInline" ng-model="model.user.userType">
+                        <label for="inlineRadio3"> Admin </label>
+                    </div>              
+                    <div class="radio radio-info radio-inline">
+                        <input type="radio" id="inlineRadio1" value="STUDENT" name="radioInline" ng-model="model.user.userType">
+                        <label for="inlineRadio1"> User </label>
                     </div>
                     <div class="radio radio-info radio-inline">
-                        <input type="radio" id="inlineRadio2" value="Instructor" name="radioInline">
-                        <label for="inlineRadio2"> Instructor </label>
+                        <input type="radio" id="inlineRadio2" value="INSTRUCTOR" name="radioInline" ng-model="model.user.userType">
+                        <label for="inlineRadio2"> Designer </label>
                     </div>
                 </div>
                 <div class="form-group wbdv-left-right-margin">

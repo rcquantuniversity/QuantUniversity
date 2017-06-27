@@ -9,7 +9,7 @@ module.exports = function() {
         email: String,
         userType: {
             type: String,
-            enum: ['STUDENT', 'INSTRUCTOR'],
+            enum: ['ADMIN', 'STUDENT', 'INSTRUCTOR'],
             default: 'INSTRUCTOR'
         },
         amazonCredentials: {
@@ -18,8 +18,12 @@ module.exports = function() {
             region : String,
             pemName : String
         },
-        noOfCredits : Number,
+        noOfCredits: {
+            type: Number,
+            default: '2'
+        },
         dateCreated: {type: Date, default: Date.now},
+        expiryDate: {type: Date, default: Date.now() + 30*24*60*60*1000},
         labs : [{
             imageName: String,
             timeRemaining : Number
