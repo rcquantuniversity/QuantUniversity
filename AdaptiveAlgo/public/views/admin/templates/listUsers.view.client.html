@@ -31,7 +31,7 @@
                                 <td>{{user.noOfCredits}}</td>
                                 <td>{{user.expiryDate | date:'MMMM d, y'}}</td>
                                 <td>
-                                    <span ng-if="user.userType == 'STUDENT'"><a class="btn btn-primary btn-rounded" ng-click="model.openModal('userModal', user.noOfCredits, user.expiryDate, user._id);">Edit User</a></span>
+                                    <span ng-if="user.userType == 'STUDENT'"><a class="btn btn-primary btn-rounded" ng-click="model.openModal('userModal', user.noOfCredits, user.expiryDate, user._id, user.email);">Edit User</a></span>
                                 </td>
                             </tr>
                         </tbody>
@@ -69,7 +69,7 @@
     <div class="modal">
         <div class="modal-body">
             <div class="closeIcon">
-                <button ng-click="model.closeModal('userModal');"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+                <button ng-click="model.closeModal('userModal')"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
             </div>
             <div id="mydiv">
             	<h1>Update User Details</h1>
@@ -88,11 +88,14 @@
                         </div>
                     </div>
                     <input type="hidden" ng-model="model.userId" value="{{model.userId}}">
+                    <input type="hidden" ng-model="model.email" value="{{model.email}}">
                     <div class="form-grp">
 			            <input class="btn btn-block btn-primary btn-bordered"
 			                   type="submit"
-			                   ng-click="model.updateUserDetails(model.credits, model.newDate, model.userId)"
-			                   value="Submit">
+			                   ng-click="model.updateUserDetails(model.credits, model.newDate, model.userId); model.sendmail(model.email, model.credits, model.newDate);"
+			                   value="Update">
+                        <button type="button" class="btn btn-block btn-primary btn-bordered"
+                               ng-click="model.closeModal('userModal')">Cancel</button> 
 			        </div>
 			        <div>
 			        	<p class="successMessage">{{model.success}}</p>

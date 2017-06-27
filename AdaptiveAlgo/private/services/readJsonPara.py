@@ -1,7 +1,6 @@
-import sys, yaml
+import sys, json
 
 def read_in():
     lines = sys.stdin.readlines()
-    print "jaja" + lines[0]
     #Since our input would only be having one line, parse our JSON data from that
-    return yaml.safe_load(lines[0])
+    return json.loads(lines[0])
