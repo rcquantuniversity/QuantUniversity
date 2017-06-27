@@ -1,7 +1,7 @@
 <div ng-controller="headerCtrl as model"> 
   <div ng-include="'header.html'"></div>
 </div> 
-<div class="container">
+<div class="container availableUserList">
     <div class="row">
         <div class="col-md-12 buildDockerPage">
             <div class="row">
@@ -13,43 +13,70 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <!-- Table View -->
+                    <!-- <table class="table table-responsive m-0 projectsList">
+                        <thead>
+                            <tr>
+                                <th>Project ID</th>
+                                <th>Project Name</th>
+                                <th>Project Description</th>
+                                <th colspan="4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat = "image in model.images.data">
+                                <td>{{$index+1}}</td>
+                                <td>{{image.imageName}}<span><a class="btn btn-primary btn-rounded btn-bordred" ng-click="model.viewDockerImage(image.imageName); model.openModal('imageModal');">View Image</a></span></td>
+                                <td>{{image.description}}</td>
+                                <td>
+                                    <a class="btn btn-primary btn-rounded btn-bordred"
+                                       ng-click="model.uploadToDockerHub(image.imageName)">
+                                        <i class="fa fa-docker"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-rounded btn-bordred"
+                                       ng-click="">
+                                        <i class="fa fa-amazon" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-rounded btn-bordred"
+                                       ng-click="">
+                                        <i class="fa fa-github" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-rounded btn-bordred"
+                                       ng-click="">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+
                     <!-- List View -->
-                    <div class="projectsListView" ng-repeat="user in model.users.data">
-                        <div class="col-md-12">
+                    <div class="listUsersView" ng-repeat="user in model.users.data">
+                    <!-- <div class="projectsListView" dir-paginate="image in model.images.data | itemsPerPage:10"> -->
+                        <div class="col-md-4 noPadLeft">
+                            <img src="images/dockerImg.jpg">
+                        </div>
+                        <div class="col-md-8">
                             <h3 class="cleafix projectTitle">
                                 <!-- <em>{{$index+1}}</em> -->
-                                {{user.firstName}}
-                                <span class="shiftRight"><a class="btn btn-danger btn-rounded btn-bordred" ng-click="model.viewDockerImage(image.imageName); model.openModal('imageModal');">View Image</a></span>
+                                {{user.firstName}} {{user.lastName}} 
+                                <span class="shiftRight" ng-if="user.userType == 'STUDENT'"><a class="btn btn-danger btn-rounded btn-bordred" ng-click="">Edit User</a></span>
                             </h3>
                             <p>
-                                {{image.description}}
+                                <span><strong>Credits:</strong> {{user.noOfCredits}}</span>
                             </p>
                             <p>
-                                <span><i class="fa fa-clock-o" aria-hidden="true"></i> Duration: {{image.duration / 3600}} Hours </span>
-                                <span><i class="fa fa-star" aria-hidden="true"></i> Credits: {{image.duration / 3600 | number: 0}} </span>
-                                <span><i class="fa fa-play" aria-hidden="true"></i> Videos: 7 Videos </span>
-                                <span><i class="fa fa-file" aria-hidden="true"></i> Files: 5 Files </span>
-                            </p>
-                            <p>
-                                <a class="btn btn-primary btn-rounded btn-bordred"
-                                   ng-click="model.uploadToDockerHub(image.imageName)">
-                                    <span><i class="fa fa-docker"></i> Publish to Docker</span>
-                                </a>
-                                <a class="btn btn-primary btn-rounded btn-bordred"
-                                   ng-click="">
-                                    <span><i class="fa fa-amazon" aria-hidden="true"></i> Publish to S3</span>
-                                </a>
-                                <a class="btn btn-primary btn-rounded btn-bordred"
-                                   ng-click="">
-                                    <span><i class="fa fa-github" aria-hidden="true"></i> Publish to GitHub</span>
-                                </a>
-                                <a class="btn btn-primary btn-rounded btn-bordred"
-                                   ng-click="">
-                                    <span><i class="fa fa-download" aria-hidden="true"></i> Download / Export </span>
-                                </a>
+                                <span><strong>Expiry Date:</strong> {{user.expiryDate | date:'MMMM d, y'}}</span>
                             </p>
                         </div>
                     </div>
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
                 </div>
             </div>
         </div>
