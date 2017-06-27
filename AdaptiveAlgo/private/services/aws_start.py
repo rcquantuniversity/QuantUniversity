@@ -24,14 +24,16 @@ class ParseParameters(luigi.Task):
 
     def run(self):
         service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
-        with open(service_dir+'/start_params.json') as data_file:    
-            data = json.load(data_file)
+        #with open(service_dir+'/start_params.json') as data_file:    
+        #  data = json.load(data_file)
+        data_file = sys.stdin.readlines()
+        data = json.loads(data_file[0])
         params = dict()
         params['Image'] = data['imageName']
         params['Module'] = data['module']
         params['Username'] = data['username']
         params['MaxUsers'] = data['maxUsers']
-        print(params)
+        print params
         _out = self.output().open('w')
         json.dump(params,_out)
         _out.close()
@@ -378,4 +380,4 @@ class StartHubTask(luigi.Task):
         print('ip: '+ip)
 
 if __name__ == '__main__':
-    luigi.run(['aws.StartHubTask', '--local-scheduler'])
+    luigi.run(['aws.ParseParameters', '--local-scheduler'])

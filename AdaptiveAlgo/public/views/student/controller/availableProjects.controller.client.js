@@ -210,7 +210,7 @@
             // vm.openModal('startModal');
             // $("#frame").attr("src", "http://localhost:8787");
             CourseService
-                .startLab(imageName, moduleName)
+                .startLab(imageName, moduleName, useAC)
                 .then(
                     function (labURL) {
 

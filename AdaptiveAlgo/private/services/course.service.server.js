@@ -21,6 +21,24 @@ module.exports = function (app, model) {
     function init() {
         Set = require('simple-hashset');
         s = new Set();
+
+        // testing
+        var spawn = require('child_process').spawn,
+            py    = spawn('python', ['./private/services/testInputOutput.py']),
+            data = {"name" : "Rohan", "id" : 1234},
+            dataString = '';
+
+        py.stdout.on('data', function(data){
+            dataString += data.toString();
+        });
+
+        py.stdout.on('end', function(){
+            console.log('All data ',dataString);
+        });
+
+        py.stdin.write(JSON.stringify(data));
+        py.stdin.end();
+
     }
     init();
 
@@ -90,6 +108,20 @@ module.exports = function (app, model) {
         // create instance for 1st user.
         // allow max 10 users by maintaining database
         // next 9 users will use same instance but different containers
+
+        var PythonShell = require('python-shell');
+
+        // Create Amazon Instance
+        // PythonShell.run('./private/services/', function (err) {
+        //     if (err) {
+        //         logger.log('Error',"Error while creating amazon instance");
+        //         logger.log('Error', err);
+        //         return res.sendStatus(200);
+        //     } else {
+        //         return res.sendStatus(400);
+        //     }
+        // });
+
 
         //read parameters from json
         ssh.connect({
@@ -216,7 +248,6 @@ module.exports = function (app, model) {
             PythonShell.run('./private/services/aws_stop.py', function (err) {
                 if (err) {
                     console.log("Error while stopping VM : "+err);
-                    console.log('finished');
                     return res.sendStatus(200);
                 } else {
                     return res.sendStatus(400);
@@ -270,84 +301,107 @@ module.exports = function (app, model) {
         });
     }
 
-    function startLab(req, res) {
-        req.setTimeout(600000);
+    function startLabWithUserCredentials(req, res, username) {
         var imageName = req.body.imageName;
         var moduleName = req.body.moduleName;
-        var imageInfo = {imageName : imageName, module : moduleName,
-            username : req.user.username, maxUsers : "2", version : "latest"};
-        var jsonFile = require('jsonfile');
-        var file = './private/services/start_params.json';
-        jsonFile.writeFile(file, imageInfo , function(err) {
-            if (err) {
-                console.log("Error writing to file : "+err);
-            }
-            // // Option 1
-            var spawn = require('child_process').spawn,
-                py = spawn('python', ['./private/services/aws_start.py']),
-            dataString = '';
+        model
+            .userModel
+            .getAmazonCredentials(username)
+            .then(
+                function (amazonCredentials) {
+                    var spawn = require('child_process').spawn,
+                        py = spawn('python', ['./private/services/testInputOutput.py']),
+                        data = {imageName : imageName, module : moduleName,
+                            username : req.user.username, maxUsers : "2", version : "latest",
+                            pemFilePath : "./private/services/qurohan.pem",
+                            accessKeyID : amazonCredentials.accessKeyID,
+                            secretAccessKey : amazonCredentials.secretAccessKey},
+                        dataString = '';
 
-            py.stdout.on('data', function(data){
-                console.log(data.toString());
-                dataString += data.toString();
-            });
+                    py.stdout.on('data', function(data){
+                        dataString += data.toString();
+                    });
 
-            py.stdout.on('end', function(){
-                if (dataString) {
-
-                    console.log("dataString : "+dataString);
-                    // add metering info into userDB
-                    model
-                        .userModel
-                        .updateStartOfLab(req.user._id, imageName)
-                        .then(
-                            function (timeRemaining) {
-                                var labParameters = {"ip" : dataString.split("ip: ")[1], timeRemaining : timeRemaining};
-                                res.json(labParameters);
-                            },
-                            function (err) {
-                                console.log(err);
-                            }
-                        );
+                    py.stdout.on('end', function(){
+                        if (dataString) {
+                            // add metering info into userDB
+                            model
+                                .userModel
+                                .updateStartOfLab(req.user._id, imageName)
+                                .then(
+                                    function (timeRemaining) {
+                                        var labParameters = {"ip" : dataString.split("ip: ")[1], timeRemaining : timeRemaining};
+                                        res.json(labParameters);
+                                    },
+                                    function (err) {
+                                        console.log(err);
+                                    }
+                                );
+                        }
+                        else {
+                            return res.sendStatus(400);
+                        }
+                    });
+                    py.stdin.write(JSON.stringify(data));
+                    py.stdin.end();
+                },
+                function (err) {
+                    console.log(err);
                 }
-                else {
-                    return res.sendStatus(400);
-                }
-            });
-            // py.stdin.write(JSON.stringify(data));
-            // py.stdin.end();
+            );
+    }
 
+    function startLab(req, res) {
+        req.setTimeout(1000000);
+        var useAC = req.body.useAC;
+        if (useAC) {
+            startLabWithUserCredentials(req, res, req.user.username);
+        } else {
+            startLabWithUserCredentials(req, res, 'admin');
+        }
 
-            // // Option 2
-            // var PythonShell = require('python-shell');
-            // console.log("Here");
-            // PythonShell.run('./private/services/aws_start.py', function (err, data) {
-            //     // console.log(data.toString());
-            //     if (data) {
-            //
-            //         // add metering info into userDB
-            //         model
-            //             .userModel
-            //             .updateStartOfLab(req.user._id, imageName)
-            //             .then(
-            //                 function (timeRemaining) {
-            //                     var labParameters = {"ip" : data.toString().split("ip: ")[1], timeRemaining : timeRemaining};
-            //                     res.json(labParameters);
-            //                 },
-            //                 function (err) {
-            //                     console.log(err);
-            //                 }
-            //             );
-            //     }
-            //     else {
-            //         return res.sendStatus(400);
-            //     }
-            //     // if (err) throw err;
-            //     // console.log('finished');
-            // });
-
-        });
-
+        // console.log({imageName : imageName, module : moduleName,
+        //     username : req.user.username, maxUsers : "2", version : "latest"});
+        //
+        // var spawn = require('child_process').spawn,
+        //     py = spawn('python', ['./private/services/aws_start.py']),
+        //     data = {imageName : imageName, module : moduleName,
+        //         username : req.user.username, maxUsers : "2", version : "latest"
+        //         pemFilePath : "./private/services/qurohan.pem"},
+        //     dataString = '';
+        //
+        // py.stdout.on('data', function(data){
+        //     console.log("Printing Output : "+data.toString());
+        //     dataString += data.toString();
+        // });
+        //
+        // py.stdout.on('end', function(){
+        //     console.log("Here");
+        //     if (dataString) {
+        //
+        //         console.log(dataString);
+        //
+        //         console.log("dataString : "+dataString);
+        //         // add metering info into userDB
+        //         model
+        //             .userModel
+        //             .updateStartOfLab(req.user._id, imageName)
+        //             .then(
+        //                 function (timeRemaining) {
+        //                     var labParameters = {"ip" : dataString.split("ip: ")[1], timeRemaining : timeRemaining};
+        //                     res.json(labParameters);
+        //                 },
+        //                 function (err) {
+        //                     console.log(err);
+        //                 }
+        //             );
+        //     }
+        //     else {
+        //         return res.sendStatus(400);
+        //     }
+        // });
+        // py.stdin.write(JSON.stringify(data));
+        // py.stdin.end();
     }
 
     function getAvailableCourses(req, res) {

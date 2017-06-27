@@ -50,8 +50,10 @@
             return $http.post("/api/stopLab",imageNameJSON);
         }
 
-        function startLab(imageName, moduleName) {
-            var imageNameJSON = {imageName : imageName, moduleName : moduleName};
+        function startLab(imageName, moduleName, useAC) {
+            var imageNameJSON = {imageName : imageName,
+                                moduleName : moduleName,
+                                useAC : useAC};
             return $http.post("/api/startLab", imageNameJSON);
         }
 

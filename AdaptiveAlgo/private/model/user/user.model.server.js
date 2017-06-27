@@ -15,9 +15,23 @@ module.exports = function () {
         updateStartOfLab : updateStartOfLab,
         updateLabTimeRemaining : updateLabTimeRemaining,
         getListOfUsers : getListOfUsers,
-        updateAmazonCredentials : updateAmazonCredentials
+        updateAmazonCredentials : updateAmazonCredentials,
+        getAmazonCredentials : getAmazonCredentials
     };
     return api;
+
+    function getAmazonCredentials(username) {
+        var deferred = Q.defer();
+        UserModel
+            .findOne({"username" : username}, function (err, data) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(data.amazonCredentials);
+                }
+            });
+        return deferred.promise;
+    }
 
     function updateLabTimeRemaining(moduleName, labStartTime, userid) {
         console.log("******** inside updateLabTimeRemaining ***********");
