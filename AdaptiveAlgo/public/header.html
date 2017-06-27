@@ -2,6 +2,12 @@
     <div class="container">
     <div class="row">
         <div class="col-md-4">
+            <div ng-switch-when = 'ADMIN' class="logo">
+                <a href="/#/admin/listUsers">
+                    <img src="images/logo.png">
+                    QU <span>Sandbox</span>
+                </a>
+            </div>
             <div ng-switch-when = 'INSTRUCTOR' class="logo">
                 <a href="/#/instructor/listImages">
                     <img src="images/logo.png">
@@ -30,6 +36,9 @@
                     Home
                 </a>
                 <a href="/#/instructor/listImages" ng-switch-when = 'INSTRUCTOR'>
+                    Home
+                </a>
+                <a href="/#/admin/listUsers" ng-switch-when = 'ADMIN'>
                     Home
                 </a>                
                 <a ng-if = 'model.userData' class="logout" ng-click="model.logout()" data-toggle="tooltip" title="Logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>                

@@ -33,6 +33,8 @@
                                 $location.url("/student/availableProjects");
                             } else if (user.data.userType === "INSTRUCTOR") {
                                 $location.url('/instructor/listImages');
+                            } else if (user.data.userType === "ADMIN") {
+                                $location.url('/admin/listUsers');
                             }
                         } else {
                             vm.error = "Invalid Credentials";

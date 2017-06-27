@@ -89,6 +89,14 @@
                 resolve : {
                     checkLogin : checkLogin
                 }
+            })
+            .when("/admin/listUsers", {
+                templateUrl: "views/admin/templates/listUsers.view.client.html",
+                controller: "ListUsersController",
+                controllerAs: "model",
+                resolve : {
+                    checkLogin : checkLogin
+                }
             });
 
 
