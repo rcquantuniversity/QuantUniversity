@@ -14,6 +14,7 @@ module.exports = function () {
         createUser : createUser,
         updateStartOfLab : updateStartOfLab,
         updateLabTimeRemaining : updateLabTimeRemaining,
+        getListOfUsers : getListOfUsers,
         updateAmazonCredentials : updateAmazonCredentials
     };
     return api;
@@ -36,6 +37,19 @@ module.exports = function () {
                         deferred.resolve(lab.timeRemaining);
                     });
                     user.save();
+                }
+            });
+        return deferred.promise;
+    }
+
+    function getListOfUsers() {
+        var deferred = Q.defer();
+        UserModel
+            .find({}, function (err, allUsers) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(allUsers);
                 }
             });
         return deferred.promise;

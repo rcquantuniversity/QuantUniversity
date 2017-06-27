@@ -18,6 +18,7 @@
             "createDockerImage" : createDockerImage,
             "uploadToDockerHub" : uploadToDockerHub,
             "listAllImages" : listAllImages,
+            "listAllUsers" : listAllUsers,
             "listAllImagesForStudent" : listAllImagesForStudent,
             "addPackage" : addPackage,
             "getPackageFromJSON" : getPackageFromJSON,
@@ -50,6 +51,10 @@
 
         function listAllImages() {
             return $http.get("/api/listAllImages");
+        }
+
+        function listAllUsers() {
+            return $http.get("/api/listAllUsers");
         }
 
         function uploadToDockerHub(imageName) {

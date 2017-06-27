@@ -7,16 +7,16 @@
         var vm = this;
 
         function init() {
-            // UserService
-            //     .listAllUsers()
-            //     .then(
-            //         function (users) {
-            //             vm.users = users;
-            //         },
-            //         function (err) {
-            //             vm.error = "Could not load users "+ err;
-            //         }
-            //     );
+            UserService
+                .listAllUsers()
+                .then(
+                    function (users) {
+                        vm.users = users;
+                    },
+                    function (err) {
+                        vm.error = "Could not load users "+ err;
+                    }
+                );
 
         }
         init();

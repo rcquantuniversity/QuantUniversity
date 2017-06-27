@@ -11,6 +11,7 @@ module.exports = function (app, model) {
     app.post("/api/createOutputJSON/:imageName", createOutputJSON);
     app.post("/api/createDockerImage", createDockerImage);
     app.get("/api/listAllImages", listAllImages);
+    app.get("/api/listAllUsers", listAllUsers);
     app.get("/api/listAllImagesForStudent", listAllImagesForStudent);
     app.post("/api/addPackage", addPackage);
     app.get("/api/getUserPackageFile", getUserPackageFile);
@@ -127,6 +128,23 @@ module.exports = function (app, model) {
                 function (err) {
                     res.sendStatus(400).send(err);
                     logger.log('Error','Could not return images for instructor : '+req.user.id);
+                }
+            );
+    }
+
+    function listAllUsers(req, res) {
+        var logger = require('./logger.js');
+        model
+            .userModel
+            .getListOfUsers()
+            .then(
+                function (users) {
+                    logger.log('Info','Returning users for admin');
+                    res.json(images);
+                },
+                function (err) {
+                    logger.log('Error','Could not return users for admin');
+                    res.sendStatus(400).send(err);
                 }
             );
     }
