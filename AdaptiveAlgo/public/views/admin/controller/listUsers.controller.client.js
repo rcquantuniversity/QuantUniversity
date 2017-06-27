@@ -30,7 +30,7 @@
             vm.userId = userId;
             vm.credits = credits;
             vm.expiryDate = expiryDate;
-            vm.formatDate = $filter('date')(vm.expiryDate, 'yyyy-MM-dd');
+            vm.formatDate = $filter('date')(vm.expiryDate);
             vm.newDate = new Date(vm.formatDate);
         }
 
