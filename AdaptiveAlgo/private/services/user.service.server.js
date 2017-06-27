@@ -140,7 +140,7 @@ module.exports = function (app, model) {
             .then(
                 function (users) {
                     logger.log('Info','Returning users for admin');
-                    res.json(images);
+                    res.json(users);
                 },
                 function (err) {
                     logger.log('Error','Could not return users for admin');

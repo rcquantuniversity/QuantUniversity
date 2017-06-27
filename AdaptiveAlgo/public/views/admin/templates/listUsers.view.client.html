@@ -11,6 +11,47 @@
                     </h4>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- List View -->
+                    <div class="projectsListView" ng-repeat="user in model.users.data">
+                        <div class="col-md-12">
+                            <h3 class="cleafix projectTitle">
+                                <!-- <em>{{$index+1}}</em> -->
+                                {{user.firstName}}
+                                <span class="shiftRight"><a class="btn btn-danger btn-rounded btn-bordred" ng-click="model.viewDockerImage(image.imageName); model.openModal('imageModal');">View Image</a></span>
+                            </h3>
+                            <p>
+                                {{image.description}}
+                            </p>
+                            <p>
+                                <span><i class="fa fa-clock-o" aria-hidden="true"></i> Duration: {{image.duration / 3600}} Hours </span>
+                                <span><i class="fa fa-star" aria-hidden="true"></i> Credits: {{image.duration / 3600 | number: 0}} </span>
+                                <span><i class="fa fa-play" aria-hidden="true"></i> Videos: 7 Videos </span>
+                                <span><i class="fa fa-file" aria-hidden="true"></i> Files: 5 Files </span>
+                            </p>
+                            <p>
+                                <a class="btn btn-primary btn-rounded btn-bordred"
+                                   ng-click="model.uploadToDockerHub(image.imageName)">
+                                    <span><i class="fa fa-docker"></i> Publish to Docker</span>
+                                </a>
+                                <a class="btn btn-primary btn-rounded btn-bordred"
+                                   ng-click="">
+                                    <span><i class="fa fa-amazon" aria-hidden="true"></i> Publish to S3</span>
+                                </a>
+                                <a class="btn btn-primary btn-rounded btn-bordred"
+                                   ng-click="">
+                                    <span><i class="fa fa-github" aria-hidden="true"></i> Publish to GitHub</span>
+                                </a>
+                                <a class="btn btn-primary btn-rounded btn-bordred"
+                                   ng-click="">
+                                    <span><i class="fa fa-download" aria-hidden="true"></i> Download / Export </span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

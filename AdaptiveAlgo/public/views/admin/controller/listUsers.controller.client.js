@@ -3,7 +3,7 @@
         .module("AdaptiveAlgoApp")
         .controller("ListUsersController", ListUsersController);
 
-    function ListUsersController(CourseService, UserService, ModalService) {
+    function ListUsersController(UserService) {
         var vm = this;
 
         function init() {
