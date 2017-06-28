@@ -24,12 +24,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat = "user in model.users.data" ng-if="user.userType == 'STUDENT'">
+                            <tr ng-repeat = "user in model.users.data">
                                 <td>{{user.firstName}} {{user.lastName}}</td>
-                                <td>{{user.noOfCredits}}</td>
-                                <td>{{user.expiryDate | date:'MMMM d, y'}}</td>
-                                <td>
+                                <td ng-if="user.userType == 'STUDENT'">{{user.noOfCredits}}</td>
+                                <td ng-if="user.userType != 'STUDENT'">-</td>
+                                <td ng-if="user.userType == 'STUDENT'">{{user.expiryDate | date:'MMMM d, y'}}</td>
+                                <td ng-if="user.userType != 'STUDENT'">-</td>
+                                <td ng-if="user.userType == 'STUDENT'">
                                     <span><a class="btn btn-primary btn-rounded" ng-click="model.openModal('userModal', user.noOfCredits, user.expiryDate, user._id, user.email);"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit User</a></span>
+                                </td>
+                                <td ng-if="user.userType != 'STUDENT'">
+                                    -
                                 </td>
                             </tr>
                         </tbody>
