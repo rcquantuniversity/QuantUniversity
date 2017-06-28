@@ -775,6 +775,7 @@ body.modal-open {
   font-size: 15px;
   padding: 0 10px 0 18px;
   position: relative;
+  display: inline-block;
 }
 
 .projectsListView a span {
@@ -811,8 +812,14 @@ body.modal-open {
   padding: 15px 25px;
 }
 
-.shiftRight a {
+.shiftRight  {
   float: right;
+  display: inline-block;
+}
+
+.shiftRight span {
+  padding: 0;
+  padding-left: 10px;
 }
 
 .projectTitle {

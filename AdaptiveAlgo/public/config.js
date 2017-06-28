@@ -82,6 +82,14 @@
                     checkLogin : checkLogin
                 }
             })
+            .when("/instructor/editDocker", {
+                templateUrl: "views/instructor/templates/editDocker.view.client.html",
+                controller: "EditDockerController",
+                controllerAs: "model",
+                resolve : {
+                    checkLogin : checkLogin
+                }
+            })
             .when("/instructor/listImages", {
                 templateUrl: "views/instructor/templates/listAllImages.view.client.html",
                 controller: "ListImagesController",
