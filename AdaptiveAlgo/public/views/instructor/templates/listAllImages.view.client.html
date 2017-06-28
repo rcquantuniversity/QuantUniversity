@@ -95,8 +95,9 @@
                             <h3 class="cleafix projectTitle">
                                 <!-- <em>{{$index+1}}</em> -->
                                 {{image.imageName}}
+
                                 <div class="shiftRight">
-                                    <span><a class="btn btn-success btn-rounded btn-bordred" ng-click="model.editDockerImage(image)">Edit Image</a></span>
+                                    <span ng-if="image.userid == model.userId"><a class="btn btn-success btn-rounded btn-bordred" ng-click="model.editDockerImage(image)">Edit Image</a></span>
                                     <span><a class="btn btn-danger btn-rounded btn-bordred" ng-click="model.viewDockerImage(image.imageName); model.openModal('imageModal');">View Image</a></span>
                                 </div>
                             </h3>
