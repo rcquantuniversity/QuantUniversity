@@ -50,7 +50,9 @@
                 .then(
                     function(image) {
                         vm.imageDetails = image.data;
-                        console.log(vm.imageDetails);
+                        var durHr = vm.imageDetails.duration;
+                        durHr = durHr/3600;
+                        vm.duration = durHr;
                     },
                     function(err) {
                         vm.error = "No image found with the given Id."
