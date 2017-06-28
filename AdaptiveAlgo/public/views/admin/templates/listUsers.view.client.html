@@ -72,12 +72,13 @@
                 <button ng-click="model.closeModal('userModal')"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
             </div>
             <div id="mydiv">
+                <div class="container">
             	<h1>Update User Details</h1>
             	<form name="userUpdate" method="post">
             		<div class="form-grp">
                         <label>Credits</label>
                         <div class="input-group fullWidth">
-                            <input type="number" class="form-control" ng-model="model.credits" placeholder="Credits">
+                            <input type="number" class="form-control" ng-model="model.credits" placeholder="Credits" step="1" min="1">
                         </div>
                     </div>
                     <!-- {{model.credits}}<br/> -->
@@ -87,21 +88,29 @@
                             <input type="date" class="form-control" ng-model="model.newDate" placeholder="Expiry Date">
                         </div>
                     </div>
+                    <br/>
                     <input type="hidden" ng-model="model.userId" value="{{model.userId}}">
                     <input type="hidden" ng-model="model.email" value="{{model.email}}">
                     <input type="hidden" ng-model="model.currentEmail" value="{{model.currentEmail}}">
                     <div class="form-grp">
+                        <div class="row">
+                        <div class="col-md-3">
 			            <input class="btn btn-block btn-primary btn-bordered"
 			                   type="submit"
 			                   ng-click="model.updateUserDetails(model.credits, model.newDate, model.userId); model.sendmail(model.email, model.credits, model.newDate, model.currentEmail);"
 			                   value="Update">
+                        </div>
+                        <div class="col-md-3">
                         <button type="button" class="btn btn-block btn-primary btn-bordered"
                                ng-click="model.closeModal('userModal')">Cancel</button> 
+                        </div>
+                        </div>
 			        </div>
 			        <div>
 			        	<p class="successMessage">{{model.success}}</p>
 			        </div>
             	</form>
+                </div>
                 <!-- {{model.expiryDate}}<br/> -->
                 <!-- {{model.formatDate}}<br/>
                 {{model.newDate}}<br/> -->
