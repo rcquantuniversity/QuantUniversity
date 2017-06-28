@@ -25,7 +25,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat = "user in model.users.data">
-                                <td>{{user.firstName}} {{user.lastName}}</td>
+                                <td>{{user.firstName}} {{user.lastName}} <br/> <em>({{user.userType}})</em></td>
                                 <td ng-if="user.userType == 'STUDENT'">{{user.noOfCredits}}</td>
                                 <td ng-if="user.userType != 'STUDENT'">-</td>
                                 <td ng-if="user.userType == 'STUDENT'">{{user.expiryDate | date:'MMMM d, y'}}</td>
