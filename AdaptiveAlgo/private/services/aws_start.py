@@ -10,11 +10,14 @@ import socket
 from luigi.mock import MockFile
 from scp import SCPClient
 
-pemkeyPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\qu.pem'
+# pemkeyPath = '/home/parallels/.ssh/qu.pem'
+# pemKeyName = 'qu'
 envFilePath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\.env'
 whitelistPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\whitelist.json'
 efsDns = 'fs-8430e32d.efs.us-west-2.amazonaws.com'
-AMIName = 'dragon'
+# AMIName = 'dragon'
+# accessKeyID = 'AKIAJSGOLFKO2H7AMATA'
+# secretAccessKey = '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'
 
 class ParseParameters(luigi.Task):
     task_namespace = 'aws'
@@ -24,18 +27,20 @@ class ParseParameters(luigi.Task):
 
     def run(self):
         service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
-        #with open(service_dir+'/start_params.json') as data_file:    
-        #  data = json.load(data_file)
+        #with open(service_dir+'/start_params.json') as data_file:
+        #    data = json.load(data_file)
         data_file = sys.stdin.readlines()
         data = json.loads(data_file[0])
-        params = dict()
-        params['Image'] = data['imageName']
-        params['Module'] = data['module']
-        params['Username'] = data['username']
-        params['MaxUsers'] = data['maxUsers']
-        print params
+        #data = {"imageName": "jhub/test","module": "jeff91","username": "s1","maxUsers": "2","version": "latest","pemName" : "qurohan","pemFilePath": "C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\qurohan.pem","accessKeyID": "AKIAIJ3DBHMG34T5OVJQ","secretAccessKey": "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","amiId" : "ami-c27561bb"}
+        # params = dict()
+        # params['Image'] = data['imageName']
+        # params['Module'] = data['module']
+        # params['Username'] = data['username']
+        # params['MaxUsers'] = data['maxUsers']
+        # print(params)
+        print(data)
         _out = self.output().open('w')
-        json.dump(params,_out)
+        json.dump(data,_out)
         _out.close()
 
 class DummyLoadBalancer(luigi.Task):
@@ -52,13 +57,12 @@ class DummyLoadBalancer(luigi.Task):
         with self.input().open('r') as infile:
             print(infile)
             params = json.load(infile)
-        
-        maxUsersForOneIns = 0
+
+        maxUsersForOneIns = int(params['maxUsers'])
         numOfCurrentUsers = 0
         numOfExistingIns = 0
-        topIndex = 0
-        moduleName = params['Module']
-        userName = params['Username']
+        moduleName = params['module']
+        userName = params['username']
         fileName = moduleName+'_balance_status.json'
         whitelistName = 'whitelist.json'
         service_dir = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
@@ -71,20 +75,17 @@ class DummyLoadBalancer(luigi.Task):
             print('corresponding JSON not here, create one')
             #create new JSON, maxUsers based on start_params.json
             newJson ={}
-            newJson['maxUsers'] = params['MaxUsers']
-            newJson['topIndex'] = 0
+            newJson['maxUsers'] = params['maxUsers']
             newJson['vms'] = []
             with open(jsonFilePath, 'w') as fp:
                 json.dump(newJson, fp)
         #load data from JSON file
         with open(jsonFilePath, 'r') as f:
             content = yaml.safe_load(f)
-        maxUsersForOneIns = int(content['maxUsers'])
-        topIndex = int(content['topIndex'])
         vmdict = {}
         for vm in content['vms']:
             vmdict[str(vm)] = (content['vms'][vm])
-        
+
         #ckeck any unbalance in the cluster, if any conflict, exit the pipe line
         for vm in vmdict:
             #update the params
@@ -101,7 +102,7 @@ class DummyLoadBalancer(luigi.Task):
         if(numOfExistingIns * maxUsersForOneIns < numOfCurrentUsers):
             print('messed up with load balance, too many containers, too few instances.')
             sys.exit()
-        
+
         #need a new instance?
         needToAllocate = False
         if(numOfExistingIns * maxUsersForOneIns == numOfCurrentUsers):
@@ -111,27 +112,28 @@ class DummyLoadBalancer(luigi.Task):
         #give user an avalaible instance the he can use
         #pass an existing instance name or a non-existing instance name
         passInfo = {}
+        passInfo.update(params)
         if(needToAllocate==True):
             print('allocate new instance')
-            topIndex = topIndex + 1
-            vmdict[moduleName+'-'+str(topIndex)] = [userName]
-            passInfo['Module'] = moduleName+'-'+str(topIndex)
+            vmdict[moduleName+'-'+str(len(vmdict)+1)] = [userName]
+            passInfo['module'] = moduleName+'-'+str(len(vmdict))
             with open(whitelistPath, 'w') as fp:
                 whitelist={}
-                whitelist['whitelist'] = vmdict[moduleName+'-'+str(topIndex)]
+                print(vmdict)
+                whitelist['whitelist'] = vmdict[moduleName+'-'+str(len(vmdict))]
                 json.dump(whitelist, fp)
         if(needToAllocate==False):
             for vm in vmdict:
                 if(len(vmdict[vm])) < maxUsersForOneIns:
                     print(vm + ' is available, '+userName+' is added to it')
                     vmdict[vm].append(userName)
-                    passInfo['Module'] = vm
+                    passInfo['module'] = vm
                     with open(whitelistPath, 'w') as fp:
                         whitelist={}
                         whitelist['whitelist'] = vmdict[vm]
                         json.dump(whitelist, fp)
                     break
-        #write to output for next 
+        #write to output for next
         _out = self.output().open('w')
         json.dump(passInfo,_out)
         _out.close()
@@ -139,10 +141,12 @@ class DummyLoadBalancer(luigi.Task):
         print(vmdict)
         writeData = {}
         writeData['maxUsers'] = maxUsersForOneIns
-        writeData['topIndex'] = topIndex
         writeData['vms'] = vmdict
+        # writeData.update(params)
+        print(writeData)
         with open(jsonFilePath, 'w') as fp:
             json.dump(writeData, fp)
+
 
 class StartInstanceTask(luigi.Task):
     task_namespace = 'aws'
@@ -156,12 +160,14 @@ class StartInstanceTask(luigi.Task):
     def run(self):
         #read from DummyLoadBalancer
         with self.input().open('r') as infile:
-            print(infile)
             params = json.load(infile)
-        
-        ec2 = boto3.resource('ec2')
-        
-        filters = [{'Name':'tag:Name', 'Values':[params['Module']]}]
+
+        print(params)
+        ec2 = boto3.resource('ec2',
+                            aws_access_key_id=params['accessKeyID'],
+                            aws_secret_access_key=params['secretAccessKey'])
+
+        filters = [{'Name':'tag:Name', 'Values':[params['module']]}]
         counter = 0
         instances = ec2.instances.filter(Filters=filters)
         for instance in instances:
@@ -174,17 +180,17 @@ class StartInstanceTask(luigi.Task):
             _out.close()
             return
 
-        imgid = ''
-        filter = {'Name': 'name', 'Values' : [AMIName]}
-        for img in ec2.images.filter(Filters = [filter]):
-            imgid = img.id
-            print(imgid)
+        imgid = params['amiId']
+        # filter = {'Name': 'name', 'Values' : [AMIName]}
+        # for img in ec2.images.filter(Filters = [filter]):
+        #     imgid = img.id
+        #     print(imgid)
 
         instance = ec2.create_instances(
             ImageId=imgid,
             MinCount=1,
             MaxCount=1,
-            KeyName='qu',
+            KeyName=params['pemName'],
             SecurityGroupIds=[
                 'jupyterhub',
             ],
@@ -196,32 +202,33 @@ class StartInstanceTask(luigi.Task):
                     'Tags': [
                         {
                             'Key': 'Name',
-                            'Value': params['Module']
+                            'Value': params['module']
                         },
                     ]
                 },
             ]
         )
-        print(type(instance))
-        print(type(instance[0]))#<class 'boto3.resources.factory.ec2.Instance'>
-        print(type(instance[0].public_ip_address))
-        print(instance)
+        #print(type(instance))
+        #print(type(instance[0]))#<class 'boto3.resources.factory.ec2.Instance'>
+        #print(type(instance[0].public_ip_address))
+        #print(instance)
         print(instance[0].public_ip_address)
         time.sleep(10)
         new_id = instance[0].id
         new_ip = ''
-        ec2 = boto3.resource('ec2')
+        ec2 = boto3.resource('ec2',
+                            aws_access_key_id=params['accessKeyID'],
+                            aws_secret_access_key=params['secretAccessKey'])
         for ins in ec2.instances.all():
             #print(type(ins))#<class 'boto3.resources.factory.ec2.Instance'>
             if ins.id == new_id:
                 print(ins.public_ip_address)
                 new_ip = ins.public_ip_address
-        
+
         _out = self.output().open('w')
         _out.write(new_ip)
         _out.close()
         #sleep for VM initialization
-        #time.sleep(100) 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         result = sock.connect_ex((new_ip,22))
         while result != 0:
@@ -231,7 +238,7 @@ class StartInstanceTask(luigi.Task):
         #efs init
 
         #1. establish ssh connection
-        k = paramiko.RSAKey.from_private_key_file(pemkeyPath)
+        k = paramiko.RSAKey.from_private_key_file(params['pemFilePath'])
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -247,7 +254,7 @@ class StartInstanceTask(luigi.Task):
             returnVal = stdout.read()
             print('docker service is not up')
             time.sleep(5)
-        
+
         #3. stop the service and mount
         commands = ['sudo service docker stop',
                     'sleep 5',
@@ -256,17 +263,17 @@ class StartInstanceTask(luigi.Task):
                     'sudo mount -a',
                     'sleep 5',
                     'sudo service docker start']
-        #stop docker 
+        #stop docker
         #mount efs
         #start docker
         for command in commands:
-        	print ('Executing {}'.format( command ))
-        	stdin , stdout, stderr = c.exec_command(command)
-        	print (stdout.read())
-        	print ('Errors')
-        	print (stderr.read())
+                print ('Executing {}'.format( command ))
+                stdin , stdout, stderr = c.exec_command(command)
+                print (stdout.read())
+                print ('Errors')
+                print (stderr.read())
         c.close()
-    
+
 class StartHubTask(luigi.Task):
     task_namespace = 'aws'
 
@@ -279,13 +286,13 @@ class StartHubTask(luigi.Task):
             print(infile)
             params = json.load(infile)
 
-        DOCKER_NOTEBOOK_IMAGE = params['Image']
-        USER_NAME = params['Username']
+        DOCKER_NOTEBOOK_IMAGE = params['imageName']
+        USER_NAME = params['username']
         USER_DIR_NAME = 'jhub-'+USER_NAME
         #update env file
         with open(envFilePath, 'r') as f:
             content = f.readlines()
-        
+
         newcontent=[]
         for line in content:
             if not line.startswith('DOCKER_NOTEBOOK_IMAGE'):
@@ -297,15 +304,15 @@ class StartHubTask(luigi.Task):
             for line in newcontent:
                 f.write("%s" % line)
 
-        
+
         # read IP address from the out put
         with self.input()[1].open('r') as infile:
             ips = infile.read().splitlines()
 
         ip = ips[0]
         print(ip)
- 
-        k = paramiko.RSAKey.from_private_key_file(pemkeyPath)
+
+        k = paramiko.RSAKey.from_private_key_file(params['pemFilePath'])
         c = paramiko.SSHClient()
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         print ('connecting')
@@ -346,7 +353,7 @@ class StartHubTask(luigi.Task):
             print (stderr.read())
         if bakdirExists == True:
             commands = ['docker rm `docker ps --no-trunc -aq`',
-                        'rm -r /home/ec2-user/nbdata/'+USER_DIR_NAME, 
+                        'rm -r /home/ec2-user/nbdata/'+USER_DIR_NAME,
                         'mv /home/ec2-user/nbdata/'+USER_DIR_NAME+'bak'+' /home/ec2-user/nbdata/'+USER_DIR_NAME]
             for command in commands:
                 print ('Executing {}'.format( command ))
@@ -356,28 +363,36 @@ class StartHubTask(luigi.Task):
                 print (stderr.read())
         commands = ['sudo cp /home/ec2-user/jupyterhub-deploy-docker/whitelist.json /var/lib/docker/volumes/jupyterhub-data/_data',
                     'docker pull '+DOCKER_NOTEBOOK_IMAGE, 'sleep 5',
-                    'mkdir -p /home/ec2-user/nbdata/'+USER_DIR_NAME, 'sudo chown 1000 /home/ec2-user/nbdata/'+USER_DIR_NAME, 
+                    'mkdir -p /home/ec2-user/nbdata/'+USER_DIR_NAME, 'sudo chown 1000 /home/ec2-user/nbdata/'+USER_DIR_NAME,
                     'cd /home/ec2-user/jupyterhub-deploy-docker; docker-compose up -d; docker-compose up -d'
                     ]
         #if image exists, skip pulling
         # if(isOnLocalMachine == True):
         #     del commands[1]
         for command in commands:
-        	print ('Executing {}'.format( command ))
-        	stdin , stdout, stderr = c.exec_command(command)
-        	print (stdout.read())
-        	print ('Errors')
-        	print (stderr.read())
-        c.close()
+                print ('Executing {}'.format( command ))
+                stdin , stdout, stderr = c.exec_command(command)
+                print (stdout.read())
+                print ('Errors')
+                print (stderr.read())
 
         #check 80 port
+        eightyCounter = 0
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         result = sock.connect_ex((ip,80))
         while result != 0:
             print ("80 port is not open")
             result = sock.connect_ex((ip,80))
             time.sleep(5)
+            eightyCounter = eightyCounter + 1
+            if eightyCounter == 10:
+                stdin , stdout, stderr = c.exec_command(commands[3])
+                print (stdout.read())
+                print ('Errors')
+                print (stderr.read())
+                eightyCounter = 0
         print('ip: '+ip)
+        c.close()
 
 if __name__ == '__main__':
-    luigi.run(['aws.ParseParameters', '--local-scheduler'])
+    luigi.run(['aws.StartHubTask', '--local-scheduler'])

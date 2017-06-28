@@ -16,16 +16,19 @@ module.exports = function () {
     var userModel = require("./user/user.model.server.js")();
     var packagesModel = require("./packages/packages.model.server.js")();
     var dockerImageModel = require("./dockerImage/dockerImage.model.server.js")();
+    var machineLearningModel = require("./machineLearningModel/mlModel.model.server.js")();
 
     var model = {
         userModel : userModel,
         packagesModel : packagesModel,
-        dockerImageModel : dockerImageModel
+        dockerImageModel : dockerImageModel,
+        machineLearningModel : machineLearningModel
     };
 
     userModel.setModel(model);
     packagesModel.setModel(model);
     dockerImageModel.setModel(model);
+    machineLearningModel.setModel(model);
 
     return model;
 };

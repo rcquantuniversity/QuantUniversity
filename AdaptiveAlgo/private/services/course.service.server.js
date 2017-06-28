@@ -23,21 +23,21 @@ module.exports = function (app, model) {
         s = new Set();
 
         // testing
-        var spawn = require('child_process').spawn,
-            py    = spawn('python', ['./private/services/testInputOutput.py']),
-            data = {"name" : "Rohan", "id" : 1234},
-            dataString = '';
-
-        py.stdout.on('data', function(data){
-            dataString += data.toString();
-        });
-
-        py.stdout.on('end', function(){
-            console.log('All data ',dataString);
-        });
-
-        py.stdin.write(JSON.stringify(data));
-        py.stdin.end();
+        // var spawn = require('child_process').spawn,
+        //     py    = spawn('python', ['./private/services/testInputOutput.py']),
+        //     data = {"name" : "Rohan", "id" : 1234},
+        //     dataString = '';
+        //
+        // py.stdout.on('data', function(data){
+        //     dataString += data.toString();
+        // });
+        //
+        // py.stdout.on('end', function(){
+        //     console.log('All data ',dataString);
+        // });
+        //
+        // py.stdin.write(JSON.stringify(data));
+        // py.stdin.end();
 
     }
     init();
@@ -302,6 +302,7 @@ module.exports = function (app, model) {
     }
 
     function startLabWithUserCredentials(req, res, username) {
+        req.setTimeout(1000000);
         var imageName = req.body.imageName;
         var moduleName = req.body.moduleName;
         model
@@ -310,12 +311,19 @@ module.exports = function (app, model) {
             .then(
                 function (amazonCredentials) {
                     var spawn = require('child_process').spawn,
-                        py = spawn('python', ['./private/services/testInputOutput.py']),
-                        data = {imageName : imageName, module : moduleName,
-                            username : req.user.username, maxUsers : "2", version : "latest",
-                            pemFilePath : "./private/services/qurohan.pem",
-                            accessKeyID : amazonCredentials.accessKeyID,
-                            secretAccessKey : amazonCredentials.secretAccessKey},
+                        py = spawn('python', ['./private/services/aws_start.py']),
+                        data = {
+                            "imageName": imageName,
+                            "module": moduleName,
+                            "username": req.user.username,
+                            "maxUsers": "2",  // get from config.json
+                            "version": "latest",  // get from config.json
+                            "pemName" : "qu",  // get from DB
+                            "pemFilePath": "./private/services/adaptivealgo.pem", // get from DB
+                            "accessKeyID": amazonCredentials.accessKeyID,
+                            "secretAccessKey": amazonCredentials.secretAccessKey,
+                            "amiId" : "ami-c27561bb"  // get from config.json
+                        },
                         dataString = '';
 
                     py.stdout.on('data', function(data){
@@ -323,6 +331,7 @@ module.exports = function (app, model) {
                     });
 
                     py.stdout.on('end', function(){
+                        console.log(dataString);
                         if (dataString) {
                             // add metering info into userDB
                             model
