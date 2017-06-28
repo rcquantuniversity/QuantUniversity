@@ -29,7 +29,7 @@
                                 <td>{{user.noOfCredits}}</td>
                                 <td>{{user.expiryDate | date:'MMMM d, y'}}</td>
                                 <td>
-                                    <span><a class="btn btn-primary btn-rounded" ng-click="model.openModal('userModal', user.noOfCredits, user.expiryDate, user._id, user.email);">Edit User</a></span>
+                                    <span><a class="btn btn-primary btn-rounded" ng-click="model.openModal('userModal', user.noOfCredits, user.expiryDate, user._id, user.email);"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit User</a></span>
                                 </td>
                             </tr>
                         </tbody>
