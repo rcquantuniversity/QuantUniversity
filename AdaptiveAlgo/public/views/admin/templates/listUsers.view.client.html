@@ -89,10 +89,11 @@
                     </div>
                     <input type="hidden" ng-model="model.userId" value="{{model.userId}}">
                     <input type="hidden" ng-model="model.email" value="{{model.email}}">
+                    <input type="hidden" ng-model="model.currentEmail" value="{{model.currentEmail}}">
                     <div class="form-grp">
 			            <input class="btn btn-block btn-primary btn-bordered"
 			                   type="submit"
-			                   ng-click="model.updateUserDetails(model.credits, model.newDate, model.userId); model.sendmail(model.email, model.credits, model.newDate);"
+			                   ng-click="model.updateUserDetails(model.credits, model.newDate, model.userId); model.sendmail(model.email, model.credits, model.newDate, model.currentEmail);"
 			                   value="Update">
                         <button type="button" class="btn btn-block btn-primary btn-bordered"
                                ng-click="model.closeModal('userModal')">Cancel</button> 
