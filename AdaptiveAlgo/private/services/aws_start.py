@@ -16,8 +16,6 @@ envFilePath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlg
 whitelistPath = 'C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\whitelist.json'
 efsDns = 'fs-8430e32d.efs.us-west-2.amazonaws.com'
 # AMIName = 'dragon'
-# accessKeyID = 'AKIAJSGOLFKO2H7AMATA'
-# secretAccessKey = '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'
 
 class ParseParameters(luigi.Task):
     task_namespace = 'aws'
