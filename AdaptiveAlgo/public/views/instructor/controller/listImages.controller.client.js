@@ -12,19 +12,7 @@
         vm.viewDockerImage = viewDockerImage;
         vm.editDockerImage = editDockerImage;
 
-        function init() {
-            UserService
-                .findCurrentUser()
-                .then(
-                    function (user) {
-                        vm.userData = user.data;
-                        vm.userId = vm.userData._id;
-                        console.log(vm.userId)
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
+        function init() {            
             UserService
                 .listAllImages()
                 .then(

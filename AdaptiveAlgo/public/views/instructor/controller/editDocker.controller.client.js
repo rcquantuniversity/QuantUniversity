@@ -51,31 +51,29 @@
                     function (user) {
                         vm.userData = user.data;
                         vm.userId = vm.userData._id;
-                        console.log(vm.userId)
+                        
+                        UserService
+                            .getImageById(imageId)
+                            .then(
+                                function(image) {
+                                    vm.imageDetails = image.data;
+                                    if(vm.imageDetails.userid == vm.userId) {
+                                        var durHr = vm.imageDetails.duration;
+                                        durHr = durHr/3600;
+                                        vm.duration = durHr;
+                                    } else {
+                                        $location.url("/");
+                                    }
+                                },
+                                function(err) {
+                                    vm.error = "No image found with the given Id."
+                                }
+                            );
                     },
                     function (err) {
                         console.log(err);
                     }
                 );
-
-            UserService
-                .getImageById(imageId)
-                .then(
-                    function(image) {
-                        vm.imageDetails = image.data;
-                        if(vm.imageDetails.userid == vm.userId) {
-                            var durHr = vm.imageDetails.duration;
-                            durHr = durHr/3600;
-                            vm.duration = durHr;
-                        } else {
-                            $location.url("/");
-                        }
-                    },
-                    function(err) {
-                        vm.error = "No image found with the given Id."
-                    }
-                );
-
         }
         init();
 
