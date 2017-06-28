@@ -29,7 +29,6 @@ class ParseParameters(luigi.Task):
         #    data = json.load(data_file)
         data_file = sys.stdin.readlines()
         data = json.loads(data_file[0])
-        #data = {"imageName": "jhub/test","module": "jeff91","username": "s1","maxUsers": "2","version": "latest","pemName" : "qurohan","pemFilePath": "C:\\Users\\QuantUniversity-6\\Rohan\\QuantUniversity\\AdaptiveAlgo\\private\\services\\qurohan.pem","accessKeyID": "AKIAIJ3DBHMG34T5OVJQ","secretAccessKey": "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","amiId" : "ami-c27561bb"}
         # params = dict()
         # params['Image'] = data['imageName']
         # params['Module'] = data['module']
