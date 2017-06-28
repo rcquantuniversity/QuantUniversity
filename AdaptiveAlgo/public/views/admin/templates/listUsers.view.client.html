@@ -17,7 +17,6 @@
                     <table class="table table-responsive m-0">
                         <thead>
                             <tr>
-                                <th>Sr No</th>
                                 <th>Name</th>
                                 <th>Credits</th>
                                 <th>Expiry Date</th>
@@ -25,13 +24,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat = "user in model.users.data">
-                                <td>{{$index+1}}</td>
+                            <tr ng-repeat = "user in model.users.data" ng-if="user.userType == 'STUDENT'">
                                 <td>{{user.firstName}} {{user.lastName}}</td>
                                 <td>{{user.noOfCredits}}</td>
                                 <td>{{user.expiryDate | date:'MMMM d, y'}}</td>
                                 <td>
-                                    <span ng-if="user.userType == 'STUDENT'"><a class="btn btn-primary btn-rounded" ng-click="model.openModal('userModal', user.noOfCredits, user.expiryDate, user._id, user.email);">Edit User</a></span>
+                                    <span><a class="btn btn-primary btn-rounded" ng-click="model.openModal('userModal', user.noOfCredits, user.expiryDate, user._id, user.email);">Edit User</a></span>
                                 </td>
                             </tr>
                         </tbody>
