@@ -39,6 +39,13 @@ module.exports = function (app, model) {
         // py.stdin.write(JSON.stringify(data));
         // py.stdin.end();
 
+        //testing
+        // reading entire directory structure
+        // var fs = require('fs');
+        // fs.readdir('./private/services', function(err, files) {
+        //     console.log(files);
+        // });
+
     }
     init();
 
