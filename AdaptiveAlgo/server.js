@@ -2,6 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var nodemailer = require("nodemailer");
 
 var app = express();
 
@@ -34,9 +35,20 @@ var storage = multer.diskStorage({ //multers disk storage settings
     }
 });
 
+// var storagePem = multer.diskStorage({ //multers disk storage settings
+//     destination: function (req, file, cb) {
+//         cb(null, './private/services/uploads/pem/')
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.fieldname + '-' + file.originalname.replace(/\..+$/, '') + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
+//     }
+// });
+
 // var upload = multer({ storage : storage}).single('userPhoto');
 
 var upload = multer({ storage : storage }).array('userPhoto',99);
+
+// var uploadPem = multer({ storage : storagePem }).single('pemFile');
 
 /** API path that will upload the files */
 app.post('/upload', function(req, res) {
@@ -46,6 +58,63 @@ app.post('/upload', function(req, res) {
         }
         // res.end("File is uploaded");
         res.redirect('/#/instructor/listImages');
+    });
+});
+
+// app.post('/uploadPem', function(req, res) {
+//     uploadPem(req,res,function(err){
+//         if(err) {
+//             return res.end("Error uploading file.");
+//         }
+//         // res.end("File is uploaded");
+//         res.redirect('/#/student/profile');
+//     });
+// });
+
+var smtpTransport = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    auth: {
+        user: "ar.adaptivealgo@gmail.com",
+        pass: "samplepass"
+    }
+});
+
+app.get('/send',function(req,res){
+    var mailOptions={
+        to : req.query.to,
+        subject : 'Your details are updated!',
+        // text : req.query.text
+        html:  req.query.message
+    }
+    console.log(mailOptions);
+    smtpTransport.sendMail(mailOptions, function(error, response){
+        if(error){
+            console.log(error);
+            res.end("error");
+        }   else{
+            console.log("Message sent: " + response.message);
+            res.end("sent");
+        }
+    });
+});
+
+app.get('/sendToAdmin',function(req,res){
+    var mailOptionsAdmin={
+        to : req.query.to,
+        subject : 'You have updated the details!',
+        // text : req.query.text
+        html:  req.query.message
+    }
+    console.log(mailOptionsAdmin);
+    smtpTransport.sendMail(mailOptionsAdmin, function(error, response){
+        if(error){
+            console.log(error);
+            res.end("error");
+        }   else{
+            console.log("Message sent: " + response.message);
+            res.end("sent");
+        }
     });
 });
 
