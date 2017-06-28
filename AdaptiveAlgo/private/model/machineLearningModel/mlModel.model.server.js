@@ -70,7 +70,6 @@ module.exports = function () {
 
     function setModel(_model) {
         model = _model;
-        console.log("Storing file in mongodb");
         // storeZipInDB();
         // retrieveZipFile();
     }
