@@ -9,12 +9,26 @@ module.exports = function () {
 
     var api = {
         setModel: setModel,
+        getImageById: getImageById,
         saveDockerImageFile : saveDockerImageFile,
         getImagesForUser : getImagesForUser,
         getImagesForStudent : getImagesForStudent,
         getImageDuration : getImageDuration
     };
     return api;
+
+    function getImageById(imageId) {
+        var deferred = Q.defer();
+        DockerImageModel
+            .findOne({_id: imageId}, function (err, user) {
+                if(err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(user);
+                }
+            });
+        return deferred.promise;
+    }
 
     function getImageDuration(imagename) {
         var deferred = Q.defer();

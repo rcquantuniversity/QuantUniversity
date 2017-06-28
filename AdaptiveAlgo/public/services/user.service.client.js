@@ -23,7 +23,8 @@
             "addPackage" : addPackage,
             "getPackageFromJSON" : getPackageFromJSON,
             "updateAmazonCredentials" : updateAmazonCredentials,
-            "updateUserDetails" : updateUserDetails
+            "updateUserDetails" : updateUserDetails,
+            "getImageById" : getImageById
         };
         return api;
 
@@ -45,6 +46,9 @@
             return $http.put("/api/setUserDetails", userDetails);
         }
 
+        function getImageById(imageId) {
+            return $http.get("/api/getImageById/"+imageId);
+        }
 
         function getPackageFromJSON() {
             return $http.get("/api/getUserPackageFile");

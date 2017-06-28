@@ -1,12 +1,14 @@
 (function () {
     angular
     .module("AdaptiveAlgoApp")
-    .controller("EditDockerController", function($scope, $http, UserService, $location, $window, Upload, $timeout) {
+    .controller("EditDockerController", function($scope, $http, UserService, $location, $window, Upload, $timeout, $routeParams) {
         // $http.get("masterPackageJSON.json").then(function(response) {
         //     $scope.myData = response.data.data;
         // });
 
         var vm = this;
+
+        var imageId = $routeParams['id'];
 
         vm.createDockerImage = createDockerImage;
         // vm.uploadToDockerHub = uploadToDockerHub;
@@ -37,6 +39,24 @@
                         vm.error = err;
                     }
                 );
+
+            // var image = {imageId : imageId};
+            // vm.dockerImage = image;
+
+            console.log(imageId);
+
+            UserService
+                .getImageById(imageId)
+                .then(
+                    function(image) {
+                        vm.imageDetails = image.data;
+                        console.log(vm.imageDetails);
+                    },
+                    function(err) {
+                        vm.error = "No image found with the given Id."
+                    }
+                );
+
         }
         init();
 

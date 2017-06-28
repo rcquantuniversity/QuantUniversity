@@ -3,13 +3,14 @@
         .module("AdaptiveAlgoApp")
         .controller("ListImagesController", ListImagesController);
 
-    function ListImagesController(CourseService, UserService, ModalService) {
+    function ListImagesController(CourseService, UserService, ModalService, $location) {
         var vm = this;
         vm.uploadToDockerHub = uploadToDockerHub;
 
         vm.openModal = openModal;
         vm.closeModal = closeModal;
         vm.viewDockerImage = viewDockerImage;
+        vm.editDockerImage = editDockerImage;
 
         function init() {
             UserService
@@ -25,6 +26,14 @@
 
         }
         init();
+
+        function editDockerImage(image) {
+            var editUrl;
+
+            editUrl = "/instructor/editDocker/"+image._id;
+
+            $location.url(editUrl);
+        }
 
         function bin2String(array) {
             var result = "";

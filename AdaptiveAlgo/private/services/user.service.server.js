@@ -17,6 +17,7 @@ module.exports = function (app, model) {
     app.get("/api/getUserPackageFile", getUserPackageFile);
     app.put("/api/setAmazonCredentials",updateAmazonCredentials);
     app.put("/api/setUserDetails",updateUserDetails);
+    app.get("/api/getImageById/:imageId", getImageById);
 
     var request = require('request');
     var dockerCLI = require('docker-cli-js');
@@ -148,6 +149,38 @@ module.exports = function (app, model) {
                     logger.log('Error','Could not return images for instructor : '+req.user.id);
                 }
             );
+    }
+
+    function getImageById(req, res) {
+        var logger = require('./logger.js');
+        var imageId = req.params.imageId;
+        console.log("Image id is : "+imageId);
+        model
+            .dockerImageModel
+            .getImageById(imageId)
+            .then(
+                function (image) {
+                    logger.log('Info','Returning the image to edit : '+imageId);
+                    res.json(image);
+                },
+                function (err) {
+                    res.sendStatus(400).send(err);
+                    logger.log('Error','Could not return the image to edit : '+imageId);
+                }
+            );
+
+        // var userId = userId;
+        // model
+        //     .userModel
+        //     .findUserById(userId)
+        //     .then(
+        //         function (user) {
+        //             res.send(user);
+        //         },
+        //         function (err) {
+        //             res.sendStatus(400).send(err);
+        //         }
+        //     );
     }
 
     function listAllUsers(req, res) {

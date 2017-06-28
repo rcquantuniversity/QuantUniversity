@@ -3,15 +3,11 @@
 </div> 
 <div class="container">
     <div class="row">
-        <ul>
-            <li>{{value.name}}</li>
-            <li>{{value.id}}</li>
-        </ul>
-        <!-- <div class="col-md-12 buildDockerPage">
+        <div class="col-md-12 buildDockerPage">
             <div class="row">
                 <div class="col-md-6">
                     <h4 class="page-title">
-                        Build Image
+                        Edit Image
                     </h4>
                 </div>
                 <div class="col-md-6">
@@ -33,22 +29,22 @@
                             <div class="panel-body">
                                 <div class="form-group wbdv-left-right-margin">                  
                                     <div class="radio radio-info radio-inline">
-                                        <input type="radio" id="inlineRadio1" value="Notebook" ng-model="model.imageType">
+                                        <input type="radio" id="inlineRadio1" value="Notebook" ng-model="model.imageDetails.imageType">
                                         <label for="inlineRadio1"> Notebook </label>
                                     </div>
                                     <div class="radio radio-info radio-inline">
-                                        <input type="radio" id="inlineRadio2" value="Script" ng-model="model.imageType">
+                                        <input type="radio" id="inlineRadio2" value="Script" ng-model="model.imageDetails.imageType">
                                         <label for="inlineRadio2"> Scripts </label>
                                     </div>
                                     <div class="radio radio-info radio-inline">
-                                        <input type="radio" id="inlineRadio3" value="Both" ng-model="model.imageType">
+                                        <input type="radio" id="inlineRadio3" value="Both" ng-model="model.imageDetails.imageType">
                                         <label for="inlineRadio3"> Notebook & Scripts </label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6" ng-if="model.imageType == 'Notebook' || model.imageType == 'Both'">
+                    <div class="col-md-6" ng-if="model.imageDetails.imageType == 'Notebook' || model.imageDetails.imageType == 'Both'">
                         <div class="card-box panel-default">
                             <div class="header-title panel-heading">
                                 Please enter the duration in hours
@@ -57,7 +53,7 @@
                                 <div class="form-grp">
                                     <label>Duration</label>
                                     <div class="input-group fullWidth">
-                                        <input type="text" class="form-control" ng-model="model.duration" id="duration" placeholder="Duration" >
+                                        <input type="text" class="form-control" ng-model="model.imageDetails.duration" id="duration" placeholder="Duration" >
                                     </div>
                                 </div>
                             </div>
@@ -74,13 +70,13 @@
                                 <div class="form-grp">
                                     <label>Image Name</label>
                                     <div class="input-group fullWidth">
-                                        <input type="text" class="form-control" ng-model="model.imageName" id="imageName" placeholder="Image Name" >
+                                        <input type="text" class="form-control" ng-model="model.imageDetails.imageName" id="imageName" placeholder="Image Name" >
                                     </div>
                                 </div>
                                 <div class="form-grp">
                                     <label>Module Name</label>
                                     <div class="input-group fullWidth">
-                                        <input type="text" class="form-control" ng-model="model.moduleName" id="moduleName" placeholder="Module Name" >
+                                        <input type="text" class="form-control" ng-model="model.imageDetails.moduleName" id="moduleName" placeholder="Module Name" >
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +91,7 @@
                                 <div class="form-grp">
                                     <label>Image Description</label>
                                     <div class="input-group fullWidth">
-                                        <textarea rows="4" class="form-control" ng-model="model.description" id="description"></textarea>
+                                        <textarea rows="4" class="form-control" ng-model="model.imageDetails.description" id="description"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -356,7 +352,7 @@
                 <br>                
                 <br/>
             </form>
-        </div> -->
+        </div>
     </div>
 </div>
 <div ng-controller="footerCtrl as model"> 

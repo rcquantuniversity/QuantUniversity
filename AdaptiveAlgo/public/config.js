@@ -82,7 +82,7 @@
                     checkLogin : checkLogin
                 }
             })
-            .when("/instructor/editDocker", {
+            .when("/instructor/editDocker/:id", {
                 templateUrl: "views/instructor/templates/editDocker.view.client.html",
                 controller: "EditDockerController",
                 controllerAs: "model",
