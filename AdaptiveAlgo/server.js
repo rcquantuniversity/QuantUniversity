@@ -34,11 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // var upload = multer({ storage : storage}).single('userPhoto');
 
-
-
 // var uploadPem = multer({ storage : storagePem }).single('pemFile');
-
-
 
 // app.post('/uploadPem', function(req, res) {
 //     uploadPem(req,res,function(err){
