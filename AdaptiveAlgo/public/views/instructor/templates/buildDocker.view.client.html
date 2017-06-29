@@ -19,7 +19,7 @@
                     </h4>
                 </div>
             </div>
-            <form method="post" id="buildDockerForm" enctype="multipart/form-data">            
+            <form action="/upload" method="post" id="buildDockerForm" enctype="multipart/form-data">            
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card-box panel-default">
@@ -358,7 +358,7 @@
                        > -->
                         </div>
                         <div class="col-md-4 alignCenter">
-                            <button type="submit" class="btn btn-primary btn-bordred" ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName, model.description, model.moduleName, model.duration, model.imageType, model.location); model.uploadFiles();">Create Docker Image</button>
+                            <button type="submit" class="btn btn-primary btn-bordred" ng-click="model.createDockerImage(model.folder1, model.folder2, model.folder3, model.imageName, model.description, model.moduleName, model.duration, model.imageType, model.location);">Create Docker Image</button>
                         </div>
                         <div class="col-md-4">
                             <!-- <input type="submit" class="btn btn-primary btn-block" value="Upload Image" name="submit" ng-click="model.upload()" /> -->

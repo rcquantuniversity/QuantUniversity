@@ -9,7 +9,6 @@
         var vm = this;
 
         vm.createDockerImage = createDockerImage;
-        vm.uploadFiles = uploadFiles;
         // vm.uploadToDockerHub = uploadToDockerHub;
         vm.showAllImages = showAllImages;
         vm.logout = logout;
@@ -40,18 +39,6 @@
                 );
         }
         init();
-
-        function uploadFiles() {
-            $http({
-                url: "/upload", 
-                method: "POST"
-            }).success(function(serverResponse) {
-                console.log(serverResponse);
-                $location.url("/instructor/listImages");
-            }).error(function(serverResponse) {
-                console.log(serverResponse);
-            });
-        }
 
         function addPackage(base, packageName, packageCommand, packageVersion) {
             var package = {
