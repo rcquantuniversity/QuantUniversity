@@ -16,7 +16,7 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <form name="profile" method="post">
+        <form action="/uploadPem" method="post" id="amazonForm" enctype="multipart/form-data">
           <div class="form-group">
             <label>First Name</label>
             <div class="input-group fullWidth">
@@ -24,7 +24,7 @@
                      type="text"
                      class="form-control"
                      placeholder="First Name"
-                     autofocus
+                     readonly
                      required>
             </div>
           </div>
@@ -35,6 +35,7 @@
                      type="text"
                      class="form-control"
                      placeholder="Last Name"
+                     readonly
                      required>
             </div>
           </div>
@@ -90,15 +91,17 @@
             </div>
           </div>
           <div class="form-group">
-            <label>PEM Name</label>
-            <input ng-model="model.userData.amazonCredentials.pemName"
-                   type="text"
-                   class="form-control"
-                   placeholder="PEM Name"
-                   required>
+            <label>SSH Key File (Please upload the .pem file)</label>
+            <!-- <input id="pemFile" class="form-control" placeholder="Choose File" ng-model="model.userData.amazonCredentials.pemName" /><br/>
+            {{model.userData.amazonCredentials.pemName}}
+            <div class="fileUpload btn btn-primary">
+                <span>Upload</span>
+                <input id="uploadPem" type="file" name="pemFile" class="upload" />
+            </div> -->
+            <input type="file" class="form-control" ng-model="model.userData.amazonCredentials.pemName">
           </div>          
-          <h4><strong><button type="button" data-target="#changePwd" data-toggle="collapse" class="collapsed btn btn-primary btn-bordered">Change Password</a></strong></h4>
-          <div id="changePwd" class="collapse">
+          <!-- <h4><strong><button type="button" data-target="#changePwd" data-toggle="collapse" class="collapsed btn btn-primary btn-bordered">Change Password</a></strong></h4> -->
+          <!-- <div id="changePwd" class="collapse">
             <div class="form-group">
               <label>Password</label>
               <input ng-model="model.user.password"
@@ -115,7 +118,8 @@
                      placeholder="Verify Password"
                      required>
             </div>
-          </div>
+          </div> -->
+          {{model.userData.amazonCredentials.pemName}}
           <div>
             <input class="btn btn-block btn-primary btn-bordered"
                    type="submit"
@@ -130,3 +134,4 @@
 <div ng-controller="footerCtrl as model"> 
   <div ng-include="'footer.html'"></div>
 </div>
+<script src="javascripts/filename-change.js"></script>
