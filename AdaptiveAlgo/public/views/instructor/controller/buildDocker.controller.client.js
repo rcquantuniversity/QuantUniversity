@@ -9,6 +9,7 @@
         var vm = this;
 
         vm.createDockerImage = createDockerImage;
+        vm.uploadFiles = uploadFiles;
         // vm.uploadToDockerHub = uploadToDockerHub;
         vm.showAllImages = showAllImages;
         vm.logout = logout;
@@ -39,6 +40,35 @@
                 );
         }
         init();
+
+        function uploadFiles() {
+            // var filename = $('#uploadFile').val();
+            // $http({
+            //     url: "/upload", 
+            //     method: "POST",
+            //     data: {filename: filename}
+            // }).success(function(serverResponse) {
+            //     console.log(serverResponse);
+            // }).error(function(serverResponse) {
+            //     console.log(serverResponse);
+            // });
+
+
+
+            $('#buildDockerForm').submit(function() {
+                $(this).ajaxSubmit({
+                    error: function(xhr) {
+                        status('Error: ' + xhr.status);
+                    },
+
+                    success: function(response) {
+                        console.log(response);
+                    }
+                });
+                //Very important line, it disable the page refresh.
+                return false;
+            }); 
+        }
 
         function addPackage(base, packageName, packageCommand, packageVersion) {
             var package = {

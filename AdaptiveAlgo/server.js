@@ -23,9 +23,21 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var multer = require('multer');
+
+var storage = multer.diskStorage({ //multers disk storage settings
+    destination: function (req, file, cb) {
+        cb(null, './private/services/temp/uploads/')
+    },
+    filename: function (req, file, cb) {
+        var datetimestamp = Date.now();
+        cb(null, file.fieldname + '-' + file.originalname.replace(/\..+$/, '') + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
+    }
+});
+
 // var storagePem = multer.diskStorage({ //multers disk storage settings
 //     destination: function (req, file, cb) {
-//         cb(null, './private/services/uploads/pem/')
+//         cb(null, './private/services/temp/uploads/pem/')
 //     },
 //     filename: function (req, file, cb) {
 //         cb(null, file.fieldname + '-' + file.originalname.replace(/\..+$/, '') + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
@@ -34,11 +46,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // var upload = multer({ storage : storage}).single('userPhoto');
 
-
+var upload = multer({ storage : storage }).array('userPhoto',99);
 
 // var uploadPem = multer({ storage : storagePem }).single('pemFile');
 
-
+/** API path that will upload the files */
+app.post('/upload', function(req, res) {
+    upload(req,res,function(err){
+        if(err) {
+            return res.end("Error uploading file.");
+        }
+        console.log("file name is: "+req.body.filename);
+        res.sendStatus(200);
+        // res.end("File is uploaded");
+        // res.redirect('/#/instructor/listImages');
+    });
+});
 
 // app.post('/uploadPem', function(req, res) {
 //     uploadPem(req,res,function(err){
